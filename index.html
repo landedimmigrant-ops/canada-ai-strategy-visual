@@ -139,6 +139,14 @@
   .ssum-none{color:var(--faint);font-size:12px}
   .pgroup{margin-bottom:2px}
   .phead{font-size:14.5px;font-weight:700;margin:20px 0 9px;padding-left:10px;border-left:4px solid}
+  .method{max-width:780px}
+  .method h3{font-size:15px;margin:24px 0 7px;color:var(--text)}
+  .method p{font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:8px}
+  .method ul{margin:4px 0 10px;padding-left:20px}
+  .method li{font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:7px}
+  .method b{color:var(--text);font-weight:600}
+  .method code{background:var(--panel2);padding:1px 5px;border-radius:4px;font-size:12.5px}
+  .method a{color:var(--accent)}
 
   /* Gap → response */
   .gaps{display:grid;gap:12px;margin-top:8px}
@@ -231,6 +239,7 @@
       <button class="tabbtn" data-tab="negative">Unfunded commitments<small>what's promised but not paid for</small></button>
       <button class="tabbtn" data-tab="targets">Targets<small>baseline → goal, with deadlines</small></button>
       <button class="tabbtn" data-tab="runway">Timeline<small>2025 → 2050, click to expand</small></button>
+      <button class="tabbtn" data-tab="method">Methodology<small>how this was made</small></button>
     </nav>
 
     <div class="sidetitle">Search</div>
@@ -364,6 +373,71 @@
       <div class="statrow" id="softStats"></div>
       <p class="flownote" style="margin-top:14px">A hedge isn't automatically a dodge — reviews and pilots are legitimate. But these are the lines to watch for follow-through, and the places where a headline number rests on softer ground than it first appears.</p>
       <div id="soft"></div>
+    </section>
+
+    <!-- ============ METHODOLOGY ============ -->
+    <section class="tab" id="tab-method">
+      <h2 style="margin-top:40px">Methodology &amp; transparency</h2>
+      <p class="h2sub">How this was made — the source, the judgment calls, what was verified, and what's interpretation rather than fact. The analytical choices are the interesting part, so here they are in the open.</p>
+      <div class="method">
+
+        <h3>1 · What this is — and isn't</h3>
+        <p>An independent, <b>unofficial</b> visual explorer of a single document: Canada's National AI Strategy, <em>AI for All</em> (ISED). It is not a Government of Canada product and not a substitute for the source — it reorganizes the strategy so it can be explored by audience, money, target and time.</p>
+
+        <h3>2 · Source</h3>
+        <ul>
+          <li><b>One primary source:</b> the official ISED strategy — the web page and its 29-page PDF — published June 2026 (page last modified 2026‑06‑04). Every figure, program, target and date was extracted from that document on <b>June 5, 2026</b>.</li>
+          <li><b>Corroboration:</b> headline numbers were cross-checked against reputable secondary sources (CBC, The Globe and Mail, BetaKit, BDC, CIFAR, canada.ca) to catch extraction errors.</li>
+          <li>Amounts are in <b>CAD</b> unless noted (one fund is reported in US$).</li>
+        </ul>
+
+        <h3>3 · How the strategy was structured</h3>
+        <p>The prose strategy was hand-coded into structured data so it could be filtered, summed and cross-linked: 3 values · 6 pillars (each with themes and key actions) · 5 priority sectors · <b>31 concrete programs</b> (each tagged with pillar, audience, dollar amount if any, and status) · <b>16 named dollar line-items</b> (each flagged new vs. leveraged) · 8 "gap → response" diagnoses · headline targets and baseline→target metrics · a dated timeline (Budget 2025 → 2050).</p>
+
+        <h3>4 · Definitions &amp; classification rules</h3>
+        <p>The interpretive core — stated plainly so you can disagree with them.</p>
+        <ul>
+          <li><b>Funded vs. unfunded</b> — a commitment is "funded" only if the strategy attaches a <em>named dollar figure</em> to it. Programs described without a specific amount are "unfunded," even if money may flow later.</li>
+          <li><b>New vs. leveraged</b> — "new" = money the strategy introduces; "leveraged" = existing or previously-announced funds (mostly Budget 2025 and ongoing programs) counted toward the total. Shown distinctly because they're different kinds of commitment.</li>
+          <li><b>Soft / hedged commitments</b> — flagged where the strategy's <em>own wording</em> qualifies the promise ("where appropriate," "at times," "explore," "assess," "review," or numbers it calls "proposed" / "estimated"). Found by searching the source text for these markers, then reading each in context. A hedge isn't automatically a dodge — but it's worth seeing.</li>
+          <li><b>Live now vs. announced</b> — "live" = running or available today per the source; "announced" = committed but not yet stood up.</li>
+          <li><b>Pillar / value assignment</b> — each item sits under the pillar the strategy assigns it; pillars roll up to the three values as the strategy describes.</li>
+          <li><b>Unfunded categories</b> (Law &amp; rights · Standards &amp; trust · Skills &amp; people · Market &amp; structural · Infrastructure &amp; sovereignty · Diplomacy &amp; alliances) are <em>our</em> groupings of unpriced items, not the government's.</li>
+        </ul>
+
+        <h3>5 · Accuracy check</h3>
+        <p>Every figure, target, date, program name and claim was checked <b>line-by-line against the official PDF</b>. It reconciles closely. Notable reconciliations:</p>
+        <ul>
+          <li><b>Priority sectors</b> — the source is internally inconsistent (its sector section enumerates <em>five</em>; a later Workforce-Alliances line says <em>six</em>). We use the authoritative, enumerated <b>five</b>.</li>
+          <li><b>Wording softened to match the source</b> in three places that read firmer than the document: sovereign compute is "<b>proposed</b> 850 MW → up to 2.3 GW" (the source says proposed / being finalized); mid-career upskilling is "<b>assess and scale up</b>" (the source commits to <em>assessing</em> offerings); Tech Growth Fund equity stakes happen "<b>at times</b>."</li>
+          <li><b>Estimates are labeled as estimates</b> — e.g. the ~$187B generative-AI figure and the 5.5 GW compute need are projections the strategy itself hedges, not commitments.</li>
+        </ul>
+
+        <h3>6 · Honest caveats</h3>
+        <ul>
+          <li><b>"Unpriced ≠ free."</b> Laws, standards work, and tax measures (SR&amp;ED, the super-deduction) carry real cost and effort — "unfunded" here means <em>no named grant</em>, not "costs nothing."</li>
+          <li><b>Totals are a definitional choice.</b> "$2.36B new / ~$6.2B leveraged" reconciles exactly to the line-items shown; some outlets total the package differently (~$6.6B all-in) by counting previously-announced money against a different baseline. Both can be right — they answer different questions.</li>
+          <li><b>The Funded / Soft / Unfunded lenses are interpretation,</b> built to make the distance between rhetoric and dollars legible. They're our reading of the strategy, not the government's framing.</li>
+          <li>Dollar amounts are reproduced <b>as the strategy reports them</b> — not independently audited.</li>
+        </ul>
+
+        <h3>7 · Reproducibility</h3>
+        <ul>
+          <li>Every program, pillar, sector and timeline entry carries a <b>"read more ↗"</b> link to the relevant section of the official strategy, so any claim can be traced to source. (Links land at the pillar/section level — the page's anchors don't go finer.)</li>
+          <li>The whole thing is <b>one self-contained <code>index.html</code></b> with the data inline, so the full dataset is readable and checkable in the page source.</li>
+        </ul>
+
+        <h3>8 · How it was built</h3>
+        <ul>
+          <li>A single static HTML file: no framework, no build step, no dependencies, no tracking; works offline; hosted free on GitHub Pages.</li>
+          <li>Built <b>iteratively</b> — starting from the strategy's own architecture (values → pillars), then adding lenses (audience, money, targets, timeline) and finally the Funded → Soft → Unfunded spectrum, tightening accuracy on each pass.</li>
+          <li>Extraction, structuring, classification and fact-checking were done with <b>AI assistance (Claude)</b> under human direction and review.</li>
+        </ul>
+
+        <h3>9 · Snapshot &amp; disclaimer</h3>
+        <p>A snapshot <b>as of June 5, 2026</b>; the strategy says it will be reviewed and updated, so figures may move. <b>Unofficial — not affiliated with or endorsed by the Government of Canada.</b> For any decision, consult the <a href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">official strategy</a> directly.</p>
+
+      </div>
     </section>
 
     <footer>
