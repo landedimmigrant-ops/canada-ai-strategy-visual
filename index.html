@@ -121,6 +121,12 @@
   .pill.announced{background:rgba(154,103,0,.12);color:var(--opportunity)}
   .pill.pl{background:var(--panel2);color:var(--muted);letter-spacing:0;text-transform:none;font-weight:600}
   .empty{color:var(--faint);padding:18px 0;font-size:14px}
+  .catgroup{margin-bottom:4px}
+  .cathead{cursor:pointer;display:flex;align-items:center;gap:9px;user-select:none}
+  .cathead .catchev{font-size:12px;color:var(--faint);transition:transform .2s;flex:none}
+  .catgroup.open .cathead .catchev{transform:rotate(90deg)}
+  .cathead .catcount{font-size:12px;font-weight:400;color:var(--faint);margin-left:auto}
+  .catgroup:not(.open) .h2sub,.catgroup:not(.open) .cards{display:none}
 
   /* Gap → response */
   .gaps{display:grid;gap:12px;margin-top:8px}
@@ -209,9 +215,9 @@
       <button class="tabbtn" data-tab="foryou">For you<small>what's in it for each audience</small></button>
       <button class="tabbtn" data-tab="opps">Opportunities<small>programs &amp; the gaps they answer</small></button>
       <button class="tabbtn" data-tab="moneytab">Money flow<small>how dollars spread across themes</small></button>
+      <button class="tabbtn" data-tab="negative">Unfunded commitments<small>what's promised but not paid for</small></button>
       <button class="tabbtn" data-tab="targets">Targets<small>baseline → goal, with deadlines</small></button>
       <button class="tabbtn" data-tab="runway">Timeline<small>2025 → 2050, click to expand</small></button>
-      <button class="tabbtn" data-tab="negative">Negative space<small>commitments with no price tag</small></button>
       <button class="tabbtn" data-tab="soft">Soft commitments<small>hedged &amp; aspirational promises</small></button>
     </nav>
 
@@ -230,7 +236,7 @@
     <button class="chip" data-f="p4"><span class="dot" style="background:var(--p4)"></span>P4 Foundation</button>
     <button class="chip" data-f="p5"><span class="dot" style="background:var(--p5)"></span>P5 Champions</button>
     <button class="chip" data-f="p6"><span class="dot" style="background:var(--p6)"></span>P6 Alliances</button>
-    <p class="resetnote">Search and filters apply across the Opportunities, Money, Targets, Timeline, Negative-space and Soft-commitments tabs.</p>
+    <p class="resetnote">Search and filters apply across the Opportunities, Money, Targets, Timeline, Unfunded-commitments and Soft-commitments tabs.</p>
   </aside>
 
   <div class="content">
@@ -328,7 +334,7 @@
 
     <!-- ============ NEGATIVE SPACE ============ -->
     <section class="tab" id="tab-negative">
-      <h2 style="margin-top:40px">The negative space — commitments with no price tag</h2>
+      <h2 style="margin-top:40px">Unfunded commitments — what's promised but not paid for</h2>
       <p class="h2sub">The Money tab shows where the dollars go. This is the inverse: every commitment in the strategy that is <em>not</em> backed by a named dollar figure — laws, standards, diplomacy, tax levers, infrastructure and structural promises. The work is real; the line item isn't.</p>
       <div class="statrow" id="negStats"></div>
       <p class="flownote" style="margin-top:14px">Unpriced ≠ free. Tax measures (SR&amp;ED, the super-deduction), new legislation, and standards work all carry real cost and effort — they just don't arrive as a named grant. Filter by pillar or value, or search, from the sidebar.</p>
@@ -338,7 +344,7 @@
     <!-- ============ SOFT COMMITMENTS ============ -->
     <section class="tab" id="tab-soft">
       <h2 style="margin-top:40px">Soft commitments — promises the language hedges</h2>
-      <p class="h2sub">Negative space asks "where's the money?" This asks "how firm is the promise?" These are the commitments the strategy waters down with its own wording — "where appropriate," "at times," "explore," "assess," or numbers it calls "proposed" and "estimated." Each card quotes the giveaway phrase.</p>
+      <p class="h2sub">Unfunded commitments asks "where's the money?" This asks "how firm is the promise?" These are the commitments the strategy waters down with its own wording — "where appropriate," "at times," "explore," "assess," or numbers it calls "proposed" and "estimated." Each card quotes the giveaway phrase.</p>
       <div class="statrow" id="softStats"></div>
       <p class="flownote" style="margin-top:14px">A hedge isn't automatically a dodge — reviews and pilots are legitimate. But these are the lines to watch for follow-through, and the places where a headline number rests on softer ground than it first appears.</p>
       <div id="soft"></div>
@@ -373,7 +379,7 @@ const PILLARS = {
   p5:{n:"Pillar 5",t:"Scaling Canadian champions",v:"sovereignty",
       m:"Growth capital, government as anchor customer, foundation models at home.",
       themes:["Investment flywheel for risk-taking","SME commercialization on Canadian infrastructure","Championing Canadian foundation models"],
-      actions:["<b>$500M</b> Canadian Tech Growth Fund — incl. federal equity stakes","Budget 2026: mechanisms to reinvest tech gains into Canadian startups","Leverage <b>$1.75B</b> Budget 2025 venture capital investments","Government as strategic anchor customer; Buy Canadian policy","<b>$700M</b> additional sovereign compute via Compute Access Fund","<b>$130M</b> commercialization programs at National AI Institutes","Leverage <b>$159M</b> Elevate IP & IP Assist (Budget 2025)","Anchor homegrown foundation models; export to trusted markets","Support safe-by-design Canadian frontier model research"]},
+      actions:["<b>$500M</b> Canadian Tech Growth Fund — incl. federal equity stakes at times","Budget 2026: mechanisms to reinvest tech gains into Canadian startups","Leverage <b>$1.75B</b> Budget 2025 venture capital investments","Government as strategic anchor customer; Buy Canadian policy","<b>$700M</b> additional sovereign compute via Compute Access Fund","<b>$130M</b> commercialization programs at National AI Institutes","Leverage <b>$159M</b> Elevate IP & IP Assist (Budget 2025)","Anchor homegrown foundation models; export to trusted markets","Support safe-by-design Canadian frontier model research"]},
   p6:{n:"Pillar 6",t:"Trusted partnerships & global alliances",v:"trust",
       m:"Sovereign Technology Alliance, open-source AI, markets for Canadian firms.",
       themes:["Multinational Sovereign Technology Alliance","Advancing open-source AI","Expanding international partnerships"],
@@ -432,7 +438,7 @@ const OPPS = [
   {n:"90,000 AI job placements",amt:"",p:"p2",who:"Young Canadians",get:"45K via Student Work Placement & Canada Summer Jobs, 35K via Skills for Success, 10K via Mitacs ADOPT and AI+X — by 2031.",st:"announced",per:["youth"]},
   {n:"CanCode",amt:"$30M",p:"p2",who:"K-12 youth & educators",get:"Free coding, AI and emerging-tech skills via nonprofits, with emphasis on underrepresented groups.",st:"announced",per:["youth"]},
   {n:"Job Bank AI matching + training platform",amt:"$50M",p:"p2",who:"Job seekers & career changers",get:"AI-powered matching to jobs that fit your skills profile, plus free and low-cost short courses.",st:"live",per:["worker","youth"]},
-  {n:"Mid-career upskilling at scale",amt:"",p:"p2",who:"Workers incl. skilled trades",get:"Employer-led training scaled nationwide, with colleges, CÉGEPs and polytechnics as applied AI leaders.",st:"announced",per:["worker"]},
+  {n:"Mid-career upskilling at scale",amt:"",p:"p2",who:"Workers incl. skilled trades",get:"A commitment to assess and scale up employer-led training, with colleges, CÉGEPs and polytechnics as applied AI leaders.",st:"announced",per:["worker"]},
   {n:"Women's Program AI acceleration",amt:"",p:"p2",who:"Women in exposed sectors",get:"Adoption support in female-dominated sectors facing early disruption, plus action on AI-fueled online abuse.",st:"announced",per:["worker"]},
   {n:"Creative Technology Program",amt:"$50M",p:"p2",who:"Canadian creators",get:"Support to use AI on your own terms — protecting and projecting Canadian culture rather than ceding it.",st:"announced",per:["creator"]},
   {n:"Indigenous-led AI initiatives",amt:"",p:"p2",who:"Indigenous communities",get:"Language models, land management and cultural heritage AI — building on First Languages AI Reality at Mila and NRC's Indigenous Languages Technology Program.",st:"announced",per:["indigenous","creator"]},
@@ -539,7 +545,7 @@ const TILES = [
   {b:"90,000",s:"AI placements for young Canadians",w:"by 2031",p:"p2"},
   {b:"~$200B",s:"GDP unlock (≈3%) from productivity",w:"strategy outcome",p:"p3"},
   {b:"1M",s:"post-secondary students reached with AI literacy",w:"rollout",p:"p2"},
-  {b:"850 MW",s:"sovereign compute, scaling to 2.3 GW",w:"by 2030",p:"p4"},
+  {b:"850 MW",s:"sovereign compute proposed, scaling to 2.3 GW",w:"by 2030",p:"p4"},
   {b:"#1-class",s:"world-leading public supercomputer",w:"by 2031",p:"p4"},
   {b:"2×",s:"electricity grid, largely clean power",w:"by 2050",p:"p4"}
 ];
@@ -842,6 +848,13 @@ function negCardHTML(o){
       <span class="pill pl" style="color:${pcol(o.p)}">${PILLARS[o.p].n}</span>
     </div></div>`;
 }
+function catGroup(cat,blurb,count,cardsHTML){
+  return `<div class="catgroup open">
+    <h2 class="cathead" onclick="this.closest('.catgroup').classList.toggle('open')"><span class="catchev">▸</span> ${cat} <span class="catcount">${count} ${count===1?"item":"items"}</span></h2>
+    <p class="h2sub">${blurb}</p>
+    <div class="cards">${cardsHTML}</div>
+  </div>`;
+}
 function renderNegative(){
   const all=negItems();
   const shown=all.filter(o=>visible(o.p)&&matches(o.t+" "+o.what+" "+(o.who||"")));
@@ -853,13 +866,11 @@ function renderNegative(){
     <div class="stat"><b>${unfundedProgs} / ${totalPrograms}</b><span>named programs unfunded (${pct}%)</span></div>
     <div class="stat"><b>${UNPRICED.length}</b><span>laws, standards &amp; alliances (not programs)</span></div>
     <div class="stat"><b>${pillarsZeroNamed}</b><span>pillar with $0 named (P6 Alliances)</span></div>`;
-  if(!shown.length){ $("#negative").innerHTML=`<p class="empty">Nothing in the negative space matches — clear the search or filter.</p>`; return; }
+  if(!shown.length){ $("#negative").innerHTML=`<p class="empty">Nothing in the unfunded list matches — clear the search or filter.</p>`; return; }
   $("#negative").innerHTML=NEG_CATS.map(cat=>{
     const items=shown.filter(o=>o.cat===cat);
     if(!items.length) return "";
-    return `<h2>${cat}</h2>
-      <p class="h2sub">${NEG_BLURB[cat]||""} <span style="color:var(--faint)">· ${items.length} ${items.length===1?"item":"items"}</span></p>
-      <div class="cards">${items.map(negCardHTML).join("")}</div>`;
+    return catGroup(cat, NEG_BLURB[cat]||"", items.length, items.map(negCardHTML).join(""));
   }).join("");
 }
 
@@ -886,9 +897,7 @@ function renderSoft(){
   $("#soft").innerHTML=SOFT_CATS.map(cat=>{
     const items=shown.filter(o=>o.cat===cat);
     if(!items.length) return "";
-    return `<h2>${cat}</h2>
-      <p class="h2sub">${SOFT_BLURB[cat]||""} <span style="color:var(--faint)">· ${items.length} ${items.length===1?"item":"items"}</span></p>
-      <div class="cards">${items.map(softCardHTML).join("")}</div>`;
+    return catGroup(cat, SOFT_BLURB[cat]||"", items.length, items.map(softCardHTML).join(""));
   }).join("");
 }
 
