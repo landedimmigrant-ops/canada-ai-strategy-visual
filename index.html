@@ -137,6 +137,8 @@
   .ssum:hover{border-color:var(--faint);color:var(--text)}
   .ssum b{background:var(--accent);color:#fff;border-radius:4px;padding:0 5px;font-size:10.5px;font-weight:700}
   .ssum-none{color:var(--faint);font-size:12px}
+  .pgroup{margin-bottom:2px}
+  .phead{font-size:14.5px;font-weight:700;margin:20px 0 9px;padding-left:10px;border-left:4px solid}
 
   /* Gap → response */
   .gaps{display:grid;gap:12px;margin-top:8px}
@@ -703,6 +705,15 @@ function cardHTML(o){
       ${srcLink(o.p)}
     </div></div>`;
 }
+/* Group program cards into pillar sections; within each, 'live now' before 'announced'. */
+function byPillarHTML(items){
+  return ["p1","p2","p3","p4","p5","p6"].map(p=>{
+    const group=items.filter(o=>o.p===p);
+    if(!group.length) return "";
+    group.sort((a,b)=>(a.st==="live"?0:1)-(b.st==="live"?0:1));
+    return `<div class="pgroup"><h3 class="phead" style="color:${pcol(p)};border-left-color:${pcol(p)}">${PILLARS[p].n} — ${PILLARS[p].t}</h3><div class="cards">${group.map(cardHTML).join("")}</div></div>`;
+  }).join("");
+}
 function renderPersonas(){
   $("#personas").innerHTML=Object.entries(PERSONAS).map(([k,p])=>
     `<button class="persona ${persona===k?'active':''}" data-per="${k}">${p.t}</button>`).join("");
@@ -714,7 +725,7 @@ function renderPersonaCards(){
     $("#personacards").innerHTML=`<p class="empty">Pick an audience above to see their slice of the strategy.</p>`; return; }
   intro.style.display="block"; intro.textContent=PERSONAS[persona].intro;
   const list=OPPS.filter(o=>o.per.includes(persona));
-  $("#personacards").innerHTML=list.map(cardHTML).join("");
+  $("#personacards").innerHTML=byPillarHTML(list);
 }
 
 /* ================= OPPORTUNITIES ================= */
@@ -729,7 +740,7 @@ function renderGaps(){
 }
 function renderOpps(){
   const list=OPPS.filter(o=>visible(o.p)&&matches(o.n+o.who+o.get+(o.amt||"")));
-  $("#oppcards").innerHTML=list.map(cardHTML).join("")||`<p class="empty">Nothing matches — clear the search or filter.</p>`;
+  $("#oppcards").innerHTML=list.length?byPillarHTML(list):`<p class="empty">Nothing matches — clear the search or filter.</p>`;
 }
 
 /* ================= MONEY ================= */
