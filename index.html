@@ -212,6 +212,7 @@
       <button class="tabbtn" data-tab="targets">Targets<small>baseline → goal, with deadlines</small></button>
       <button class="tabbtn" data-tab="runway">Timeline<small>2025 → 2050, click to expand</small></button>
       <button class="tabbtn" data-tab="negative">Negative space<small>commitments with no price tag</small></button>
+      <button class="tabbtn" data-tab="soft">Soft commitments<small>hedged &amp; aspirational promises</small></button>
     </nav>
 
     <div class="sidetitle">Search</div>
@@ -229,7 +230,7 @@
     <button class="chip" data-f="p4"><span class="dot" style="background:var(--p4)"></span>P4 Foundation</button>
     <button class="chip" data-f="p5"><span class="dot" style="background:var(--p5)"></span>P5 Champions</button>
     <button class="chip" data-f="p6"><span class="dot" style="background:var(--p6)"></span>P6 Alliances</button>
-    <p class="resetnote">Search and filters apply across the Opportunities, Money, Targets, Timeline and Negative-space tabs.</p>
+    <p class="resetnote">Search and filters apply across the Opportunities, Money, Targets, Timeline, Negative-space and Soft-commitments tabs.</p>
   </aside>
 
   <div class="content">
@@ -332,6 +333,15 @@
       <div class="statrow" id="negStats"></div>
       <p class="flownote" style="margin-top:14px">Unpriced ≠ free. Tax measures (SR&amp;ED, the super-deduction), new legislation, and standards work all carry real cost and effort — they just don't arrive as a named grant. Filter by pillar or value, or search, from the sidebar.</p>
       <div id="negative"></div>
+    </section>
+
+    <!-- ============ SOFT COMMITMENTS ============ -->
+    <section class="tab" id="tab-soft">
+      <h2 style="margin-top:40px">Soft commitments — promises the language hedges</h2>
+      <p class="h2sub">Negative space asks "where's the money?" This asks "how firm is the promise?" These are the commitments the strategy waters down with its own wording — "where appropriate," "at times," "explore," "assess," or numbers it calls "proposed" and "estimated." Each card quotes the giveaway phrase.</p>
+      <div class="statrow" id="softStats"></div>
+      <p class="flownote" style="margin-top:14px">A hedge isn't automatically a dodge — reviews and pilots are legitimate. But these are the lines to watch for follow-through, and the places where a headline number rests on softer ground than it first appears.</p>
+      <div id="soft"></div>
     </section>
 
     <footer>
@@ -481,6 +491,27 @@ const UNPRICED = [
   {t:"Anchor homegrown foundation models",p:"p5",cat:"Diplomacy & alliances",what:"Back Canadian frontier models and export them to trusted markets — direction set, no named fund."},
   {t:"Expand international AI partnerships",p:"p6",cat:"Diplomacy & alliances",what:"Deepen ties across Europe, the Indo-Pacific and the Middle East — diplomatic effort, no named spend."},
   {t:"Lead a global open-source AI effort",p:"p6",cat:"Diplomacy & alliances",what:"Convene a multi-stakeholder push for transparent open-source AI as an answer to lock-in."}
+];
+
+/* ===== SOFT COMMITMENTS: hedged / aspirational promises, with the giveaway phrase quoted ===== */
+const SOFT_CATS = ["Conditional","Under study","Proposed / estimate"];
+const SOFT_BLURB = {
+  "Conditional":"Promised only “where appropriate” or “at times” — the trigger is left to the government's discretion.",
+  "Under study":"A commitment to “explore,” “assess” or “review” — the action is to look into it, not yet to do it.",
+  "Proposed / estimate":"Reads like a target, but the source flags it as proposed, being finalized, or estimated."
+};
+const SOFT = [
+  {t:"Sovereign Wealth Fund for AI champions",p:"p5",cat:"Conditional",q:"where appropriate",what:"The strategy says it will tap the recently announced Sovereign Wealth Fund to back national champions — but only “where appropriate,” with no amount or trigger defined."},
+  {t:"Federal equity stakes in AI firms",p:"p5",cat:"Conditional",q:"at times",what:"The $500M Tech Growth Fund can take government equity stakes in promising firms — but the action is qualified as happening “at times.”"},
+  {t:"Canadian models leading on AI safety",p:"p5",cat:"Conditional",q:"if developed appropriately and scaled commercially",what:"Safe-by-design frontier research “has the potential to become world-leading” — explicitly conditional on being developed and scaled first."},
+  {t:"Budget 2026 reinvestment mechanisms",p:"p5",cat:"Under study",q:"work with experts to explore",what:"Finance will explore ways to get Canadians to reinvest tech gains into AI startups — a commitment to study, not yet a mechanism."},
+  {t:"Aligning innovation programs",p:"p5",cat:"Under study",q:"assess the full continuum",what:"Canada will assess existing innovation instruments to shorten the path from research to market — direction set, design pending."},
+  {t:"Mid-career upskilling at scale",p:"p2",cat:"Under study",q:"assess training and upskill offerings",what:"The visual lists this as a program; the source only commits to assessing offerings in order to scale up employer-led training."},
+  {t:"Privacy Act review",p:"p1",cat:"Under study",q:"continue its review",what:"The government will keep reviewing how it uses personal data, with “considerations around” transparency — an ongoing review, not a new rule yet."},
+  {t:"Tracking AI's impact on jobs",p:"p2",cat:"Under study",q:"track and assess",what:"Canada will track and assess AI's labour-market and economic impacts to guide policy — a monitoring commitment with no defined intervention."},
+  {t:"850 MW → 2.3 GW sovereign compute",p:"p4",cat:"Proposed / estimate",q:"proposed providing … up to",what:"The headline compute figure: partnerships are “being finalized” and have “proposed providing” 850 MW by 2030, scaling “up to” 2.3 GW — a proposal, not secured capacity."},
+  {t:"5.5 GW of compute needed by 2030",p:"p4",cat:"Proposed / estimate",q:"estimates vary, but analysis suggests",what:"The stated national compute requirement is an analyst estimate the strategy itself hedges, not a government commitment."},
+  {t:"$187B generative-AI upside by 2030",p:"p3",cat:"Proposed / estimate",q:"some estimates",what:"The economic-upside figure is cited as “some estimates” for generative AI alone — an external projection, not a strategy target."}
 ];
 
 const GAPS = [
@@ -832,8 +863,37 @@ function renderNegative(){
   }).join("");
 }
 
+/* ================= SOFT COMMITMENTS ================= */
+const SOFT_CATCOL={"Conditional":"opportunity","Under study":"sovereignty","Proposed / estimate":"faint"};
+function softCardHTML(o){
+  return `<div class="card" style="border-left-color:${pcol(o.p)}">
+    <div class="top"><h4>${o.t}</h4><span class="pill pl" style="color:${cssVar(SOFT_CATCOL[o.cat])}">${o.cat}</span></div>
+    <div class="get">${o.what}</div>
+    <div style="font-size:12px;font-style:italic;color:var(--muted);border-top:1px solid var(--line);padding-top:7px;margin-top:2px">“…${o.q}…”</div>
+    <div class="foot">
+      <span class="pill pl" style="color:${pcol(o.p)}">${PILLARS[o.p].n}</span>
+    </div></div>`;
+}
+function renderSoft(){
+  const shown=SOFT.filter(o=>visible(o.p)&&matches(o.t+" "+o.what+" "+o.q));
+  const c=cat=>SOFT.filter(o=>o.cat===cat).length;
+  $("#softStats").innerHTML=`
+    <div class="stat"><b>${SOFT.length}</b><span>hedged / aspirational promises</span></div>
+    <div class="stat"><b>${c("Conditional")}</b><span>conditional (“where appropriate”)</span></div>
+    <div class="stat"><b>${c("Under study")}</b><span>under study (“explore / assess”)</span></div>
+    <div class="stat"><b>${c("Proposed / estimate")}</b><span>proposed or estimated, not firm</span></div>`;
+  if(!shown.length){ $("#soft").innerHTML=`<p class="empty">Nothing in the soft-commitments list matches — clear the search or filter.</p>`; return; }
+  $("#soft").innerHTML=SOFT_CATS.map(cat=>{
+    const items=shown.filter(o=>o.cat===cat);
+    if(!items.length) return "";
+    return `<h2>${cat}</h2>
+      <p class="h2sub">${SOFT_BLURB[cat]||""} <span style="color:var(--faint)">· ${items.length} ${items.length===1?"item":"items"}</span></p>
+      <div class="cards">${items.map(softCardHTML).join("")}</div>`;
+  }).join("");
+}
+
 /* ================= GLOBAL ================= */
-function rerenderFiltered(){ renderGaps(); renderOpps(); renderMoney(); renderFlow(); renderTargets(); renderTimeline(); renderNegative(); }
+function rerenderFiltered(){ renderGaps(); renderOpps(); renderMoney(); renderFlow(); renderTargets(); renderTimeline(); renderNegative(); renderSoft(); }
 function setFilter(f){
   filter=f;
   $$(".chip").forEach(c=>{
