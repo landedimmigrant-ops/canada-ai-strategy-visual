@@ -915,7 +915,18 @@ function setFilter(f){
   rerenderFiltered();
 }
 $$(".chip").forEach(c=>c.onclick=()=>setFilter(c.dataset.f));
-$("#search").addEventListener("input",e=>{q=e.target.value.trim().toLowerCase();rerenderFiltered();});
+$("#search").addEventListener("input",e=>{
+  q=e.target.value.trim().toLowerCase();
+  rerenderFiltered();
+  // Search only affects the list tabs. If the user starts typing from Overview or
+  // By audience (which don't respond to search), jump to the Opportunities catalogue
+  // so results are actually visible.
+  const cur=document.querySelector(".tabbtn.current");
+  if(q && cur && (cur.dataset.tab==="overview"||cur.dataset.tab==="foryou")){
+    document.querySelector('.tabbtn[data-tab="opps"]').click();
+    $("#search").focus();
+  }
+});
 
 $$(".tabbtn").forEach(b=>b.onclick=()=>{
   $$(".tabbtn").forEach(x=>x.classList.toggle("current",x===b));
