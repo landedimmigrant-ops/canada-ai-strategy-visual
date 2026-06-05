@@ -224,11 +224,11 @@
       <button class="tabbtn current" data-tab="overview">Overview<small>vision, values &amp; pillars</small></button>
       <button class="tabbtn" data-tab="foryou">By audience<small>the strategy, by who you are</small></button>
       <button class="tabbtn" data-tab="opps">Opportunities<small>programs &amp; the gaps they answer</small></button>
-      <button class="tabbtn" data-tab="moneytab">Money flow<small>how dollars spread across themes</small></button>
+      <button class="tabbtn" data-tab="moneytab">Funded commitments<small>the named dollars, and where they flow</small></button>
+      <button class="tabbtn" data-tab="soft">Soft commitments<small>hedged &amp; aspirational promises</small></button>
       <button class="tabbtn" data-tab="negative">Unfunded commitments<small>what's promised but not paid for</small></button>
       <button class="tabbtn" data-tab="targets">Targets<small>baseline → goal, with deadlines</small></button>
       <button class="tabbtn" data-tab="runway">Timeline<small>2025 → 2050, click to expand</small></button>
-      <button class="tabbtn" data-tab="soft">Soft commitments<small>hedged &amp; aspirational promises</small></button>
     </nav>
 
     <div class="sidetitle">Search</div>
@@ -248,7 +248,7 @@
     <button class="chip" data-f="p4"><span class="dot" style="background:var(--p4)"></span>P4 Foundation</button>
     <button class="chip" data-f="p5"><span class="dot" style="background:var(--p5)"></span>P5 Champions</button>
     <button class="chip" data-f="p6"><span class="dot" style="background:var(--p6)"></span>P6 Alliances</button>
-    <p class="resetnote">Search and filters apply across the Opportunities, Money, Targets, Timeline, Unfunded-commitments and Soft-commitments tabs.</p>
+    <p class="resetnote">Search and filters apply across the Opportunities, Funded-commitments, Soft-commitments, Unfunded-commitments, Targets and Timeline tabs.</p>
     </div>
   </aside>
 
@@ -348,7 +348,7 @@
     <!-- ============ NEGATIVE SPACE ============ -->
     <section class="tab" id="tab-negative">
       <h2 style="margin-top:40px">Unfunded commitments — what's promised but not paid for</h2>
-      <p class="h2sub">The Money tab shows where the dollars go. This is the inverse: every commitment in the strategy that is <em>not</em> backed by a named dollar figure — laws, standards, diplomacy, tax levers, infrastructure and structural promises. The work is real; the line item isn't.</p>
+      <p class="h2sub">The Funded commitments tab shows where the dollars go. This is the inverse: every commitment in the strategy that is <em>not</em> backed by a named dollar figure — laws, standards, diplomacy, tax levers, infrastructure and structural promises. The work is real; the line item isn't.</p>
       <div class="statrow" id="negStats"></div>
       <p class="flownote" style="margin-top:14px">Unpriced ≠ free. Tax measures (SR&amp;ED, the super-deduction), new legislation, and standards work all carry real cost and effort — they just don't arrive as a named grant. Filter by pillar or value, or search, from the sidebar.</p>
       <div class="personas" id="negPills"></div>
@@ -426,10 +426,10 @@ const MONEY = [
 
 const PERSONAS = {
   sme:{t:"SME owner",intro:"You're who this strategy is mostly aimed at. SMEs are 99% of Canadian businesses but only ~8% have adopted AI — so the biggest single pool of money here is adoption support: financing, hands-on help, compute, and tax incentives."},
-  youth:{t:"Student / young worker",intro:"Free training, a personal AI agent while you study, and 90,000 paid placements — the strategy treats your generation as the carrier of the whole adoption bet."},
   founder:{t:"Founder / scale-up",intro:"The strategy's explicit goal is to stop Canadian companies from scaling under other flags. That means growth capital (including federal equity), cheap sovereign compute, IP protection, and government as your first big customer."},
-  researcher:{t:"Researcher",intro:"More CIFAR chairs, a public supercomputer, unlocked health data, and faster immigration pathways — the play is to anchor world-class research talent in Canada against global recruitment pressure."},
+  youth:{t:"Student / young worker",intro:"Free training, a personal AI agent while you study, and 90,000 paid placements — the strategy treats your generation as the carrier of the whole adoption bet."},
   worker:{t:"Mid-career worker",intro:"The strategy's framing is deliberately pro-worker: AI should augment, not displace. For you that means employer-led retraining at scale, free short courses, and targeted support if your sector is exposed early."},
+  researcher:{t:"Researcher",intro:"More CIFAR chairs, a public supercomputer, unlocked health data, and faster immigration pathways — the play is to anchor world-class research talent in Canada against global recruitment pressure."},
   creator:{t:"Creator / culture",intro:"A dedicated fund to use AI on your own terms, plus the defensive side: deepfake legal tools, watermarking, and French-language and Indigenous-language AI so Canadian culture isn't flattened by foreign models."},
   indigenous:{t:"Indigenous communities",intro:"Support for Indigenous-led AI — language models, land management, cultural heritage — with self-determination over how AI is built and used in Indigenous contexts, building on First Languages AI Reality at Mila."},
   public:{t:"Public servant",intro:"Government plans to be an anchor adopter of Canadian AI: faster procurement, an Innovation Fellows program to bring technical talent inside, and human-in-the-loop rules for meaningful decisions."}
@@ -943,7 +943,7 @@ function searchSummary(){
   el.style.display="block";
   const counts=[
     ["opps","Opportunities",OPPS.filter(o=>visible(o.p)&&matches(o.n+o.who+o.get+(o.amt||""))).length],
-    ["moneytab","Money",MONEY.filter(m=>visible(m.p)&&matches(m.l+(m.note||""))).length],
+    ["moneytab","Funded",MONEY.filter(m=>visible(m.p)&&matches(m.l+(m.note||""))).length],
     ["targets","Targets",TILES.filter(t=>visible(t.p)&&matches(t.b+t.s)).length+DUMBS.filter(d=>visible(d.p)&&matches(d.l+d.sm)).length],
     ["runway","Timeline",EVENTS.filter(e=>visible(e.p)&&matches(e.t+(e.ctx||""))).length],
     ["negative","Unfunded",negItems().filter(o=>visible(o.p)&&matches(o.t+" "+o.what+" "+(o.who||""))).length],
