@@ -127,6 +127,16 @@
   .catgroup.open .cathead .catchev{transform:rotate(90deg)}
   .cathead .catcount{font-size:12px;font-weight:400;color:var(--faint);margin-left:auto}
   .catgroup:not(.open) .h2sub,.catgroup:not(.open) .cards{display:none}
+  .srclink{margin-left:auto;font-size:11px;color:var(--faint);text-decoration:none;white-space:nowrap;font-weight:600}
+  .srclink:hover{color:var(--accent);text-decoration:underline}
+  .filterbox{border:1px solid var(--line);border-radius:10px;padding:10px 12px 12px;margin-top:4px;background:var(--panel)}
+  .filterbox .sidetitle:first-child{margin-top:0}
+  #searchsummary{display:none;margin:9px 0 2px}
+  .ssum-h{color:var(--faint);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
+  .ssum{display:inline-flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:3px 8px;margin:0 5px 5px 0;font-size:12px;color:var(--muted);cursor:pointer}
+  .ssum:hover{border-color:var(--faint);color:var(--text)}
+  .ssum b{background:var(--accent);color:#fff;border-radius:4px;padding:0 5px;font-size:10.5px;font-weight:700}
+  .ssum-none{color:var(--faint);font-size:12px}
 
   /* Gap → response */
   .gaps{display:grid;gap:12px;margin-top:8px}
@@ -223,7 +233,9 @@
 
     <div class="sidetitle">Search</div>
     <input class="search" id="search" type="search" placeholder="e.g. SME, health, compute…">
+    <div id="searchsummary"></div>
 
+    <div class="filterbox">
     <div class="sidetitle">Filter by value</div>
     <button class="chip active" data-f="all">All</button>
     <button class="chip" data-f="trust"><span class="dot" style="background:var(--trust)"></span>Trust</button>
@@ -237,6 +249,7 @@
     <button class="chip" data-f="p5"><span class="dot" style="background:var(--p5)"></span>P5 Champions</button>
     <button class="chip" data-f="p6"><span class="dot" style="background:var(--p6)"></span>P6 Alliances</button>
     <p class="resetnote">Search and filters apply across the Opportunities, Money, Targets, Timeline, Unfunded-commitments and Soft-commitments tabs.</p>
+    </div>
   </aside>
 
   <div class="content">
@@ -264,7 +277,7 @@
       <div id="detail"></div>
 
       <h2>Five priority sectors</h2>
-      <p class="h2sub">Focal points across every pillar, where scientific, economic and industrial strengths converge.</p>
+      <p class="h2sub">Focal points across every pillar, where scientific, economic and industrial strengths converge. <a class="srclink" style="margin-left:0" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all#_Toc78" target="_blank" rel="noopener">read in the strategy ↗</a></p>
       <div class="sectors">
         <div class="sector"><b>Health &amp; life sciences</b>first AI mission · $200M</div>
         <div class="sector"><b>Energy &amp; natural resources</b>extraction, clean transition, supply chains</div>
@@ -644,6 +657,11 @@ const visible=p=>{ if(filter==="all"||p==="all")return true;
   return PILLARS[p] && PILLARS[p].v===filter; };
 const matches=txt=>!q||txt.toLowerCase().includes(q);
 const fmtM=v=>v>=1000?"$"+(v/1000).toFixed(2).replace(/\.?0+$/,"")+"B":"$"+v+"M";
+/* Deep links into the official strategy page (pillar-level section anchors) */
+const DOC="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all";
+const DOC_ANCHOR={p1:"_Toc79",p2:"_Toc80",p3:"_Toc81",p4:"_Toc82",p5:"_Toc83",p6:"_Toc84",sectors:"_Toc78",vision:"_Toc76"};
+const docHref=k=>DOC+"#"+(DOC_ANCHOR[k]||"_Toc76");
+const srcLink=(k,label)=>`<a class="srclink" href="${docHref(k)}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Open this section of the official strategy">${label||"strategy ↗"}</a>`;
 
 /* ================= OVERVIEW ================= */
 function renderValues(){
@@ -664,6 +682,7 @@ function showDetail(pk){
   d.innerHTML=`<button class="closebtn" onclick="hideDetail()">close ✕</button>
     <div class="dv" style="color:${vcol(p.v)}">${VALUES[p.v].t} · ${p.n}</div>
     <h3>${p.t}</h3>
+    <p style="margin:-4px 0 12px"><a class="srclink" style="margin-left:0" href="${docHref(pk)}" target="_blank" rel="noopener">Read this pillar in the official strategy ↗</a></p>
     <div class="cols">
       <div><h4>Themes</h4><ul>${p.themes.map(t=>`<li>${t}</li>`).join("")}</ul></div>
       <div><h4>Key actions</h4><ul>${p.actions.map(a=>`<li>${a}</li>`).join("")}</ul></div>
@@ -681,6 +700,7 @@ function cardHTML(o){
     <div class="foot">
       <span class="pill ${o.st}">${o.st==="live"?"live now":"announced"}</span>
       <span class="pill pl" style="color:${pcol(o.p)}">${PILLARS[o.p].n}</span>
+      ${srcLink(o.p)}
     </div></div>`;
 }
 function renderPersonas(){
@@ -827,7 +847,7 @@ function renderTimeline(){
         else if(e.tag==="context")badge=`<span class="badge" style="background:#eef1f4;color:var(--faint)">context</span>`;
         return `<div class="tevent ${hit?'':'dim'}" style="border-left-color:${col}" onclick="this.classList.toggle('open')">
           <span class="tp" style="color:${col}">${e.p==="all"?"ALL":e.p.toUpperCase()}</span>
-          <span class="tt">${e.t}</span>${badge}${e.ctx?`<span class="chev">▶</span><div class="tctx">${e.ctx}</div>`:""}</div>`;
+          <span class="tt">${e.t}</span>${badge}${e.ctx?`<span class="chev">▶</span><div class="tctx">${e.ctx} ${srcLink(e.p)}</div>`:""}</div>`;
       }).join("")}
     </div>`;
   }).join("");
@@ -847,6 +867,7 @@ function negCardHTML(o){
     <div class="foot">
       ${o.st?`<span class="pill ${o.st}">${o.st==="live"?"live now":"announced"}</span>`:`<span class="pill pl">commitment</span>`}
       <span class="pill pl" style="color:${pcol(o.p)}">${PILLARS[o.p].n}</span>
+      ${srcLink(o.p)}
     </div></div>`;
 }
 function catGroup(cat,blurb,count,cardsHTML){
@@ -896,6 +917,7 @@ function softCardHTML(o){
     <div style="font-size:12px;font-style:italic;color:var(--muted);border-top:1px solid var(--line);padding-top:7px;margin-top:2px">“…${o.q}…”</div>
     <div class="foot">
       <span class="pill pl" style="color:${pcol(o.p)}">${PILLARS[o.p].n}</span>
+      ${srcLink(o.p)}
     </div></div>`;
 }
 function renderSoft(){
@@ -915,7 +937,25 @@ function renderSoft(){
 }
 
 /* ================= GLOBAL ================= */
-function rerenderFiltered(){ renderGaps(); renderOpps(); renderMoney(); renderFlow(); renderTargets(); renderTimeline(); renderNegative(); renderSoft(); }
+function searchSummary(){
+  const el=$("#searchsummary"); if(!el) return;
+  if(!q){ el.style.display="none"; el.innerHTML=""; return; }
+  el.style.display="block";
+  const counts=[
+    ["opps","Opportunities",OPPS.filter(o=>visible(o.p)&&matches(o.n+o.who+o.get+(o.amt||""))).length],
+    ["moneytab","Money",MONEY.filter(m=>visible(m.p)&&matches(m.l+(m.note||""))).length],
+    ["targets","Targets",TILES.filter(t=>visible(t.p)&&matches(t.b+t.s)).length+DUMBS.filter(d=>visible(d.p)&&matches(d.l+d.sm)).length],
+    ["runway","Timeline",EVENTS.filter(e=>visible(e.p)&&matches(e.t+(e.ctx||""))).length],
+    ["negative","Unfunded",negItems().filter(o=>visible(o.p)&&matches(o.t+" "+o.what+" "+(o.who||""))).length],
+    ["soft","Soft",SOFT.filter(o=>visible(o.p)&&matches(o.t+" "+o.what+" "+o.q)).length]
+  ];
+  const total=counts.reduce((s,c)=>s+c[2],0);
+  if(!total){ el.innerHTML=`<div class="ssum-none">No matches for “${q}” — try another term.</div>`; return; }
+  el.innerHTML=`<div class="ssum-h">${total} match${total===1?"":"es"} across tabs — jump to:</div>`+
+    counts.filter(c=>c[2]>0).map(([tab,label,n])=>`<button class="ssum" data-go="${tab}">${label}<b>${n}</b></button>`).join("");
+  $$("#searchsummary .ssum").forEach(b=>b.onclick=()=>{ if(b.dataset.go==="negative")negCat="All"; rerenderFiltered(); document.querySelector(`.tabbtn[data-tab="${b.dataset.go}"]`).click(); });
+}
+function rerenderFiltered(){ renderGaps(); renderOpps(); renderMoney(); renderFlow(); renderTargets(); renderTimeline(); renderNegative(); renderSoft(); searchSummary(); }
 function setFilter(f){
   filter=f;
   $$(".chip").forEach(c=>{
