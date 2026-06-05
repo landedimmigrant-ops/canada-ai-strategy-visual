@@ -661,7 +661,7 @@ const fmtM=v=>v>=1000?"$"+(v/1000).toFixed(2).replace(/\.?0+$/,"")+"B":"$"+v+"M"
 const DOC="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all";
 const DOC_ANCHOR={p1:"_Toc79",p2:"_Toc80",p3:"_Toc81",p4:"_Toc82",p5:"_Toc83",p6:"_Toc84",sectors:"_Toc78",vision:"_Toc76"};
 const docHref=k=>DOC+"#"+(DOC_ANCHOR[k]||"_Toc76");
-const srcLink=(k,label)=>`<a class="srclink" href="${docHref(k)}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Open this section of the official strategy">${label||"strategy ↗"}</a>`;
+const srcLink=(k,label)=>`<a class="srclink" href="${docHref(k)}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Open this section of the official strategy">${label||"read more ↗"}</a>`;
 
 /* ================= OVERVIEW ================= */
 function renderValues(){
