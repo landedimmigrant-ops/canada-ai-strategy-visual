@@ -338,6 +338,7 @@
       <p class="h2sub">The Money tab shows where the dollars go. This is the inverse: every commitment in the strategy that is <em>not</em> backed by a named dollar figure — laws, standards, diplomacy, tax levers, infrastructure and structural promises. The work is real; the line item isn't.</p>
       <div class="statrow" id="negStats"></div>
       <p class="flownote" style="margin-top:14px">Unpriced ≠ free. Tax measures (SR&amp;ED, the super-deduction), new legislation, and standards work all carry real cost and effort — they just don't arrive as a named grant. Filter by pillar or value, or search, from the sidebar.</p>
+      <div class="personas" id="negPills"></div>
       <div id="negative"></div>
     </section>
 
@@ -633,7 +634,7 @@ const EVENTS = [
 ];
 
 /* ================= STATE & HELPERS ================= */
-let filter="all", q="", persona=null;
+let filter="all", q="", persona=null, negCat="Law & rights";
 const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
 const cssVar=v=>getComputedStyle(document.documentElement).getPropertyValue("--"+v).trim();
 const pcol=p=>p==="all"?"#26374a":cssVar(p);
@@ -866,12 +867,24 @@ function renderNegative(){
     <div class="stat"><b>${unfundedProgs} / ${totalPrograms}</b><span>named programs unfunded (${pct}%)</span></div>
     <div class="stat"><b>${UNPRICED.length}</b><span>laws, standards &amp; alliances (not programs)</span></div>
     <div class="stat"><b>${pillarsZeroNamed}</b><span>pillar with $0 named (P6 Alliances)</span></div>`;
-  if(!shown.length){ $("#negative").innerHTML=`<p class="empty">Nothing in the unfunded list matches — clear the search or filter.</p>`; return; }
-  $("#negative").innerHTML=NEG_CATS.map(cat=>{
-    const items=shown.filter(o=>o.cat===cat);
-    if(!items.length) return "";
-    return catGroup(cat, NEG_BLURB[cat]||"", items.length, items.map(negCardHTML).join(""));
-  }).join("");
+  // category pills — click to navigate by theme (like the By audience tab)
+  const catCount=cat=>shown.filter(o=>o.cat===cat).length;
+  const pills=[...NEG_CATS.map(c=>[c,catCount(c)]),["All",shown.length]];
+  $("#negPills").innerHTML=pills.map(([c,n])=>
+    `<button class="persona ${negCat===c?'active':''}" data-cat="${c}"${(c!=="All"&&n===0)?' style="opacity:.4"':''}>${c} (${n})</button>`
+  ).join("");
+  $$("#negPills .persona").forEach(b=>b.onclick=()=>{negCat=b.dataset.cat;renderNegative();});
+  // body — a single category, or All
+  if(negCat!=="All"){
+    const items=shown.filter(o=>o.cat===negCat);
+    $("#negative").innerHTML=items.length
+      ? `<p class="h2sub" style="margin-top:16px">${NEG_BLURB[negCat]||""}</p><div class="cards">${items.map(negCardHTML).join("")}</div>`
+      : `<p class="empty">No “${negCat}” items match the current filter — pick another category above, or clear the sidebar filter.</p>`;
+    return;
+  }
+  $("#negative").innerHTML=shown.length
+    ? NEG_CATS.map(cat=>{const items=shown.filter(o=>o.cat===cat); return items.length?catGroup(cat,NEG_BLURB[cat]||"",items.length,items.map(negCardHTML).join("")):"";}).join("")
+    : `<p class="empty">Nothing in the unfunded list matches — clear the search or filter.</p>`;
 }
 
 /* ================= SOFT COMMITMENTS ================= */
