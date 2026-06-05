@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Canada's AI Strategy — AI for All — Visual Explorer</title>
+<style>
+  :root{
+    --bg:#fbfbfc; --panel:#ffffff; --panel2:#f1f4f6; --line:#d9dee3;
+    --text:#26374a; --muted:#5c6f7c; --faint:#7d8a96;
+    --accent:#d3080c;
+    --trust:#b10e1e; --opportunity:#9a6700; --sovereignty:#2b5797;
+    --p1:#b10e1e; --p2:#9a6700; --p3:#1f7a3f; --p4:#2b5797; --p5:#6b3fa0; --p6:#11707a;
+    --new:#1f7a3f; --lev:#6f7d89;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--bg);color:var(--text);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;border-top:4px solid var(--accent)}
+
+  /* ===== Layout ===== */
+  .layout{display:grid;grid-template-columns:250px minmax(0,1fr);max-width:1320px;margin:0 auto}
+  aside{position:sticky;top:0;height:100vh;overflow-y:auto;padding:26px 18px 28px 24px;border-right:1px solid var(--line);scrollbar-width:thin}
+  .content{padding:0 32px 80px;min-width:0}
+
+  .sidetitle{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:20px 0 8px}
+  .sidetitle:first-child{margin-top:0}
+
+  .tabbtn{display:block;width:100%;text-align:left;cursor:pointer;background:none;border:none;color:var(--muted);font-size:14px;padding:7px 10px;border-radius:8px;border-left:3px solid transparent;margin-bottom:2px}
+  .tabbtn:hover{color:var(--text);background:var(--panel)}
+  .tabbtn.current{color:var(--text);background:var(--panel2);border-left-color:var(--accent);font-weight:600}
+  .tabbtn small{display:block;font-size:11px;color:var(--faint);font-weight:400}
+
+  .search{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:8px;color:var(--text);padding:7px 11px;font-size:13px;outline:none}
+  .search:focus{border-color:var(--faint)}
+
+  .chip{display:block;width:100%;text-align:left;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:8px;padding:5px 11px;font-size:13px;transition:.15s;margin-bottom:5px}
+  .chip:hover{color:var(--text)}
+  .chip.active{color:#fff;font-weight:600}
+  .chip .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:1px}
+  .resetnote{font-size:11.5px;color:var(--faint);margin-top:6px}
+
+  @media(max-width:900px){
+    .layout{grid-template-columns:1fr}
+    aside{position:sticky;top:0;height:auto;z-index:30;background:rgba(255,255,255,.96);backdrop-filter:blur(6px);border-right:none;border-bottom:1px solid var(--line);padding:10px 16px;display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+    .sidetitle{margin:0 6px 0 0}
+    .tabbtn{display:inline-block;width:auto;padding:4px 10px;border-left:none;border-radius:999px}
+    .tabbtn.current{outline:1px solid var(--accent)}
+    .tabbtn small{display:none}
+    .chip{display:inline-block;width:auto;margin-bottom:0;border-radius:999px;padding:4px 11px}
+    .search{width:160px}
+    .resetnote{display:none}
+    .content{padding:0 18px 60px}
+  }
+
+  /* tabs */
+  .tab{display:none}
+  .tab.show{display:block}
+
+  header{padding:40px 0 26px;border-bottom:1px solid var(--line);margin-bottom:6px}
+  .kicker{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin-bottom:10px}
+  h1{font-size:28px;font-weight:700;letter-spacing:-.01em}
+  h1 span{color:var(--accent)}
+  .sub{color:var(--muted);margin-top:10px;max-width:760px}
+  .statrow{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 16px}
+  .stat b{display:block;font-size:19px}
+  .stat span{font-size:12px;color:var(--muted)}
+
+  h2{font-size:20px;margin:34px 0 6px}
+  .h2sub{color:var(--muted);font-size:14px;margin-bottom:18px;max-width:800px}
+
+  /* Values → pillars */
+  .values{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:8px}
+  @media(max-width:1040px){.values{grid-template-columns:1fr}}
+  .valcol{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .valcol h3{font-size:15px;text-transform:uppercase;letter-spacing:.1em;margin-bottom:4px}
+  .valcol p{font-size:13px;color:var(--muted);margin-bottom:12px;min-height:58px}
+  @media(max-width:1040px){.valcol p{min-height:0}}
+  .pillarcard{border-radius:10px;border:1px solid var(--line);background:var(--panel2);padding:12px;margin-top:10px;cursor:pointer;transition:.15s;border-left:4px solid}
+  .pillarcard:hover{transform:translateY(-1px);border-color:var(--faint)}
+  .pillarcard.sel{outline:2px solid var(--text)}
+  .pillarcard .pn{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint)}
+  .pillarcard .pt{font-weight:600;font-size:14px;margin:2px 0 4px}
+  .pillarcard .pm{font-size:12px;color:var(--muted)}
+  .adoption{text-align:center;color:var(--faint);font-size:13px;margin:18px 0 0;letter-spacing:.06em}
+  .adoption b{color:var(--text)}
+
+  #detail{display:none;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px;margin-top:16px;border-left:5px solid}
+  #detail h3{font-size:18px;margin-bottom:2px}
+  #detail .dv{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--faint);margin-bottom:12px}
+  #detail .cols{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media(max-width:760px){#detail .cols{grid-template-columns:1fr}}
+  #detail h4{font-size:12px;text-transform:uppercase;letter-spacing:.1em;color:var(--faint);margin:12px 0 8px}
+  #detail li{font-size:13.5px;color:var(--text);margin:0 0 7px 16px}
+  #detail li b{color:var(--new)}
+  .closebtn{float:right;background:none;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:3px 10px;cursor:pointer;font-size:12px}
+  .closebtn:hover{color:var(--text)}
+
+  .sectors{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .sector{background:var(--panel);border:1px dashed var(--line);border-radius:8px;padding:8px 14px;font-size:13px;color:var(--muted)}
+  .sector b{color:var(--text);display:block;font-size:13px}
+
+  /* Personas */
+  .personas{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 22px}
+  .persona{cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--muted);border-radius:999px;padding:8px 16px;font-size:14px;transition:.15s}
+  .persona:hover{color:var(--text);border-color:var(--faint)}
+  .persona.active{background:var(--accent);color:#fff;font-weight:600;border-color:var(--accent)}
+  .personaintro{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:10px;padding:14px 18px;font-size:14px;color:var(--text);margin-bottom:18px;display:none}
+
+  /* Opportunity cards */
+  .cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:12px;margin-top:8px}
+  .card{background:var(--panel);border:1px solid var(--line);border-left:4px solid;border-radius:12px;padding:14px 16px;display:flex;flex-direction:column;gap:6px}
+  .card .top{display:flex;justify-content:space-between;gap:8px;align-items:flex-start}
+  .card h4{font-size:14.5px;line-height:1.35}
+  .card .amt{font-size:13px;font-weight:700;color:var(--new);white-space:nowrap}
+  .card .who{font-size:12px;color:var(--faint)}
+  .card .who b{color:var(--muted);font-weight:600}
+  .card .get{font-size:13px;color:var(--muted);flex:1}
+  .card .foot{display:flex;gap:8px;align-items:center;margin-top:4px}
+  .pill{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:5px;padding:2px 8px}
+  .pill.live{background:rgba(31,122,63,.12);color:var(--new)}
+  .pill.announced{background:rgba(154,103,0,.12);color:var(--opportunity)}
+  .pill.pl{background:var(--panel2);color:var(--muted);letter-spacing:0;text-transform:none;font-weight:600}
+  .empty{color:var(--faint);padding:18px 0;font-size:14px}
+
+  /* Gap → response */
+  .gaps{display:grid;gap:12px;margin-top:8px}
+  .gap{display:grid;grid-template-columns:1fr 36px 1fr;gap:0;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+  @media(max-width:820px){.gap{grid-template-columns:1fr}.gap .arrow{display:none}}
+  .gap .prob{padding:14px 18px;border-left:4px solid var(--trust)}
+  .gap .prob h4{font-size:13.5px;margin-bottom:4px;color:var(--trust)}
+  .gap .prob p{font-size:13px;color:var(--muted)}
+  .gap .arrow{display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:18px}
+  .gap .resp{padding:14px 18px;background:var(--panel2)}
+  .gap .resp h4{font-size:13.5px;margin-bottom:4px;color:var(--new)}
+  .gap .resp p{font-size:13px;color:var(--muted)}
+
+  /* Money */
+  .money{margin-top:10px}
+  .mrow{display:grid;grid-template-columns:280px 1fr 90px;gap:12px;align-items:center;padding:7px 0;border-bottom:1px solid #e6eaee}
+  @media(max-width:760px){.mrow{grid-template-columns:1fr;gap:4px}.mrow .amt2{text-align:left}}
+  .mrow .lbl{font-size:13px;color:var(--text)}
+  .mrow .lbl small{display:block;color:var(--faint);font-size:11px}
+  .barwrap{background:#e9edf1;border-radius:5px;height:18px;overflow:hidden}
+  .bar{height:100%;border-radius:5px;min-width:3px;transition:width .5s ease}
+  .bar.lev{opacity:.55;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.55) 0 6px,transparent 6px 12px)}
+  .amt2{font-size:13px;font-weight:600;text-align:right;font-variant-numeric:tabular-nums}
+  .legend{display:flex;gap:18px;font-size:12px;color:var(--muted);margin:14px 0 4px;flex-wrap:wrap}
+  .legend i{display:inline-block;width:14px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
+  .mtotal{display:flex;gap:14px;flex-wrap:wrap;margin-top:16px}
+  .mtotal .stat b{font-size:17px}
+  #flow{width:100%;overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px;margin-top:8px}
+  #flow svg{display:block;min-width:760px}
+  .flownote{font-size:11.5px;color:var(--faint);margin-top:8px}
+
+  /* Targets */
+  .tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:8px 0 26px}
+  .tile{background:var(--panel);border:1px solid var(--line);border-top:3px solid;border-radius:12px;padding:16px}
+  .tile b{display:block;font-size:24px;letter-spacing:-.01em}
+  .tile span{font-size:12.5px;color:var(--muted)}
+  .tile .when{font-size:11px;color:var(--faint);margin-top:6px;display:block}
+  .dumbs{margin-top:8px}
+  .dumb{display:grid;grid-template-columns:250px 1fr 90px;gap:14px;align-items:center;padding:11px 0;border-bottom:1px solid #e6eaee}
+  @media(max-width:760px){.dumb{grid-template-columns:1fr;gap:6px}}
+  .dumb .lbl{font-size:13.5px}
+  .dumb .lbl small{display:block;color:var(--faint);font-size:11px}
+  .track{position:relative;height:26px}
+  .track .rail{position:absolute;top:11px;left:0;right:0;height:4px;background:#e9edf1;border-radius:2px}
+  .track .fill{position:absolute;top:11px;height:4px;border-radius:2px;opacity:.85}
+  .track .dotA,.track .dotB{position:absolute;top:5px;width:16px;height:16px;border-radius:50%;border:3px solid var(--bg)}
+  .track .dotA{background:var(--faint)}
+  .track .vlabel{position:absolute;top:-7px;font-size:10.5px;color:var(--faint);transform:translateX(-50%)}
+  .track .vlabel.b{color:var(--text);font-weight:700}
+  .dumb .when{font-size:12px;color:var(--faint);text-align:right}
+  @media(max-width:760px){.dumb .when{text-align:left}}
+
+  /* Timeline */
+  .timeline{position:relative;margin-top:14px;padding-left:30px}
+  .timeline::before{content:"";position:absolute;left:9px;top:6px;bottom:6px;width:2px;background:var(--line)}
+  .tgroup{margin-bottom:8px}
+  .tyear{position:relative;font-size:16px;font-weight:700;padding:14px 0 8px}
+  .tyear::before{content:"";position:absolute;left:-27px;top:21px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:3px solid var(--faint)}
+  .tyear small{display:block;font-size:12px;font-weight:400;color:var(--muted)}
+  .tevent{position:relative;background:var(--panel);border:1px solid var(--line);border-left:4px solid;border-radius:10px;padding:10px 14px;margin:8px 0;display:flex;gap:12px;align-items:baseline;flex-wrap:wrap;transition:.15s;cursor:pointer}
+  .tevent:hover{border-color:var(--faint)}
+  .tevent.dim{opacity:.18}
+  .tevent .chev{font-size:11px;color:var(--faint);transition:transform .2s;align-self:center}
+  .tevent.open .chev{transform:rotate(90deg)}
+  .tctx{display:none;flex-basis:100%;font-size:12.5px;line-height:1.6;color:var(--muted);border-top:1px solid var(--line);padding-top:8px;margin-top:4px}
+  .tevent.open .tctx{display:block}
+  .tevent .tp{font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint);white-space:nowrap}
+  .tevent .tt{font-size:13.5px;flex:1;min-width:220px}
+  .badge{font-size:11.5px;font-weight:700;border-radius:6px;padding:2px 8px;white-space:nowrap}
+  .badge.money{background:rgba(31,122,63,.12);color:var(--new)}
+  .badge.money.lev{background:rgba(111,125,137,.13);color:var(--lev)}
+  .badge.target{background:rgba(154,103,0,.12);color:var(--opportunity)}
+
+  footer{margin-top:56px;color:var(--faint);font-size:12px;border-top:1px solid var(--line);padding-top:16px}
+  footer a{color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+  <aside>
+    <div class="sidetitle">Explore</div>
+    <nav id="tabs">
+      <button class="tabbtn current" data-tab="overview">Overview<small>vision, values &amp; pillars</small></button>
+      <button class="tabbtn" data-tab="foryou">For you<small>what's in it for each audience</small></button>
+      <button class="tabbtn" data-tab="opps">Opportunities<small>programs &amp; the gaps they answer</small></button>
+      <button class="tabbtn" data-tab="moneytab">Money flow<small>how dollars spread across themes</small></button>
+      <button class="tabbtn" data-tab="targets">Targets<small>baseline → goal, with deadlines</small></button>
+      <button class="tabbtn" data-tab="runway">Timeline<small>2025 → 2050, click to expand</small></button>
+    </nav>
+
+    <div class="sidetitle">Search</div>
+    <input class="search" id="search" type="search" placeholder="e.g. SME, health, compute…">
+
+    <div class="sidetitle">Filter by value</div>
+    <button class="chip active" data-f="all">All</button>
+    <button class="chip" data-f="trust"><span class="dot" style="background:var(--trust)"></span>Trust</button>
+    <button class="chip" data-f="opportunity"><span class="dot" style="background:var(--opportunity)"></span>Opportunity</button>
+    <button class="chip" data-f="sovereignty"><span class="dot" style="background:var(--sovereignty)"></span>Sovereignty</button>
+    <div class="sidetitle">Filter by pillar</div>
+    <button class="chip" data-f="p1"><span class="dot" style="background:var(--p1)"></span>P1 Protection</button>
+    <button class="chip" data-f="p2"><span class="dot" style="background:var(--p2)"></span>P2 Empowerment</button>
+    <button class="chip" data-f="p3"><span class="dot" style="background:var(--p3)"></span>P3 Prosperity</button>
+    <button class="chip" data-f="p4"><span class="dot" style="background:var(--p4)"></span>P4 Foundation</button>
+    <button class="chip" data-f="p5"><span class="dot" style="background:var(--p5)"></span>P5 Champions</button>
+    <button class="chip" data-f="p6"><span class="dot" style="background:var(--p6)"></span>P6 Alliances</button>
+    <p class="resetnote">Search and filters apply across the Opportunities, Money, Targets and Timeline tabs.</p>
+  </aside>
+
+  <div class="content">
+
+    <!-- ============ OVERVIEW ============ -->
+    <section class="tab show" id="tab-overview">
+      <header>
+        <div class="kicker">Innovation, Science and Economic Development Canada · Released June 2026</div>
+        <h1>Canada's National AI Strategy — <span>AI for All</span></h1>
+        <p class="sub">One vision, three values, six pillars, five priority sectors — and a runway of commitments stretching from Budget 2025 to 2050. Use the tabs to explore by audience, program, money, target, or time.</p>
+        <div class="statrow">
+          <div class="stat"><b>3</b><span>core values</span></div>
+          <div class="stat"><b>6</b><span>pillars</span></div>
+          <div class="stat"><b>5</b><span>priority sectors</span></div>
+          <div class="stat"><b>$2.36B</b><span>new named commitments</span></div>
+          <div class="stat"><b>~$6.2B</b><span>leveraged from existing programs</span></div>
+          <div class="stat"><b>~$200B</b><span>targeted GDP gain (≈3%)</span></div>
+        </div>
+      </header>
+
+      <h2>The architecture: values → pillars</h2>
+      <p class="h2sub">The strategy's own logic: trust makes adoption possible; opportunity and sovereignty make adoption pay off for Canadians. Each value carries two pillars — click one for full detail.</p>
+      <div class="values" id="values"></div>
+      <p class="adoption">— all six connected through <b>ADOPTION</b>: "for Canadians to benefit from AI, they must first learn to use it" —</p>
+      <div id="detail"></div>
+
+      <h2>Five priority sectors</h2>
+      <p class="h2sub">Focal points across every pillar, where scientific, economic and industrial strengths converge.</p>
+      <div class="sectors">
+        <div class="sector"><b>Health &amp; life sciences</b>first AI mission · $200M</div>
+        <div class="sector"><b>Energy &amp; natural resources</b>extraction, clean transition, supply chains</div>
+        <div class="sector"><b>Transportation</b>logistics, autonomy, predictive maintenance</div>
+        <div class="sector"><b>Agriculture</b>precision farming, food security</div>
+        <div class="sector"><b>Manufacturing &amp; robotics</b>industrial AI, defence production</div>
+      </div>
+    </section>
+
+    <!-- ============ FOR YOU ============ -->
+    <section class="tab" id="tab-foryou">
+      <h2 style="margin-top:40px">What's in it for you</h2>
+      <p class="h2sub">The strategy organizes itself by pillar; people don't. Pick who you are and see only the programs, money, and targets that touch you directly.</p>
+      <div class="personas" id="personas"></div>
+      <div class="personaintro" id="personaintro"></div>
+      <div class="cards" id="personacards"></div>
+    </section>
+
+    <!-- ============ OPPORTUNITIES ============ -->
+    <section class="tab" id="tab-opps">
+      <h2 style="margin-top:40px">The gaps — and what answers them</h2>
+      <p class="h2sub">Every program in this strategy exists because of a diagnosed problem. Read the left side first; the right side is the response.</p>
+      <div class="gaps" id="gaps"></div>
+
+      <h2>The opportunity catalogue</h2>
+      <p class="h2sub">Every concrete program in the strategy as a card: what it is, who it's for, what you get, and whether it's live today or still being stood up. Filter by pillar or search from the sidebar.</p>
+      <div class="cards" id="oppcards"></div>
+    </section>
+
+    <!-- ============ MONEY ============ -->
+    <section class="tab" id="tab-moneytab">
+      <h2 style="margin-top:40px">How the dollars flow</h2>
+      <p class="h2sub">Values → pillars → named programs. Ribbon thickness is proportional to dollars; the picture makes one thing obvious — the money concentrates in Sovereignty.</p>
+      <div id="flow"></div>
+      <p class="flownote">Areas approximate — minimum thicknesses applied so small programs stay visible. Pillar 6 (Alliances) carries no named dollar commitments; its work is diplomatic. Hatched = leveraged/existing money.</p>
+
+      <h2>Line by line</h2>
+      <p class="h2sub">Named dollar commitments, coloured by pillar. Solid bars are new strategy money; hatched bars leverage existing programs and Budget 2025.</p>
+      <div class="legend">
+        <span><i style="background:var(--new)"></i>New commitment</span>
+        <span><i style="background:var(--lev);opacity:.55;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.55) 0 5px,transparent 5px 10px)"></i>Leveraged / existing</span>
+      </div>
+      <div class="money" id="money"></div>
+      <div class="mtotal">
+        <div class="stat"><b id="totNew">—</b><span>new, filtered</span></div>
+        <div class="stat"><b id="totLev">—</b><span>leveraged, filtered</span></div>
+      </div>
+    </section>
+
+    <!-- ============ TARGETS ============ -->
+    <section class="tab" id="tab-targets">
+      <h2 style="margin-top:40px">The headline numbers</h2>
+      <p class="h2sub">The outcomes the whole architecture is built to produce.</p>
+      <div class="tiles" id="tiles"></div>
+
+      <h2>Baseline → target</h2>
+      <p class="h2sub">Where Canada stands today versus where the strategy commits to land, with the deadline on each.</p>
+      <div class="dumbs" id="dumbs"></div>
+    </section>
+
+    <!-- ============ TIMELINE ============ -->
+    <section class="tab" id="tab-runway">
+      <h2 style="margin-top:40px">The timeline: from momentum to 2050</h2>
+      <p class="h2sub">Launches, money and targets on one runway. Money badges in green, targets in amber. Click any entry for context; filter or search from the sidebar.</p>
+      <div class="timeline" id="timeline"></div>
+    </section>
+
+    <footer>
+      Source: <a href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all">Canada's National Artificial Intelligence Strategy: AI for All</a>, ISED, published June 2026. All figures CAD unless noted. Visual prepared June 5, 2026.
+    </footer>
+
+  </div>
+</div>
+
+<script>
+/* ================= DATA ================= */
+const PILLARS = {
+  p1:{n:"Pillar 1",t:"Protecting Canadians & safeguarding democracy",v:"trust",
+      m:"Privacy and online-safety law, AI safety capability, trusted certification.",
+      themes:["Democracy, safety & privacy in the AI era","Safe & trustworthy AI infrastructure"],
+      actions:["Modernize consumer privacy legislation — fundamental right to privacy, children's data protection","Introduce online safety laws; legal tools against deepfakes","Protect elections from AI-enabled misinformation & foreign interference","Continue Privacy Act review for government data use","<b>$50M</b> to expand the Canadian AI Safety Institute (CAISI)","AI transparency work incl. watermarking of AI content","Canada Trusted AI Certification program","Renew Standards Council of Canada AI Program","Applied AI with law enforcement: fraud, extortion, cyber defence"]},
+  p2:{n:"Pillar 2",t:"Empowering Canadians",v:"opportunity",
+      m:"AI literacy for all, workforce skills, culture, language and inclusion.",
+      themes:["Foundational AI literacy","Classrooms to careers","Applied workforce skills","Pro-worker industrial AI","Indigenous leadership in AI","Canadian identity, culture & inclusion"],
+      actions:["National AI Literacy Initiative — free entry-level training for all Canadians","Reach <b>1M</b> post-secondary students; train <b>3,000+</b> K-12 educators","Trusted AI agents for all post-secondary students","Libraries & community orgs as literacy hubs (rural, remote, northern)","<b>$50M</b> Job Bank AI-powered matching (Budget 2025)","<b>$30M</b> CanCode digital skills for K-12 youth","Up to <b>90,000</b> AI-related jobs & placements for young Canadians","Mid-career upskilling; colleges, CÉGEPs & polytechnics as applied AI leaders","Accelerate adoption in female-dominated sectors via Women's Program","Support Indigenous-led AI: languages, land management, cultural heritage","French-language AI tools; bilingual government AI systems","<b>$50M</b> Creative Technology Program for Canadian creators","Promote world-first accessible & equitable AI standard; GBA Plus"]},
+  p3:{n:"Pillar 3",t:"Powering shared prosperity",v:"opportunity",
+      m:"SME adoption at scale, national AI missions, better public services.",
+      themes:["Accelerating SME adoption","Solving national challenges through AI missions","Transforming public service delivery"],
+      actions:["<b>$500M</b> BDC LIFT program — SME financing for AI tools","<b>$500M</b> to expand the Regional AI Initiative (via RDAs)","AI Literacy & Adoption Assessment tool for SMEs","Small Business & Entrepreneurship Development Program support","SR&ED credit + Productivity Super-Deduction to catalyze investment","<b>$200M</b> first AI Mission: health outcomes; more missions to follow","Workforce Alliances across six priority sectors","Faster federal AI procurement via Office of Digital Transformation","PM's Innovation Fellows Program — technical talent into government"]},
+  p4:{n:"Pillar 4",t:"Building the sovereign AI foundation",v:"sovereignty",
+      m:"Compute, cloud, connectivity, data and research talent on Canadian terms.",
+      themes:["Sustainable data centres","Sovereign compute, cloud & connectivity","Unlocking the power of data","Anchoring world-class research talent"],
+      actions:["Build a world-leading public supercomputer by <b>2031</b>","Large-scale AI data centres (100MW+): <b>850MW</b> proposed by 2030, scaling to <b>2.3GW</b>","Continue <b>$2B+</b> existing compute investments (AI Compute Challenge)","Expand high-capacity fibre & satellite connectivity","Chip design & fabrication: NRC Photonics Fabrication Centre spin-off","Secure sovereign cloud, cyber & quantum systems for government","<b>$100M</b> Health Sector Data Space with CIHI","<b>$100M</b> to expand VITAL health-data platform to 5 more provinces","Grow Canada CIFAR AI Chairs from <b>130 to ~200</b> researchers","Expand Global Talent Stream; PR pathways to retain AI talent","Complements <b>$1.7B</b> Budget 2025 talent attraction strategy"]},
+  p5:{n:"Pillar 5",t:"Scaling Canadian champions",v:"sovereignty",
+      m:"Growth capital, government as anchor customer, foundation models at home.",
+      themes:["Investment flywheel for risk-taking","SME commercialization on Canadian infrastructure","Championing Canadian foundation models"],
+      actions:["<b>$500M</b> Canadian Tech Growth Fund — incl. federal equity stakes","Budget 2026: mechanisms to reinvest tech gains into Canadian startups","Leverage <b>$1.75B</b> Budget 2025 venture capital investments","Government as strategic anchor customer; Buy Canadian policy","<b>$700M</b> additional sovereign compute via Compute Access Fund","<b>$130M</b> commercialization programs at National AI Institutes","Leverage <b>$159M</b> Elevate IP & IP Assist (Budget 2025)","Anchor homegrown foundation models; export to trusted markets","Support safe-by-design Canadian frontier model research"]},
+  p6:{n:"Pillar 6",t:"Trusted partnerships & global alliances",v:"trust",
+      m:"Sovereign Technology Alliance, open-source AI, markets for Canadian firms.",
+      themes:["Multinational Sovereign Technology Alliance","Advancing open-source AI","Expanding international partnerships"],
+      actions:["Expand the Sovereign Technology Alliance (launched with Germany, Feb 2026)","Leverage Trade Commissioner Service to open markets & attract investment","Lead a global multi-stakeholder open-source AI effort","Shared library of transparent, adaptable open-source AI tools","Europe: Germany (anchor), UK, France, EU, Finland, Norway","Indo-Pacific: Canada–Australia–India trilateral; Japan; AISI collaboration","Middle East: UAE, Qatar, Saudi Arabia investment & cooperation","11 of 20 new partnerships explicitly advance AI cooperation"]}
+};
+const VALUES = {
+  trust:{t:"Trust",d:"The north star. Rules, safeguards and alliances that make Canadians confident enough to adopt AI at all.",pillars:["p1","p6"]},
+  opportunity:{t:"Opportunity",d:"Adoption must mean better work, better services and broader prosperity — channelled to people and SMEs.",pillars:["p3","p2"]},
+  sovereignty:{t:"Sovereignty",d:"Compute, data, talent and champions built and governed on Canadian terms — from reliance to resilience.",pillars:["p5","p4"]}
+};
+
+const MONEY = [
+  {l:"Existing AI compute investments (AI Compute Challenge)",p:"p4",a:2000,lev:true,note:"continuing delivery, $2B+"},
+  {l:"Budget 2025 venture capital stimulus",p:"p5",a:1750,lev:true},
+  {l:"Budget 2025 talent attraction strategy",p:"p4",a:1700,lev:true,note:"broader than AI"},
+  {l:"Compute Access Fund expansion — SME sovereign compute",p:"p5",a:700},
+  {l:"Regional AI Initiative expansion (RDAs)",p:"p3",a:500},
+  {l:"BDC LIFT — SME AI adoption financing",p:"p3",a:500,lev:true,note:"existing BDC initiative"},
+  {l:"Canadian Tech Growth Fund",p:"p5",a:500},
+  {l:"AI Missions Program — first mission: health",p:"p3",a:200},
+  {l:"Elevate IP & IP Assist (Budget 2025)",p:"p5",a:159,lev:true},
+  {l:"Commercialization programs, National AI Institutes",p:"p5",a:130},
+  {l:"Health Sector Data Space (with CIHI)",p:"p4",a:100},
+  {l:"VITAL expansion to 5 more provinces",p:"p4",a:100},
+  {l:"Canadian AI Safety Institute expansion",p:"p1",a:50},
+  {l:"Creative Technology Program",p:"p2",a:50},
+  {l:"Job Bank AI modernization (Budget 2025)",p:"p2",a:50,lev:true},
+  {l:"CanCode — K-12 digital & AI skills",p:"p2",a:30}
+];
+
+const PERSONAS = {
+  sme:{t:"SME owner",intro:"You're who this strategy is mostly aimed at. SMEs are 99% of Canadian businesses but only ~8% have adopted AI — so the biggest single pool of money here is adoption support: financing, hands-on help, compute, and tax incentives."},
+  youth:{t:"Student / young worker",intro:"Free training, a personal AI agent while you study, and 90,000 paid placements — the strategy treats your generation as the carrier of the whole adoption bet."},
+  founder:{t:"Founder / scale-up",intro:"The strategy's explicit goal is to stop Canadian companies from scaling under other flags. That means growth capital (including federal equity), cheap sovereign compute, IP protection, and government as your first big customer."},
+  researcher:{t:"Researcher",intro:"More CIFAR chairs, a public supercomputer, unlocked health data, and faster immigration pathways — the play is to anchor world-class research talent in Canada against global recruitment pressure."},
+  worker:{t:"Mid-career worker",intro:"The strategy's framing is deliberately pro-worker: AI should augment, not displace. For you that means employer-led retraining at scale, free short courses, and targeted support if your sector is exposed early."},
+  creator:{t:"Creator / culture",intro:"A dedicated fund to use AI on your own terms, plus the defensive side: deepfake legal tools, watermarking, and French-language and Indigenous-language AI so Canadian culture isn't flattened by foreign models."},
+  indigenous:{t:"Indigenous communities",intro:"Support for Indigenous-led AI — language models, land management, cultural heritage — with self-determination over how AI is built and used in Indigenous contexts, building on First Languages AI Reality at Mila."},
+  public:{t:"Public servant",intro:"Government plans to be an anchor adopter of Canadian AI: faster procurement, an Innovation Fellows program to bring technical talent inside, and human-in-the-loop rules for meaningful decisions."}
+};
+
+const OPPS = [
+  {n:"BDC LIFT program",amt:"$500M",p:"p3",who:"SMEs",get:"Financing to buy and integrate AI tools, software and equipment into operations.",st:"live",per:["sme"]},
+  {n:"Regional AI Initiative expansion",amt:"$500M",p:"p3",who:"SMEs & regional organizations",get:"Hands-on adoption and commercialization support delivered through Regional Development Agencies, across the country.",st:"announced",per:["sme"]},
+  {n:"AI Literacy & Adoption Assessment tool",amt:"",p:"p3",who:"SMEs & entrepreneurs",get:"Assess your AI readiness, identify practical use cases, and get connected to programs — in a low-risk environment.",st:"announced",per:["sme"]},
+  {n:"SR&ED + Productivity Super-Deduction",amt:"",p:"p3",who:"Businesses investing in innovation",get:"Tax credits and the Budget 2025 super-deduction to make AI investment more affordable.",st:"live",per:["sme","founder"]},
+  {n:"Compute Access Fund expansion",amt:"+$700M",p:"p5",who:"SMEs & startups",get:"Affordable sovereign compute so you can train, test and deploy on Canadian infrastructure instead of foreign clouds.",st:"announced",per:["sme","founder","researcher"]},
+  {n:"Canadian Tech Growth Fund",amt:"$500M",p:"p5",who:"Promising AI scale-ups",get:"Flexible growth capital — including, at times, federal equity stakes — to close the scale-up gap and keep you anchored in Canada.",st:"announced",per:["founder"]},
+  {n:"Venture Scientist Fund (Mila + Inovia)",amt:"US$100M",p:"p5",who:"Research-born founders",get:"Early-stage VC for 55+ AI-native companies emerging from Canadian research universities.",st:"live",per:["founder","researcher"]},
+  {n:"AI Institute commercialization programs",amt:"$130M",p:"p5",who:"Entrepreneurial researchers",get:"Commercialization support across the National AI Institutes, including Founders-in-Residence.",st:"announced",per:["founder","researcher"]},
+  {n:"Elevate IP & IP Assist",amt:"$159M",p:"p5",who:"SMEs with intangible assets",get:"Protect Canadian intellectual property and commercialize it in the global marketplace.",st:"live",per:["founder","sme"]},
+  {n:"Government as anchor customer",amt:"",p:"p5",who:"Domestic scale-ups",get:"Federal revenue and validation through the Buy Canadian policy — reference customers before you export.",st:"announced",per:["founder"]},
+  {n:"AI Missions Program — health first",amt:"$200M",p:"p3",who:"Health innovators & researchers",get:"Mission funding for high-impact public-good AI: primary care access, ER wait times, admin burden.",st:"announced",per:["founder","researcher","public"]},
+  {n:"National AI Literacy Initiative",amt:"",p:"p2",who:"All Canadians",get:"Free entry-level AI training — practical courses and sector modules, delivered through schools, libraries and community organizations.",st:"announced",per:["youth","worker","sme","creator","indigenous","public"]},
+  {n:"Trusted AI agents for students",amt:"",p:"p2",who:"Post-secondary students",get:"Access to capable, personal AI tools while you study — workforce-ready experience before graduation.",st:"announced",per:["youth"]},
+  {n:"90,000 AI job placements",amt:"",p:"p2",who:"Young Canadians",get:"45K via Student Work Placement & Canada Summer Jobs, 35K via Skills for Success, 10K via Mitacs ADOPT and AI+X — by 2031.",st:"announced",per:["youth"]},
+  {n:"CanCode",amt:"$30M",p:"p2",who:"K-12 youth & educators",get:"Free coding, AI and emerging-tech skills via nonprofits, with emphasis on underrepresented groups.",st:"announced",per:["youth"]},
+  {n:"Job Bank AI matching + training platform",amt:"$50M",p:"p2",who:"Job seekers & career changers",get:"AI-powered matching to jobs that fit your skills profile, plus free and low-cost short courses.",st:"live",per:["worker","youth"]},
+  {n:"Mid-career upskilling at scale",amt:"",p:"p2",who:"Workers incl. skilled trades",get:"Employer-led training scaled nationwide, with colleges, CÉGEPs and polytechnics as applied AI leaders.",st:"announced",per:["worker"]},
+  {n:"Women's Program AI acceleration",amt:"",p:"p2",who:"Women in exposed sectors",get:"Adoption support in female-dominated sectors facing early disruption, plus action on AI-fueled online abuse.",st:"announced",per:["worker"]},
+  {n:"Creative Technology Program",amt:"$50M",p:"p2",who:"Canadian creators",get:"Support to use AI on your own terms — protecting and projecting Canadian culture rather than ceding it.",st:"announced",per:["creator"]},
+  {n:"Indigenous-led AI initiatives",amt:"",p:"p2",who:"Indigenous communities",get:"Language models, land management and cultural heritage AI — building on First Languages AI Reality at Mila and NRC's Indigenous Languages Technology Program.",st:"announced",per:["indigenous","creator"]},
+  {n:"CIFAR AI Chairs expansion",amt:"",p:"p4",who:"Researchers",get:"Program grows from 130 to nearly 200 chairs across Mila, Amii and Vector.",st:"announced",per:["researcher"]},
+  {n:"World-leading public supercomputer",amt:"",p:"p4",who:"Researchers & SMEs",get:"Secure, sovereign, high-performance compute for public and industry-driven innovation — by 2031.",st:"announced",per:["researcher","founder","sme"]},
+  {n:"Health Sector Data Space",amt:"$100M",p:"p4",who:"Health researchers & companies",get:"Secure, standardized, linked health datasets with CIHI — for trials, services research and performance measurement.",st:"announced",per:["researcher","founder"]},
+  {n:"VITAL expansion",amt:"$100M",p:"p4",who:"Health AI companies",get:"Pan-Canadian clinical data platform expanding to five more provinces; 80+ companies already build on it.",st:"live",per:["researcher","founder"]},
+  {n:"Global Talent Stream expansion",amt:"",p:"p4",who:"International AI talent",get:"Faster entry and onboarding for highly-skilled AI workers, with aligned permanent residency pathways.",st:"announced",per:["researcher","worker"]},
+  {n:"PM's Innovation Fellows Program",amt:"",p:"p3",who:"Technologists",get:"A tour of duty inside government building the muscle to procure, evaluate and deploy AI systems.",st:"announced",per:["public","founder"]},
+  {n:"Canada Trusted AI Certification",amt:"",p:"p1",who:"AI vendors & buyers",get:"A market trust mark helping Canadians identify trustworthy AI products — a differentiator for compliant vendors.",st:"announced",per:["founder","sme"]},
+  {n:"Canadian AI Safety Institute expansion",amt:"$50M",p:"p1",who:"Safety researchers",get:"Track emerging AI risks, advance technical research, run transparent evaluations of AI models.",st:"announced",per:["researcher"]},
+  {n:"Sovereign Technology Alliance",amt:"",p:"p6",who:"Canadian champions & exporters",get:"Open procurement and interoperable AI capability across allied democracies, starting with Germany.",st:"live",per:["founder"]},
+  {n:"Trade Commissioner Service for AI",amt:"",p:"p6",who:"Exporters",get:"Showcase abroad, foreign investment attraction, and market access through diplomatic networks.",st:"live",per:["founder","sme"]},
+  {n:"Open-source AI tools library",amt:"",p:"p6",who:"SMEs, nonprofits, researchers",get:"A shared inventory of transparent, adaptable, secure open-source AI aligned with Canadian needs.",st:"announced",per:["sme","researcher","public"]}
+];
+
+const GAPS = [
+  {p:"p3",gt:"The adoption gap",g:"Only 12% of Canadian businesses use AI — about 8% of SMEs — versus 29–42% among Nordic leaders. 78% of non-adopters say they don't see the benefit: a translation problem, not resistance.",
+   rt:"Make adoption easy and concrete",r:"$500M LIFT financing, $500M Regional AI Initiative, a readiness assessment tool, and mission-driven projects that prove value in real sectors. Target: 60% adoption by 2034."},
+  {p:"p2",gt:"The literacy & trust gap",g:"Canada ranks 44th of 47 countries on AI training and literacy, 42nd on trust. Only 24% of Canadians have any AI training; half see AI as a threat to humanity.",
+   rt:"Train everyone, starting now",g2:"",r:"Free national AI literacy training, 1M students reached, 3,000+ educators equipped, AI agents for every post-secondary student, and delivery through libraries into rural and northern communities."},
+  {p:"p5",gt:"The startup exodus",g:"Nearly 70% of Canadian-led startups end up headquartered outside the country. VC is concentrated in few deals, and the rational move has long been to scale south.",
+   rt:"Change the math of staying",r:"$500M Growth Fund with equity stakes, the Venture Scientist Fund, Budget 2026 reinvestment incentives, and government as anchor customer — rebuilding the flywheel that rewards staying."},
+  {p:"p4",gt:"The sovereignty exposure",g:"Sovereign compute is nascent; GPU fabrication sits offshore; researchers train on foreign clouds and sensitive data lives in foreign jurisdictions, subject to rules Canada doesn't control.",
+   rt:"Build-partner-buy",r:"A public supercomputer by 2031, 850MW of sovereign compute by 2030 scaling to 2.3GW, $700M in SME compute access, chip fabrication via the NRC photonics spin-off, sovereign cloud for government."},
+  {p:"p4",gt:"The talent squeeze",g:"Every major economy is courting the same researchers and engineers with faster immigration, higher pay, and deeper compute. Canada's research lead is its most strategic asset — and its most poachable.",
+   rt:"Anchor the people",r:"CIFAR AI Chairs from 130 to ~200, an expanded Global Talent Stream with PR pathways, all stacked on the $1.7B Budget 2025 talent attraction strategy."},
+  {p:"p1",gt:"The harms that erode trust",g:"Deepfakes already used as sexual violence and election misinformation; algorithmic bias harming vulnerable communities; children's data exposed. Half of Canadians regard AI as a threat.",
+   rt:"Safety as the foundation of speed",r:"Modernized privacy law, online safety legislation, deepfake legal tools, election protections, a $50M AI Safety Institute expansion, watermarking, and a Trusted AI Certification mark."},
+  {p:"p4",gt:"Data locked in silos",g:"Decades of public health, energy and agricultural data — exactly what AI needs — sits inaccessible to the innovators who could turn it into products and better services.",
+   rt:"Treat data as a national asset",r:"$100M Health Sector Data Space with CIHI and $100M to expand VITAL to five more provinces, with privacy-protected standards. Health first; other sectors follow."},
+  {p:"p6",gt:"Platform dependence",g:"The global market is consolidating around a few closed systems. For dependent countries: lock-in, opacity, and technology that can be restricted at a foreign government's discretion.",
+   rt:"Alliances and open source",r:"The Sovereign Technology Alliance pools allied compute, models and procurement; a global open-source effort keeps transparent, adaptable alternatives viable for SMEs and nonprofits."}
+];
+
+const TILES = [
+  {b:"60%",s:"business AI adoption (from 12%)",w:"by 2034",p:"p3"},
+  {b:"250,000",s:"new jobs through AI adoption",w:"by 2031",p:"p3"},
+  {b:"90,000",s:"AI placements for young Canadians",w:"by 2031",p:"p2"},
+  {b:"~$200B",s:"GDP unlock (≈3%) from productivity",w:"strategy outcome",p:"p3"},
+  {b:"1M",s:"post-secondary students reached with AI literacy",w:"rollout",p:"p2"},
+  {b:"850 MW",s:"sovereign compute, scaling to 2.3 GW",w:"by 2030",p:"p4"},
+  {b:"#1-class",s:"world-leading public supercomputer",w:"by 2031",p:"p4"},
+  {b:"2×",s:"electricity grid, largely clean power",w:"by 2050",p:"p4"}
+];
+const DUMBS = [
+  {l:"Business AI adoption",sm:"Statistics Canada baseline vs strategy target",from:12,to:60,unit:"%",max:100,when:"2034",p:"p3"},
+  {l:"SME AI adoption",sm:"today — rolled into the 60% goal",from:8,to:60,unit:"%",max:100,when:"2034",p:"p3"},
+  {l:"Canadians with any AI training",sm:"KPMG/U-Melbourne study baseline; goal is universal free access",from:24,to:100,unit:"%",max:100,when:"open",p:"p2"},
+  {l:"Canada CIFAR AI Chairs",sm:"across Mila, Amii and Vector",from:130,to:200,unit:"",max:220,when:"rollout",p:"p4"},
+  {l:"K-12 educators trained",sm:"doubling current teacher training",from:1500,to:3000,unit:"",max:3300,when:"rollout",p:"p2"},
+  {l:"Sovereign compute capacity",sm:"proposed partnerships; scaling path to 2,300 MW",from:0,to:850,unit:" MW",max:2300,when:"2030",p:"p4"}
+];
+
+const GROUPS = [
+  {k:"2025",t:"Already in motion",s:"Budget 2025 and groundwork laid before the strategy"},
+  {k:"2026",t:"2026 — Strategy launch",s:"AI for All released June 2026; commitments begin rolling out"},
+  {k:"2030",t:"By 2030",s:"Compute scale-up checkpoint"},
+  {k:"2031",t:"By 2031",s:"Jobs and infrastructure milestones"},
+  {k:"2034",t:"By 2034",s:"The adoption endgame"},
+  {k:"2050",t:"By 2050",s:"The long grid horizon"}
+];
+const EVENTS = [
+  {g:"2025",p:"p4",t:"$1.7B talent attraction strategy announced (Budget 2025)",m:"$1.7B",lev:true,
+   ctx:"Announced before the strategy to counter intensifying global competition for AI researchers and engineers — every major economy is courting the same people with faster immigration and deeper capital. The strategy's talent measures (more CIFAR Chairs, an expanded Global Talent Stream) build on top of this base."},
+  {g:"2025",p:"p5",t:"$1.75B to stimulate venture capital; $159M Elevate IP / IP Assist (Budget 2025)",m:"$1.9B",lev:true,
+   ctx:"Canada ranks 5th globally in AI venture capital ($3.1B invested in 2025), but deals are concentrated and funding gaps push companies to relocate south. These Budget 2025 funds stimulate private VC and help SMEs protect and commercialize their intellectual property."},
+  {g:"2025",p:"p2",t:"$50M Job Bank AI-powered job matching launched (Budget 2025)",m:"$50M",lev:true,
+   ctx:"AI-powered matching automatically aligns people with opportunities fitting their skills profiles, paired with a national online training platform offering free and low-cost short courses — including sector-specific AI literacy modules."},
+  {g:"2025",p:"p2",t:"World's first standard on accessible & equitable AI published",tag:"milestone",
+   ctx:"Canada published the first national standard anywhere designed to catch accessibility and equity barriers in AI systems before they reach users. The strategy commits to promoting it and aligning Canadian AI with Accessible Canada Act principles."},
+  {g:"2025",p:"p4",t:"$2B+ AI Compute Challenge investments underway",m:"$2B+",lev:true,
+   ctx:"Existing federal commitments to bring large-scale commercial sovereign compute online. Context: Canada's sovereign compute capacity is nascent — researchers train on foreign clouds and sensitive data sits in foreign jurisdictions, which the strategy treats as a strategic exposure."},
+  {g:"2025",p:"p6",t:"20 new economic & defence partnerships signed; 11 explicitly cover AI; ~$100B foreign investment commitments",tag:"milestone",
+   ctx:"Signed within a single year, spanning four continents — covering AI safety standards, sovereign infrastructure, industrial deployment, and business-to-business matchmaking. Free trade negotiations advancing in parallel with India, ASEAN and beyond."},
+
+  {g:"2026",p:"p5",t:"Jan — Venture Scientist Fund launches (Mila + Inovia): US$100M for 55+ AI-native startups",m:"US$100M",lev:true,
+   ctx:"Built to fix a specific leak: nearly 70% of Canadian-led startups end up headquartered outside the country. The fund creates a structured path from university research to company creation in foundational AI, deep tech, and computational infrastructure — anchored in Canada."},
+  {g:"2026",p:"p6",t:"Feb — Sovereign Technology Alliance launched with Germany",tag:"milestone",
+   ctx:"A coalition of aligned democracies pooling AI models, digital infrastructure, capital, and joint research — positioned as a credible alternative to the hegemons and hyperscalers that dominate global AI. Includes shared safety approaches and common evaluation standards."},
+  {g:"2026",p:"all",t:"Jun — AI for All strategy released",tag:"milestone",
+   ctx:"Shaped by more than 11,000 consultation submissions and a 28-member expert task force, with input from First Nations, Métis and Inuit leaders, labour, arts and environmental groups. Built around one bet: adoption drives the benefits, and trust makes adoption possible."},
+  {g:"2026",p:"p1",t:"Privacy modernization, online safety laws, deepfake legal tools, election protection",tag:"rollout",
+   ctx:"New consumer privacy law enshrines a fundamental right to privacy and shields children's data; online safety laws add legal tools against deepfakes — already used as a form of sexual violence and election misinformation. The Privacy Act review covers government's own data use."},
+  {g:"2026",p:"p1",t:"CAISI expansion + Canada Trusted AI Certification program",m:"$50M",
+   ctx:"The $50M expands the Canadian AI Safety Institute to track emerging risks and run transparent evaluations of AI models. The certification mark helps Canadians identify trustworthy AI products, backed by renewed Standards Council funding for AI testing and standards."},
+  {g:"2026",p:"p2",t:"National AI Literacy Initiative: 1M students, 3,000+ educators, AI agents for post-secondary students",tag:"rollout",
+   ctx:"The gap is stark: Canada ranked 44th of 47 countries on AI training and literacy, and only 24% of Canadians report any AI training at all. Delivery runs through schools, post-secondary, and public libraries — especially in rural, remote and northern communities."},
+  {g:"2026",p:"p2",t:"CanCode K-12 skills + Creative Technology Program",m:"$80M",
+   ctx:"$30M funds nonprofits delivering free coding and AI skills to K-12 youth with emphasis on underrepresented groups. The $50M Creative Technology Program supports Canadian creators using AI 'on their own terms' — part of protecting culture, French language, and identity."},
+  {g:"2026",p:"p3",t:"First AI Mission: improving health outcomes",m:"$200M",
+   ctx:"The proof point already exists: CHARTWatch at Toronto's St. Michael's Hospital cut unexpected ward deaths by 26% by predicting patient deterioration hours ahead. The mission targets primary care access, ER wait times, and physicians' administrative burden."},
+  {g:"2026",p:"p3",t:"SME adoption push: Regional AI Initiative ($500M new) + BDC LIFT ($500M leveraged)",m:"$1B",
+   ctx:"Only 12% of businesses (≈8% of SMEs) have adopted AI, and 78% of non-adopters say they don't see the benefit — the strategy calls it a translation problem, not resistance. LIFT finances AI tools; the Regional AI Initiative delivers hands-on support through regional agencies."},
+  {g:"2026",p:"p4",t:"Health Sector Data Space + VITAL expansion to 5 more provinces",m:"$200M",
+   ctx:"Canada's universal health system generates clinical data at a scale most countries can't match, but it sits in institutional silos. The Data Space (with CIHI) links standardized datasets for trials and research; 80+ companies already build on VITAL's hospital data."},
+  {g:"2026",p:"p4",t:"CIFAR AI Chairs grow from 130 toward ~200 researchers",tag:"rollout",
+   ctx:"The program that anchored Canada's research lead — funding the institutes (Mila, Amii, Vector) where work like AI scribes for ER physicians and ML-guided cancer surgery is already deployed. Expansion is the retention play against global recruitment pressure."},
+  {g:"2026",p:"p5",t:"Canadian Tech Growth Fund (equity stakes) + Compute Access Fund expansion + AI Institute commercialization",m:"$1.33B",
+   ctx:"The $500M Growth Fund lets the federal government take equity stakes in promising AI firms — following France, Japan, and the US. $700M gives SMEs affordable sovereign compute (most currently train on foreign clouds); $130M funds commercialization, including Founders-in-Residence."},
+  {g:"2026",p:"p5",t:"Budget 2026 — mechanisms to reinvest tech gains into new Canadian AI startups",tag:"rollout",
+   ctx:"Finance will work with experts to design incentives for Canadians to roll gains from successful tech companies into new Canadian AI startups — feeding the investment flywheel meant to keep talent, IP, and the next generation of champions at home."},
+  {g:"2026",p:"p6",t:"Global open-source AI effort; trilateral Canada–Australia–India tech partnership",tag:"rollout",
+   ctx:"Open-source AI is framed as resilience: transparent, cheaper to deploy, and adaptable to local needs — an answer to vendor lock-in as the market consolidates around a few proprietary systems. The trilateral partnership covers AI, quantum, trade missions, and matchmaking."},
+
+  {g:"2030",p:"p4",t:"850 MW sovereign compute capacity proposed, with scaling path to 2.3 GW",tag:"target",
+   ctx:"Partnerships now being finalized for 100MW+ data centres under Canadian control and law, with tens of billions in corresponding investment. The built-in edge: a grid that's 83%+ renewable and low-emission, and a cold climate that slashes cooling costs."},
+  {g:"2030",p:"p4",t:"Estimated 5.5 GW of AI compute needed for Canada's commercial players",tag:"context",
+   ctx:"Analyst estimate of total commercial demand. Much will be served by hyperscalers — welcomed where it benefits Canadians — but the sovereign share is the strategic piece, so Canadian organizations aren't dependent on platforms a foreign government could restrict."},
+  {g:"2030",p:"p3",t:"Generative AI alone could add ~$187B annually to the economy (estimate)",tag:"context",
+   ctx:"One estimate cited in the strategy, alongside forecast labour-productivity gains of 0.3–1.1% per year even before the strategy's own impacts. The catch: none of it materializes without closing the adoption gap."},
+
+  {g:"2031",p:"p4",t:"World-leading public supercomputer online",tag:"target",
+   ctx:"A public machine giving Canadian researchers and SMEs secure, sovereign, high-performance compute — so cutting-edge work doesn't have to run on foreign infrastructure. Flagship of the 'build-partner-buy' approach to sovereign capability."},
+  {g:"2031",p:"p2",t:"Up to 90,000 AI-related jobs & work placements for young Canadians",tag:"target",
+   ctx:"The breakdown: 45,000 through the Student Work Placement Program and Canada Summer Jobs, 35,000 through Skills for Success and similar initiatives, and 10,000 through Mitacs ADOPT and AI+X — career-relevant AI experience before entering the workforce."},
+  {g:"2031",p:"p3",t:"Up to 250,000 new jobs created through AI adoption",tag:"target",
+   ctx:"Projected AI-relevant jobs across the whole economy, supported by Workforce Alliances in six priority sectors coordinating employers, unions, post-secondary institutions, and Indigenous partners. The framing is deliberately pro-worker: augment expertise, don't displace it."},
+
+  {g:"2034",p:"p3",t:"Business AI adoption rises from 12% to 60%",tag:"target",
+   ctx:"The strategy's headline number. SMEs are the battleground — 99% of Canadian businesses, employing 14.3 million workers, with adoption around 8% today versus 29–42% among Nordic leaders. Nearly half of SME owners have experimented; deployment is what's missing."},
+  {g:"2034",p:"all",t:"~3% GDP unlock — nearly $200B from labour productivity (strategy outcome)",tag:"target",
+   ctx:"The macro payoff if adoption, commercialization, and the priority-sector missions land: roughly 3% of GDP from labour productivity. This is the number the whole architecture — trust, opportunity, sovereignty — is built to unlock."},
+
+  {g:"2050",p:"p4",t:"Electricity grid doubled — clean power pairing with sovereign AI data centres",tag:"target",
+   ctx:"From the parallel National Electricity Strategy: double the grid, largely with hydro, nuclear and renewables. Clean power plus a northern climate gives Canadian compute a cost and sustainability advantage competitors spend billions trying to replicate artificially."}
+];
+
+/* ================= STATE & HELPERS ================= */
+let filter="all", q="", persona=null;
+const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
+const cssVar=v=>getComputedStyle(document.documentElement).getPropertyValue("--"+v).trim();
+const pcol=p=>p==="all"?"#26374a":cssVar(p);
+const vcol=v=>cssVar(v);
+const visible=p=>{ if(filter==="all"||p==="all")return true;
+  if(filter.startsWith("p"))return p===filter;
+  return PILLARS[p] && PILLARS[p].v===filter; };
+const matches=txt=>!q||txt.toLowerCase().includes(q);
+const fmtM=v=>v>=1000?"$"+(v/1000).toFixed(2).replace(/\.?0+$/,"")+"B":"$"+v+"M";
+
+/* ================= OVERVIEW ================= */
+function renderValues(){
+  $("#values").innerHTML=Object.entries(VALUES).map(([k,v])=>`
+    <div class="valcol" style="border-top:3px solid ${vcol(k)}">
+      <h3 style="color:${vcol(k)}">${v.t}</h3><p>${v.d}</p>
+      ${v.pillars.map(pk=>{const p=PILLARS[pk];return `
+        <div class="pillarcard" data-p="${pk}" style="border-left-color:${pcol(pk)}">
+          <div class="pn">${p.n}</div><div class="pt">${p.t}</div><div class="pm">${p.m}</div>
+        </div>`}).join("")}
+    </div>`).join("");
+  $$(".pillarcard").forEach(el=>el.onclick=()=>showDetail(el.dataset.p));
+}
+function showDetail(pk){
+  const p=PILLARS[pk], d=$("#detail");
+  $$(".pillarcard").forEach(e=>e.classList.toggle("sel",e.dataset.p===pk));
+  d.style.display="block"; d.style.borderLeftColor=pcol(pk);
+  d.innerHTML=`<button class="closebtn" onclick="hideDetail()">close ✕</button>
+    <div class="dv" style="color:${vcol(p.v)}">${VALUES[p.v].t} · ${p.n}</div>
+    <h3>${p.t}</h3>
+    <div class="cols">
+      <div><h4>Themes</h4><ul>${p.themes.map(t=>`<li>${t}</li>`).join("")}</ul></div>
+      <div><h4>Key actions</h4><ul>${p.actions.map(a=>`<li>${a}</li>`).join("")}</ul></div>
+    </div>`;
+  d.scrollIntoView({behavior:"smooth",block:"nearest"});
+}
+function hideDetail(){ $("#detail").style.display="none"; $$(".pillarcard").forEach(e=>e.classList.remove("sel")); }
+
+/* ================= FOR YOU ================= */
+function cardHTML(o){
+  return `<div class="card" style="border-left-color:${pcol(o.p)}">
+    <div class="top"><h4>${o.n}</h4>${o.amt?`<span class="amt">${o.amt}</span>`:""}</div>
+    <div class="who">FOR <b>${o.who}</b></div>
+    <div class="get">${o.get}</div>
+    <div class="foot">
+      <span class="pill ${o.st}">${o.st==="live"?"live now":"announced"}</span>
+      <span class="pill pl" style="color:${pcol(o.p)}">${PILLARS[o.p].n}</span>
+    </div></div>`;
+}
+function renderPersonas(){
+  $("#personas").innerHTML=Object.entries(PERSONAS).map(([k,p])=>
+    `<button class="persona ${persona===k?'active':''}" data-per="${k}">${p.t}</button>`).join("");
+  $$(".persona").forEach(b=>b.onclick=()=>{persona=persona===b.dataset.per?null:b.dataset.per;renderPersonas();renderPersonaCards();});
+}
+function renderPersonaCards(){
+  const intro=$("#personaintro");
+  if(!persona){ intro.style.display="none";
+    $("#personacards").innerHTML=`<p class="empty">Pick an audience above to see their slice of the strategy.</p>`; return; }
+  intro.style.display="block"; intro.textContent=PERSONAS[persona].intro;
+  const list=OPPS.filter(o=>o.per.includes(persona));
+  $("#personacards").innerHTML=list.map(cardHTML).join("");
+}
+
+/* ================= OPPORTUNITIES ================= */
+function renderGaps(){
+  const list=GAPS.filter(g=>visible(g.p)&&matches(g.gt+g.g+g.rt+g.r));
+  $("#gaps").innerHTML=list.map(g=>`
+    <div class="gap">
+      <div class="prob"><h4>⚠ ${g.gt}</h4><p>${g.g}</p></div>
+      <div class="arrow">→</div>
+      <div class="resp"><h4>✓ ${g.rt}</h4><p>${g.r}</p></div>
+    </div>`).join("")||`<p class="empty">No gaps match this filter.</p>`;
+}
+function renderOpps(){
+  const list=OPPS.filter(o=>visible(o.p)&&matches(o.n+o.who+o.get+(o.amt||"")));
+  $("#oppcards").innerHTML=list.map(cardHTML).join("")||`<p class="empty">Nothing matches — clear the search or filter.</p>`;
+}
+
+/* ================= MONEY ================= */
+function renderMoney(){
+  const max=Math.max(...MONEY.map(m=>m.a));
+  const rows=MONEY.filter(m=>visible(m.p)&&matches(m.l+(m.note||"")));
+  $("#money").innerHTML=rows.map(m=>`
+    <div class="mrow">
+      <div class="lbl">${m.l}${m.note?`<small>${m.note}</small>`:""}</div>
+      <div class="barwrap"><div class="bar ${m.lev?'lev':''}" style="width:${Math.max(2,m.a/max*100)}%;background-color:${pcol(m.p)}"></div></div>
+      <div class="amt2">${fmtM(m.a)}</div>
+    </div>`).join("")||`<p class="empty">No named dollar commitments under this filter.</p>`;
+  const tn=rows.filter(m=>!m.lev).reduce((s,m)=>s+m.a,0), tl=rows.filter(m=>m.lev).reduce((s,m)=>s+m.a,0);
+  $("#totNew").textContent=fmtM(tn); $("#totLev").textContent=fmtM(tl);
+}
+function renderFlow(){
+  const ORDER={trust:["p1","p6"],opportunity:["p2","p3"],sovereignty:["p4","p5"]};
+  const pillarTotals={}; Object.keys(PILLARS).forEach(p=>pillarTotals[p]=MONEY.filter(m=>m.p===p).reduce((s,m)=>s+m.a,0));
+  const valTotals={}; Object.entries(ORDER).forEach(([v,ps])=>valTotals[v]=ps.reduce((s,p)=>s+pillarTotals[p],0));
+  const total=Object.values(valTotals).reduce((a,b)=>a+b,0);
+  const H=620, W=1180, NW=14, X=[170,520,880];
+  const scale=(H-140)/total;
+  const hOf=(amt,min)=>Math.max(amt*scale,min);
+  // column 1: values
+  let y=20; const vNodes={};
+  Object.keys(ORDER).forEach(v=>{const h=hOf(valTotals[v],26);vNodes[v]={y,h};y+=h+22;});
+  // column 2: pillars (ordered by value)
+  y=14; const pNodes={};
+  Object.entries(ORDER).forEach(([v,ps])=>ps.forEach(p=>{const h=hOf(pillarTotals[p],18);pNodes[p]={y,h};y+=h+14;}));
+  // column 3: programs grouped by pillar order
+  y=8; const progs=[];
+  Object.entries(ORDER).forEach(([v,ps])=>ps.forEach(p=>{
+    MONEY.filter(m=>m.p===p).forEach(m=>{const h=hOf(m.a,11);progs.push({...m,y,h});y+=h+7;});
+  }));
+  const svgH=Math.max(H,y+10);
+  let s=`<svg viewBox="0 0 ${W} ${svgH}" xmlns="http://www.w3.org/2000/svg" font-family="inherit">`;
+  const ribbon=(x1,y1,x2,y2,th,col,op,dash)=>
+    `<path d="M ${x1} ${y1} C ${(x1+x2)/2} ${y1} ${(x1+x2)/2} ${y2} ${x2} ${y2}" stroke="${col}" stroke-width="${Math.max(th,2)}" fill="none" opacity="${op}" ${dash?'stroke-dasharray="4 4"':''}/>`;
+  // links value→pillar
+  const vOff={}; Object.keys(ORDER).forEach(v=>vOff[v]=0);
+  Object.entries(ORDER).forEach(([v,ps])=>ps.forEach(p=>{
+    const dim=!(visible(p));
+    const th=pNodes[p].h;
+    const sy=vNodes[v].y+vOff[v]+th/2; vOff[v]+=th;
+    const ty=pNodes[p].y+th/2;
+    s+=ribbon(X[0]+NW,sy,X[1],ty,th,pcol(p),dim?0.06:0.4,pillarTotals[p]===0);
+  }));
+  // links pillar→program
+  const pOff={}; Object.keys(PILLARS).forEach(p=>pOff[p]=0);
+  progs.forEach(m=>{
+    const dim=!(visible(m.p))||(q&&!matches(m.l));
+    const th=m.h;
+    const sy=pNodes[m.p].y+pOff[m.p]+th/2; pOff[m.p]+=th;
+    s+=ribbon(X[1]+NW,sy,X[2],m.y+th/2,th,pcol(m.p),dim?0.06:(m.lev?0.25:0.5),false);
+  });
+  // nodes col1
+  Object.entries(vNodes).forEach(([v,n])=>{
+    s+=`<rect x="${X[0]}" y="${n.y}" width="${NW}" height="${n.h}" rx="3" fill="${vcol(v)}"/>
+        <text x="${X[0]-10}" y="${n.y+n.h/2}" text-anchor="end" dominant-baseline="middle" fill="${vcol(v)}" font-size="14" font-weight="700">${VALUES[v].t}</text>
+        <text x="${X[0]-10}" y="${n.y+n.h/2+17}" text-anchor="end" dominant-baseline="middle" fill="#7d8a96" font-size="11">${valTotals[v]?fmtM(valTotals[v]):"no named $"}</text>`;
+  });
+  // nodes col2
+  Object.entries(pNodes).forEach(([p,n])=>{
+    const dim=!visible(p);
+    s+=`<rect x="${X[1]}" y="${n.y}" width="${NW}" height="${n.h}" rx="3" fill="${pcol(p)}" opacity="${dim?0.2:1}"/>
+        <text x="${X[1]+NW+8}" y="${n.y+n.h/2-2}" dominant-baseline="middle" fill="${dim?'#c2cad1':'#26374a'}" font-size="12" font-weight="600">${PILLARS[p].n} — ${PILLARS[p].t.length>34?PILLARS[p].t.slice(0,32)+"…":PILLARS[p].t}</text>
+        <text x="${X[1]+NW+8}" y="${n.y+n.h/2+13}" dominant-baseline="middle" fill="#7d8a96" font-size="10.5">${pillarTotals[p]?fmtM(pillarTotals[p]):"no named $"}</text>`;
+  });
+  // nodes col3
+  progs.forEach(m=>{
+    const dim=!visible(m.p)||(q&&!matches(m.l));
+    s+=`<rect x="${X[2]}" y="${m.y}" width="${NW}" height="${m.h}" rx="2" fill="${pcol(m.p)}" opacity="${dim?0.15:(m.lev?0.5:1)}"/>
+        <text x="${X[2]+NW+7}" y="${m.y+m.h/2}" dominant-baseline="middle" fill="${dim?'#c2cad1':'#5c6f7c'}" font-size="10.5">${m.l.length>34?m.l.slice(0,33)+"…":m.l} · <tspan fill="${dim?'#c2cad1':'#26374a'}" font-weight="700">${fmtM(m.a)}</tspan>${m.lev?' <tspan fill="#7d8a96">(lev)</tspan>':''}</text>`;
+  });
+  s+=`</svg>`;
+  $("#flow").innerHTML=s;
+}
+
+/* ================= TARGETS ================= */
+function renderTargets(){
+  $("#tiles").innerHTML=TILES.filter(t=>visible(t.p)&&matches(t.b+t.s)).map(t=>`
+    <div class="tile" style="border-top-color:${pcol(t.p)}">
+      <b>${t.b}</b><span>${t.s}</span><span class="when">${t.w}</span>
+    </div>`).join("")||`<p class="empty">No headline numbers match.</p>`;
+  $("#dumbs").innerHTML=DUMBS.filter(d=>visible(d.p)&&matches(d.l+d.sm)).map(d=>{
+    const x1=d.from/d.max*100, x2=d.to/d.max*100;
+    return `<div class="dumb">
+      <div class="lbl">${d.l}<small>${d.sm}</small></div>
+      <div class="track">
+        <div class="rail"></div>
+        <div class="fill" style="left:${x1}%;width:${x2-x1}%;background:${pcol(d.p)}"></div>
+        <div class="dotA" style="left:calc(${x1}% - 8px)"></div>
+        <div class="dotB" style="left:calc(${x2}% - 8px);background:${pcol(d.p)}"></div>
+        <span class="vlabel" style="left:${x1}%">${d.from.toLocaleString()}${d.unit}</span>
+        <span class="vlabel b" style="left:${x2}%">${d.to.toLocaleString()}${d.unit}${d.l.includes("compute")?"+":""}</span>
+      </div>
+      <div class="when">${d.when}</div>
+    </div>`;
+  }).join("")||`<p class="empty">No targets match.</p>`;
+}
+
+/* ================= TIMELINE ================= */
+function renderTimeline(){
+  $("#timeline").innerHTML=GROUPS.map(g=>{
+    const evs=EVENTS.filter(e=>e.g===g.k);
+    return `<div class="tgroup">
+      <div class="tyear">${g.t}<small>${g.s}</small></div>
+      ${evs.map(e=>{
+        const col=pcol(e.p);
+        const hit=visible(e.p)&&matches(e.t+(e.ctx||""));
+        let badge="";
+        if(e.m)badge=`<span class="badge money ${e.lev?'lev':''}">${e.m}${e.lev?' leveraged':''}</span>`;
+        else if(e.tag==="target")badge=`<span class="badge target">target</span>`;
+        else if(e.tag==="milestone")badge=`<span class="badge target" style="background:rgba(43,87,151,.12);color:var(--sovereignty)">milestone</span>`;
+        else if(e.tag==="context")badge=`<span class="badge" style="background:#eef1f4;color:var(--faint)">context</span>`;
+        return `<div class="tevent ${hit?'':'dim'}" style="border-left-color:${col}" onclick="this.classList.toggle('open')">
+          <span class="tp" style="color:${col}">${e.p==="all"?"ALL":e.p.toUpperCase()}</span>
+          <span class="tt">${e.t}</span>${badge}${e.ctx?`<span class="chev">▶</span><div class="tctx">${e.ctx}</div>`:""}</div>`;
+      }).join("")}
+    </div>`;
+  }).join("");
+}
+
+/* ================= GLOBAL ================= */
+function rerenderFiltered(){ renderGaps(); renderOpps(); renderMoney(); renderFlow(); renderTargets(); renderTimeline(); }
+function setFilter(f){
+  filter=f;
+  $$(".chip").forEach(c=>{
+    const on=c.dataset.f===f;
+    c.classList.toggle("active",on);
+    if(on){const map={all:"#26374a",trust:vcol("trust"),opportunity:vcol("opportunity"),sovereignty:vcol("sovereignty")};
+      c.style.background=map[f]||pcol(f);}
+    else c.style.background="";
+  });
+  rerenderFiltered();
+}
+$$(".chip").forEach(c=>c.onclick=()=>setFilter(c.dataset.f));
+$("#search").addEventListener("input",e=>{q=e.target.value.trim().toLowerCase();rerenderFiltered();});
+
+$$(".tabbtn").forEach(b=>b.onclick=()=>{
+  $$(".tabbtn").forEach(x=>x.classList.toggle("current",x===b));
+  $$(".tab").forEach(t=>t.classList.toggle("show",t.id==="tab-"+b.dataset.tab));
+  window.scrollTo({top:0});
+});
+
+renderValues(); renderPersonas(); renderPersonaCards(); rerenderFiltered();
+</script>
+</body>
+</html>
