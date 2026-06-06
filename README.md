@@ -28,6 +28,11 @@ a "soft" commitment), the line-by-line accuracy check against the official PDF, 
 The analytical lenses (Funded / Soft / Unfunded) are our interpretation, built to make the gap between
 rhetoric and dollars legible — not the government's framing.
 
+It was researched, structured and fact-checked with **AI assistance — Anthropic's Claude (Opus 4.8)** —
+under human direction. Because the strategy is recent, figures were taken from the source document itself
+(not the model's prior knowledge), corroborated against public sources, and verified line-by-line; every
+item links back to the strategy so any claim can be audited rather than trusted.
+
 ## Sharing via GitHub Pages
 
 The entry file is named `index.html`, so with **Settings → Pages → Deploy from branch** the visual is live
