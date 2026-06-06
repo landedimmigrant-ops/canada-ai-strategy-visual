@@ -1,0 +1,61 @@
+{
+  "$schema": "./ledger.schema.json",
+  "meta": {
+    "project": "<name of the visual>",
+    "method": "Source-Traceable Claim Ledger v1.0",
+    "primary_source": {
+      "title": "<source document title>",
+      "url": "<source url>",
+      "publisher": "<issuer>",
+      "retrieved": "<YYYY-MM-DD the source was read>"
+    },
+    "compiled": "<YYYY-MM-DD>",
+    "compiler": "<who/what compiled this ledger>",
+    "currency": "<e.g. CAD>"
+  },
+  "claims": [
+    {
+      "id": "example-direct:unique-join-key",
+      "claim": "A figure/date/name exactly as the reader sees it in the visual.",
+      "rendered_in": ["which tab or view shows it"],
+      "kind": "direct",
+      "grade": "U",
+      "source": {
+        "doc": "<source title>",
+        "locator": "<PDF p.X §Section, or web anchor>",
+        "quote": "<verbatim sentence from the source carrying this claim>"
+      },
+      "corroboration": [
+        { "src": "<independent source>", "url": "<url>", "agrees": true }
+      ],
+      "checks": [
+        { "stage": "verification", "method": "pending", "by": "", "date": "", "result": "pending" }
+      ],
+      "notes": ""
+    },
+    {
+      "id": "example-derived:a-total-or-count",
+      "claim": "A sum, count, or percentage you computed.",
+      "rendered_in": ["which view"],
+      "kind": "derived",
+      "grade": "U",
+      "formula": "sum(claims where ...) — reference the input claim ids",
+      "checks": [
+        { "stage": "verification", "method": "recompute", "by": "", "date": "", "result": "pending" }
+      ],
+      "notes": "Grade inherits from the weakest input plus correctness of the arithmetic."
+    },
+    {
+      "id": "example-editorial:a-lens-or-grouping",
+      "claim": "A label, lens, or mapping you chose.",
+      "rendered_in": ["which view"],
+      "kind": "editorial",
+      "grade": "D",
+      "rule": "The classification criterion, stated so a reader can disagree with it.",
+      "checks": [
+        { "stage": "verification", "method": "source-match", "by": "", "date": "", "result": "confirm", "note": "rule applied consistently across all items" }
+      ],
+      "notes": "Editorial claims are graded on defensibility, not truth."
+    }
+  ]
+}

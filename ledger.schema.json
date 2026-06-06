@@ -1,0 +1,131 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.org/stcl/ledger.schema.json",
+  "title": "Source-Traceable Claim Ledger",
+  "description": "One file per visual. Each claim in the visual is one row, traced to source and graded for confidence. See METHOD.md and confidence-rubric.md.",
+  "type": "object",
+  "required": ["meta", "claims"],
+  "additionalProperties": false,
+  "properties": {
+    "$schema": { "type": "string" },
+    "meta": {
+      "type": "object",
+      "required": ["project", "method", "primary_source"],
+      "additionalProperties": true,
+      "properties": {
+        "project": { "type": "string", "description": "Name of the visual this ledger backs." },
+        "method": { "type": "string", "description": "Method name + version, e.g. 'Source-Traceable Claim Ledger v1.0'." },
+        "primary_source": {
+          "type": "object",
+          "required": ["title"],
+          "properties": {
+            "title": { "type": "string" },
+            "url": { "type": "string" },
+            "publisher": { "type": "string" },
+            "retrieved": { "type": "string", "description": "ISO date the source was read." },
+            "note": { "type": "string" }
+          }
+        },
+        "compiled": { "type": "string", "description": "ISO date this ledger pass was compiled." },
+        "compiler": { "type": "string", "description": "Who/what compiled it." },
+        "currency": { "type": "string" }
+      }
+    },
+    "claims": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/claim" }
+    }
+  },
+  "$defs": {
+    "claim": {
+      "type": "object",
+      "required": ["id", "claim", "kind", "grade", "checks"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Stable join key; must also identify the claim in the visual's data (e.g. 'money:BDC LIFT — SME AI adoption financing')."
+        },
+        "claim": {
+          "type": "string",
+          "description": "The assertion as the reader sees it."
+        },
+        "rendered_in": {
+          "type": "array",
+          "items": { "type": "string" },
+          "description": "Which views/tabs of the visual show this claim."
+        },
+        "kind": {
+          "enum": ["direct", "derived", "editorial"],
+          "description": "direct = asserted by the source; derived = computed by us; editorial = our framing."
+        },
+        "grade": {
+          "enum": ["A", "B", "C", "D", "U", "F"],
+          "description": "Set by the decision procedure in confidence-rubric.md. A corroborated, B single-source, C source-flagged, D editorial-rule, U pending, F disputed."
+        },
+        "source": {
+          "type": "object",
+          "description": "Required for kind=direct. Claim-level provenance.",
+          "required": ["locator", "quote"],
+          "properties": {
+            "doc": { "type": "string" },
+            "locator": { "type": "string", "description": "Most precise pointer the source allows: PDF page + section, or web anchor." },
+            "quote": { "type": "string", "description": "Verbatim evidence span from the source." }
+          }
+        },
+        "formula": {
+          "type": "string",
+          "description": "Required for kind=derived. The exact computation over other ledger claims."
+        },
+        "rule": {
+          "type": "string",
+          "description": "Required for kind=editorial. The classification criterion, stated so a reader can disagree."
+        },
+        "corroboration": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["src", "agrees"],
+            "properties": {
+              "src": { "type": "string" },
+              "url": { "type": "string" },
+              "agrees": { "type": "boolean" },
+              "note": { "type": "string" }
+            }
+          }
+        },
+        "checks": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["stage", "result"],
+            "properties": {
+              "stage": { "enum": ["extraction", "verification", "adjudication"] },
+              "method": { "enum": ["recompute", "source-match", "hedge-quote", "read-transcribe", "pending"] },
+              "by": { "type": "string", "description": "Actor, honestly named: 'human:<name>', 'ai:recompute', 'ai:independent-pass', etc." },
+              "date": { "type": "string" },
+              "result": { "enum": ["match", "confirm", "dispute", "pending", "approve"] },
+              "note": { "type": "string" }
+            }
+          }
+        },
+        "notes": { "type": "string" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "kind": { "const": "direct" } } },
+          "then": { "required": ["source"] }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "derived" } } },
+          "then": { "required": ["formula"] }
+        },
+        {
+          "if": { "properties": { "kind": { "const": "editorial" } } },
+          "then": { "required": ["rule"] }
+        }
+      ]
+    }
+  }
+}
