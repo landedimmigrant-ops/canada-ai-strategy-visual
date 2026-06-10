@@ -6,7 +6,7 @@ An interactive, single-file visual breakdown of [Canada's National AI Strategy: 
 
 ## What's inside
 
-Ten tabs, driven by a shared sidebar with search and value/pillar filters:
+Eight explore tabs plus an About group, driven by a shared sidebar with search and value/pillar filters:
 
 - **Overview** — the architecture: three values (Trust, Opportunity, Sovereignty) carrying six pillars, plus the five priority sectors. Click a pillar for its themes and key actions.
 - **By audience** — pick who you are (SME owner, founder, student, mid-career worker, researcher, creator, Indigenous communities, public servant) and see the programs that touch you, grouped by pillar.
@@ -16,6 +16,10 @@ Ten tabs, driven by a shared sidebar with search and value/pillar filters:
 - **Unfunded commitments** — every commitment with no named dollar figure (laws, standards, diplomacy, infrastructure), navigable by category.
 - **Targets** — headline tiles and baseline → target dumbbells (12% → 60% business adoption by 2034, 130 → ~200 CIFAR chairs, 0 → 850 MW sovereign compute by 2030).
 - **Timeline** — every launch, dollar and target from Budget 2025 to 2050; click any entry for context.
+
+An **About** group holds the project's own accounting:
+
+- **About** — who made this, why, and how to hold it to account.
 - **Methodology** — how it was made: source, classification rules, the accuracy check, and limitations.
 - **Verification** — every tracked claim, labelled and traced to source, generated live from the claim ledger.
 
