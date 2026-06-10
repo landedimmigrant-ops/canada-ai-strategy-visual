@@ -2,44 +2,88 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://example.org/stcl/ledger.schema.json",
   "title": "Source-Traceable Claim Ledger",
-  "description": "One file per visual. Each claim in the visual is one row, traced to source and graded for confidence. See METHOD.md and confidence-rubric.md.",
+  "description": "One file per visual. Each claim in the visual is one row, traced to source and labelled by its basis (a category, not a score). See METHOD.md and confidence-rubric.md.",
   "type": "object",
-  "required": ["meta", "claims"],
+  "required": [
+    "meta",
+    "claims"
+  ],
   "additionalProperties": false,
   "properties": {
-    "$schema": { "type": "string" },
+    "$schema": {
+      "type": "string"
+    },
     "meta": {
       "type": "object",
-      "required": ["project", "method", "primary_source"],
+      "required": [
+        "project",
+        "method",
+        "primary_source"
+      ],
       "additionalProperties": true,
       "properties": {
-        "project": { "type": "string", "description": "Name of the visual this ledger backs." },
-        "method": { "type": "string", "description": "Method name + version, e.g. 'Source-Traceable Claim Ledger v1.0'." },
+        "project": {
+          "type": "string",
+          "description": "Name of the visual this ledger backs."
+        },
+        "method": {
+          "type": "string",
+          "description": "Method name + version, e.g. 'Source-Traceable Claim Ledger v1.0'."
+        },
         "primary_source": {
           "type": "object",
-          "required": ["title"],
+          "required": [
+            "title"
+          ],
           "properties": {
-            "title": { "type": "string" },
-            "url": { "type": "string" },
-            "publisher": { "type": "string" },
-            "retrieved": { "type": "string", "description": "ISO date the source was read." },
-            "note": { "type": "string" }
+            "title": {
+              "type": "string"
+            },
+            "url": {
+              "type": "string"
+            },
+            "publisher": {
+              "type": "string"
+            },
+            "retrieved": {
+              "type": "string",
+              "description": "ISO date the source was read."
+            },
+            "note": {
+              "type": "string"
+            }
           }
         },
-        "compiled": { "type": "string", "description": "ISO date this ledger pass was compiled." },
-        "compiler": { "type": "string", "description": "Who/what compiled it." },
-        "currency": { "type": "string" }
+        "compiled": {
+          "type": "string",
+          "description": "ISO date this ledger pass was compiled."
+        },
+        "compiler": {
+          "type": "string",
+          "description": "Who/what compiled it."
+        },
+        "currency": {
+          "type": "string"
+        }
       }
     },
     "claims": {
       "type": "array",
-      "items": { "$ref": "#/$defs/claim" }
+      "items": {
+        "$ref": "#/$defs/claim"
+      }
     }
   },
   "$defs": {
     "claim": {
       "type": "object",
-      "required": ["id", "claim", "kind", "grade", "checks"],
+      "required": [
+        "id",
+        "claim",
+        "kind",
+        "basis",
+        "checks"
+      ],
       "additionalProperties": false,
       "properties": {
         "id": {
@@ -52,25 +96,50 @@
         },
         "rendered_in": {
           "type": "array",
-          "items": { "type": "string" },
+          "items": {
+            "type": "string"
+          },
           "description": "Which views/tabs of the visual show this claim."
         },
         "kind": {
-          "enum": ["direct", "derived", "editorial"],
+          "enum": [
+            "direct",
+            "derived",
+            "editorial"
+          ],
           "description": "direct = asserted by the source; derived = computed by us; editorial = our framing."
         },
-        "grade": {
-          "enum": ["A", "B", "C", "D", "U", "F"],
-          "description": "Set by the decision procedure in confidence-rubric.md. A corroborated, B single-source, C source-flagged, D editorial-rule, U pending, F disputed."
+        "basis": {
+          "enum": [
+            "corroborated",
+            "per-source",
+            "qualified",
+            "recomputed",
+            "our-analysis",
+            "unverified",
+            "disputed"
+          ],
+          "description": "Set by the decision procedure in confidence-rubric.md. A category describing the claim's basis (corroborated, per-source, qualified, recomputed, our-analysis, unverified, disputed) — not a graded scale."
         },
         "source": {
           "type": "object",
           "description": "Required for kind=direct. Claim-level provenance.",
-          "required": ["locator", "quote"],
+          "required": [
+            "locator",
+            "quote"
+          ],
           "properties": {
-            "doc": { "type": "string" },
-            "locator": { "type": "string", "description": "Most precise pointer the source allows: PDF page + section, or web anchor." },
-            "quote": { "type": "string", "description": "Verbatim evidence span from the source." }
+            "doc": {
+              "type": "string"
+            },
+            "locator": {
+              "type": "string",
+              "description": "Most precise pointer the source allows: PDF page + section, or web anchor."
+            },
+            "quote": {
+              "type": "string",
+              "description": "Verbatim evidence span from the source."
+            }
           }
         },
         "formula": {
@@ -85,12 +154,23 @@
           "type": "array",
           "items": {
             "type": "object",
-            "required": ["src", "agrees"],
+            "required": [
+              "src",
+              "agrees"
+            ],
             "properties": {
-              "src": { "type": "string" },
-              "url": { "type": "string" },
-              "agrees": { "type": "boolean" },
-              "note": { "type": "string" }
+              "src": {
+                "type": "string"
+              },
+              "url": {
+                "type": "string"
+              },
+              "agrees": {
+                "type": "boolean"
+              },
+              "note": {
+                "type": "string"
+              }
             }
           }
         },
@@ -99,31 +179,95 @@
           "minItems": 1,
           "items": {
             "type": "object",
-            "required": ["stage", "result"],
+            "required": [
+              "stage",
+              "result"
+            ],
             "properties": {
-              "stage": { "enum": ["extraction", "verification", "adjudication"] },
-              "method": { "enum": ["recompute", "source-match", "hedge-quote", "read-transcribe", "pending"] },
-              "by": { "type": "string", "description": "Actor, honestly named: 'human:<name>', 'ai:recompute', 'ai:independent-pass', etc." },
-              "date": { "type": "string" },
-              "result": { "enum": ["match", "confirm", "dispute", "pending", "approve"] },
-              "note": { "type": "string" }
+              "stage": {
+                "enum": [
+                  "extraction",
+                  "verification",
+                  "adjudication"
+                ]
+              },
+              "method": {
+                "enum": [
+                  "recompute",
+                  "source-match",
+                  "hedge-quote",
+                  "read-transcribe",
+                  "pending"
+                ]
+              },
+              "by": {
+                "type": "string",
+                "description": "Actor, honestly named: 'human:<name>', 'ai:recompute', 'ai:independent-pass', etc."
+              },
+              "date": {
+                "type": "string"
+              },
+              "result": {
+                "enum": [
+                  "match",
+                  "confirm",
+                  "dispute",
+                  "pending",
+                  "approve"
+                ]
+              },
+              "note": {
+                "type": "string"
+              }
             }
           }
         },
-        "notes": { "type": "string" }
+        "notes": {
+          "type": "string"
+        }
       },
       "allOf": [
         {
-          "if": { "properties": { "kind": { "const": "direct" } } },
-          "then": { "required": ["source"] }
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "direct"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "source"
+            ]
+          }
         },
         {
-          "if": { "properties": { "kind": { "const": "derived" } } },
-          "then": { "required": ["formula"] }
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "derived"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "formula"
+            ]
+          }
         },
         {
-          "if": { "properties": { "kind": { "const": "editorial" } } },
-          "then": { "required": ["rule"] }
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "editorial"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "rule"
+            ]
+          }
         }
       ]
     }

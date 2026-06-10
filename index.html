@@ -224,6 +224,53 @@
 
   footer{margin-top:56px;color:var(--faint);font-size:12px;border-top:1px solid var(--line);padding-top:16px}
   footer a{color:var(--muted)}
+
+  /* ===== Confidence badges + ledger modal ===== */
+  .cbadge{display:inline-flex;align-items:center;gap:5px;cursor:pointer;font-size:10px;font-weight:700;letter-spacing:.03em;border-radius:5px;padding:2px 7px;border:1px solid var(--line);background:var(--panel);color:var(--faint);white-space:nowrap;line-height:1.45;font-family:inherit;vertical-align:middle}
+  .cbadge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+  .cbadge:hover{border-color:currentColor}
+  /* basis colours are applied inline from the BASIS map in JS */
+  .mrow .lbl .cbadge,.dumb .lbl .cbadge{margin-top:4px}
+  .tile .cbadge{margin-top:8px}
+  .stat .cbadge{margin-top:6px}
+
+  .lmodal-overlay{display:none;position:fixed;inset:0;background:rgba(38,55,74,.45);z-index:100;align-items:center;justify-content:center;padding:20px}
+  .lmodal-overlay.show{display:flex}
+  .lmodal{background:var(--panel);border:1px solid var(--line);border-top:4px solid var(--faint);border-radius:14px;max-width:560px;width:100%;max-height:84vh;overflow-y:auto;padding:20px 24px 24px;box-shadow:0 18px 50px rgba(38,55,74,.25)}
+  .lmodal h3{font-size:16px;margin:2px 40px 0 0;line-height:1.35}
+  .lmodal .lgrade{font-size:11px;text-transform:uppercase;letter-spacing:.06em;font-weight:700;margin:9px 0 16px}
+  .lmodal .lrow{margin:0 0 13px}
+  .lmodal .lrow .lk{font-size:10px;text-transform:uppercase;letter-spacing:.09em;color:var(--faint);margin-bottom:3px}
+  .lmodal .lrow .lv{font-size:13px;color:var(--text);line-height:1.55}
+  .lmodal .lv.quote{font-style:italic;color:var(--muted)}
+  .lmodal .lclose{position:absolute;background:none;border:1px solid var(--line);color:var(--muted);border-radius:8px;padding:3px 10px;cursor:pointer;font-size:12px;font-family:inherit;margin:-2px 0 0 0;right:24px}
+  .lmodal{position:relative}
+  .lmodal .lfull{display:inline-block;margin-top:4px;font-size:12px;font-weight:700;color:var(--accent);text-decoration:none;word-break:break-word}
+  .lmodal .lfull:hover{text-decoration:underline}
+
+  /* Confidence tab */
+  #tab-confidence h3{font-size:15px;margin:24px 0 6px;color:var(--text)}
+  .confgrid{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 10px}
+  .confcard{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:11px 15px;min-width:96px}
+  .confcard.lead{border-left:4px solid var(--accent)}
+  .confcard b{display:block;font-size:21px;font-variant-numeric:tabular-nums}
+  .confcard span{font-size:11px;color:var(--muted)}
+  .conflegend{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:8px;margin:6px 0 8px}
+  .conflegend .li{display:flex;gap:9px;align-items:flex-start;font-size:12.5px;color:var(--muted);background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 12px;line-height:1.5}
+  .conflegend .li b{color:var(--text)}
+  .conflist{display:flex;flex-direction:column;gap:7px;margin-top:6px}
+  .confsubhead{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);font-weight:700;margin:16px 0 7px}
+  .confsubhead:first-child{margin-top:4px}
+  .confsubhead.attn{color:var(--accent)}
+  .conflist .ci{display:flex;gap:10px;align-items:baseline;background:var(--panel);border:1px solid var(--line);border-radius:9px;padding:9px 12px}
+  .conflist .ci .ct{font-size:13px;color:var(--text);flex:1;min-width:0}
+  .conflist .ci .cp{font-size:11.5px;color:var(--faint);display:block;margin-top:2px}
+  .conftable{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:4px}
+  .conftable th{text-align:left;color:var(--faint);font-size:10px;text-transform:uppercase;letter-spacing:.07em;border-bottom:1px solid var(--line);padding:7px 8px;position:sticky}
+  .conftable td{border-bottom:1px solid #eceff2;padding:9px 8px;vertical-align:top;color:var(--muted);line-height:1.5}
+  .conftable td.ctab{white-space:nowrap}
+  .conftable tr:hover td{background:var(--panel2)}
+  .conftable .cclaim{color:var(--text)}
 </style>
 </head>
 <body>
@@ -237,11 +284,12 @@
       <button class="tabbtn" data-tab="foryou">By audience<small>the strategy, by who you are</small></button>
       <button class="tabbtn" data-tab="opps">Opportunities<small>programs &amp; the gaps they answer</small></button>
       <button class="tabbtn" data-tab="moneytab">Funded commitments<small>the named dollars, and where they flow</small></button>
-      <button class="tabbtn" data-tab="soft">Soft commitments<small>hedged &amp; aspirational promises</small></button>
-      <button class="tabbtn" data-tab="negative">Unfunded commitments<small>what's promised but not paid for</small></button>
+      <button class="tabbtn" data-tab="soft">Soft commitments<small>hedged or conditional language</small></button>
+      <button class="tabbtn" data-tab="negative">Unfunded commitments<small>commitments without a named amount</small></button>
       <button class="tabbtn" data-tab="targets">Targets<small>baseline → goal, with deadlines</small></button>
       <button class="tabbtn" data-tab="runway">Timeline<small>2025 → 2050, click to expand</small></button>
       <button class="tabbtn" data-tab="method">Methodology<small>how this was made</small></button>
+      <button class="tabbtn" data-tab="confidence">Verification<small>how every claim was checked</small></button>
     </nav>
 
     <div class="sidetitle">Search</div>
@@ -272,25 +320,25 @@
       <header>
         <div class="kicker">Innovation, Science and Economic Development Canada · Released June 2026</div>
         <h1>Canada's National AI Strategy — <span>AI for All</span></h1>
-        <p class="sub">One vision, three values, six pillars, five priority sectors — and a runway of commitments stretching from Budget 2025 to 2050. Use the tabs to explore by audience, program, money, target, or time. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">Read the full strategy ↗</a></p>
+        <p class="sub">Three values, six pillars and five priority sectors, with commitments dated from Budget 2025 to 2050. The tabs reorganize the strategy by audience, program, funding, target and date. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">Read the full strategy ↗</a></p>
         <div class="statrow">
           <div class="stat"><b>3</b><span>core values</span></div>
           <div class="stat"><b>6</b><span>pillars</span></div>
           <div class="stat"><b>5</b><span>priority sectors</span></div>
-          <div class="stat"><b>$2.36B</b><span>new named commitments</span></div>
-          <div class="stat"><b>~$6.2B</b><span>leveraged from existing programs</span></div>
+          <div class="stat" id="statNew"><b>$2.36B</b><span>new named commitments</span></div>
+          <div class="stat" id="statLev"><b>~$6.2B</b><span>leveraged from existing programs</span></div>
           <div class="stat"><b>~$200B</b><span>targeted GDP gain (≈3%)</span></div>
         </div>
       </header>
 
       <h2>The architecture: values → pillars</h2>
-      <p class="h2sub">The strategy's own logic: trust makes adoption possible; opportunity and sovereignty make adoption pay off for Canadians. Each value carries two pillars — click one for full detail.</p>
+      <p class="h2sub">The strategy's stated logic: trust makes adoption possible, while opportunity and sovereignty ensure adoption benefits Canadians. Each value carries two pillars; select one for detail.</p>
       <div class="values" id="values"></div>
       <p class="adoption">— all six connected through <b>ADOPTION</b>: "for Canadians to benefit from AI, they must first learn to use it" —</p>
       <div id="detail"></div>
 
       <h2>Five priority sectors</h2>
-      <p class="h2sub">Focal points across every pillar, where scientific, economic and industrial strengths converge. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all#_Toc78" target="_blank" rel="noopener">read in the strategy ↗</a></p>
+      <p class="h2sub">Sectors where, in the strategy's terms, Canada's scientific, economic and industrial strengths converge. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all#_Toc78" target="_blank" rel="noopener">read in the strategy ↗</a></p>
       <div class="sectors">
         <div class="sector"><b>Health &amp; life sciences</b>first AI mission · $200M</div>
         <div class="sector"><b>Energy &amp; natural resources</b>extraction, clean transition, supply chains</div>
@@ -302,8 +350,8 @@
 
     <!-- ============ FOR YOU ============ -->
     <section class="tab" id="tab-foryou">
-      <h2 style="margin-top:40px">What's in it for you</h2>
-      <p class="h2sub">The strategy organizes itself by pillar; people don't. Pick who you are and see only the programs, money, and targets that touch you directly. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">Read the full strategy ↗</a></p>
+      <h2 style="margin-top:40px">The strategy by audience</h2>
+      <p class="h2sub">The strategy is organized by pillar. Select an audience to see the programs, funding and targets most relevant to it. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">Read the full strategy ↗</a></p>
       <div class="personas" id="personas"></div>
       <div class="personaintro" id="personaintro"></div>
       <div class="cards" id="personacards"></div>
@@ -311,24 +359,24 @@
 
     <!-- ============ OPPORTUNITIES ============ -->
     <section class="tab" id="tab-opps">
-      <h2 style="margin-top:40px">The gaps — and what answers them</h2>
-      <p class="h2sub">Every program in this strategy exists because of a diagnosed problem. Read the left side first; the right side is the response. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">Read the full strategy ↗</a></p>
+      <h2 style="margin-top:40px">Diagnosed gaps and the programs that respond</h2>
+      <p class="h2sub">The strategy presents each program as a response to a diagnosed gap. The left column states the gap; the right column states the response. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">Read the full strategy ↗</a></p>
       <div class="gaps" id="gaps"></div>
 
-      <h2>The opportunity catalogue</h2>
-      <p class="h2sub">Every concrete program in the strategy as a card: what it is, who it's for, what you get, and whether it's live today or still being stood up. Filter by pillar or search from the sidebar.</p>
+      <h2>Program catalogue</h2>
+      <p class="h2sub">Each named program in the strategy: its purpose, intended audience, funding where specified, and whether it is live or announced. Grouped by pillar; filter or search from the sidebar.</p>
       <div class="cards" id="oppcards"></div>
     </section>
 
     <!-- ============ MONEY ============ -->
     <section class="tab" id="tab-moneytab">
-      <h2 style="margin-top:40px">How the dollars flow</h2>
-      <p class="h2sub">Values → pillars → named programs. Ribbon thickness is proportional to dollars; the picture makes one thing obvious — the money concentrates in Sovereignty. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">Read the full strategy ↗</a></p>
+      <h2 style="margin-top:40px">How the funding flows</h2>
+      <p class="h2sub">Values → pillars → named programs; ribbon width is proportional to the dollar amount. The largest share sits under the Sovereignty value. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">Read the full strategy ↗</a></p>
       <div id="flow"></div>
-      <p class="flownote">Areas approximate — minimum thicknesses applied so small programs stay visible. Pillar 6 (Alliances) carries no named dollar commitments; its work is diplomatic. Hatched = leveraged/existing money.</p>
+      <p class="flownote">Ribbon areas are approximate; small programs are given a minimum width to stay legible. Pillar 6 (Alliances) carries no named dollar commitments. Hatched bars are leveraged or existing funds.</p>
 
       <h2>Line by line</h2>
-      <p class="h2sub">Named dollar commitments, coloured by pillar. Solid bars are new strategy money; hatched bars leverage existing programs and Budget 2025.</p>
+      <p class="h2sub">Named dollar commitments, coloured by pillar. Solid bars are new commitments; hatched bars are leveraged from existing programs and Budget 2025.</p>
       <div class="legend">
         <span><i style="background:var(--new)"></i>New commitment</span>
         <span><i style="background:var(--lev);opacity:.55;background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.55) 0 5px,transparent 5px 10px)"></i>Leveraged / existing</span>
@@ -342,45 +390,45 @@
 
     <!-- ============ TARGETS ============ -->
     <section class="tab" id="tab-targets">
-      <h2 style="margin-top:40px">The headline numbers</h2>
-      <p class="h2sub">The outcomes the whole architecture is built to produce. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">Read the full strategy ↗</a></p>
+      <h2 style="margin-top:40px">Headline targets</h2>
+      <p class="h2sub">The strategy's stated outcome targets. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">Read the full strategy ↗</a></p>
       <div class="tiles" id="tiles"></div>
 
       <h2>Baseline → target</h2>
-      <p class="h2sub">Where Canada stands today versus where the strategy commits to land, with the deadline on each.</p>
+      <p class="h2sub">Baseline and target for each metric, with the stated deadline.</p>
       <div class="dumbs" id="dumbs"></div>
     </section>
 
     <!-- ============ TIMELINE ============ -->
     <section class="tab" id="tab-runway">
-      <h2 style="margin-top:40px">The timeline: from momentum to 2050</h2>
-      <p class="h2sub">Launches, money and targets on one runway. Money badges in green, targets in amber. Click any entry for context; filter or search from the sidebar. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">Read the full strategy ↗</a></p>
+      <h2 style="margin-top:40px">Timeline, 2025–2050</h2>
+      <p class="h2sub">Announcements, funding and targets by date. Funding is shown in green, targets in amber. Select an entry for context; filter or search from the sidebar. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">Read the full strategy ↗</a></p>
       <div class="timeline" id="timeline"></div>
     </section>
 
     <!-- ============ NEGATIVE SPACE ============ -->
     <section class="tab" id="tab-negative">
-      <h2 style="margin-top:40px">Unfunded commitments — what's promised but not paid for</h2>
-      <p class="h2sub">The Funded commitments tab shows where the dollars go. This is the inverse: every commitment in the strategy that is <em>not</em> backed by a named dollar figure — laws, standards, diplomacy, tax levers, infrastructure and structural promises. The work is real; the line item isn't. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">Read the full strategy ↗</a></p>
+      <h2 style="margin-top:40px">Unfunded commitments — no named dollar figure</h2>
+      <p class="h2sub">Commitments in the strategy that are <em>not</em> attached to a named dollar figure — legislation, standards, diplomacy, tax measures and infrastructure. Many carry real cost; they simply have no amount specified in the document. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">Read the full strategy ↗</a></p>
       <div class="statrow" id="negStats"></div>
-      <p class="flownote" style="margin-top:14px">Unpriced ≠ free. Tax measures (SR&amp;ED, the super-deduction), new legislation, and standards work all carry real cost and effort — they just don't arrive as a named grant. Filter by pillar or value, or search, from the sidebar.</p>
+      <p class="flownote" style="margin-top:14px">An unpriced commitment is not necessarily costless: tax measures (SR&amp;ED, the super-deduction), legislation and standards work carry real cost but appear without a named amount. Filter by pillar or value, or search, from the sidebar.</p>
       <div class="personas" id="negPills"></div>
       <div id="negative"></div>
     </section>
 
     <!-- ============ SOFT COMMITMENTS ============ -->
     <section class="tab" id="tab-soft">
-      <h2 style="margin-top:40px">Soft commitments — promises the language hedges</h2>
-      <p class="h2sub">Unfunded commitments asks "where's the money?" This asks "how firm is the promise?" These are the commitments the strategy waters down with its own wording — "where appropriate," "at times," "explore," "assess," or numbers it calls "proposed" and "estimated." Each card quotes the giveaway phrase. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">Read the full strategy ↗</a></p>
+      <h2 style="margin-top:40px">Soft commitments — hedged or conditional language</h2>
+      <p class="h2sub">Commitments the strategy qualifies in its own wording — "where appropriate," "at times," "explore," "assess," or figures it describes as "proposed" or "estimated." Each card quotes the qualifying phrase from the source. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">Read the full strategy ↗</a></p>
       <div class="statrow" id="softStats"></div>
-      <p class="flownote" style="margin-top:14px">A hedge isn't automatically a dodge — reviews and pilots are legitimate. But these are the lines to watch for follow-through, and the places where a headline number rests on softer ground than it first appears.</p>
+      <p class="flownote" style="margin-top:14px">Qualified language is not necessarily a weakness; reviews and pilots are standard policy instruments. These items are listed because the commitment, or the figure, is conditional or not yet firm in the source.</p>
       <div id="soft"></div>
     </section>
 
     <!-- ============ METHODOLOGY ============ -->
     <section class="tab" id="tab-method">
       <h2 style="margin-top:40px">Methodology &amp; transparency</h2>
-      <p class="h2sub">How this was made — the source, the judgment calls, what was verified, and what's interpretation rather than fact. The analytical choices are the interesting part, so here they are in the open. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">Read the full strategy ↗</a></p>
+      <p class="h2sub">How this was made — the source, the judgment calls, what was verified, and what is interpretation rather than fact. The analytical choices are set out below so they can be reviewed. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">Read the full strategy ↗</a></p>
       <div class="method">
 
         <h3>1 · What this is — and isn't</h3>
@@ -397,11 +445,11 @@
         <p>The prose strategy was hand-coded into structured data so it could be filtered, summed and cross-linked: 3 values · 6 pillars (each with themes and key actions) · 5 priority sectors · <b>31 concrete programs</b> (each tagged with pillar, audience, dollar amount if any, and status) · <b>16 named dollar line-items</b> (each flagged new vs. leveraged) · 8 "gap → response" diagnoses · headline targets and baseline→target metrics · a dated timeline (Budget 2025 → 2050).</p>
 
         <h3>4 · Definitions &amp; classification rules</h3>
-        <p>The interpretive core — stated plainly so you can disagree with them.</p>
+        <p>The interpretive core, set out so it can be reviewed and contested.</p>
         <ul>
           <li><b>Funded vs. unfunded</b> — a commitment is "funded" only if the strategy attaches a <em>named dollar figure</em> to it. Programs described without a specific amount are "unfunded," even if money may flow later.</li>
           <li><b>New vs. leveraged</b> — "new" = money the strategy introduces; "leveraged" = existing or previously-announced funds (mostly Budget 2025 and ongoing programs) counted toward the total. Shown distinctly because they're different kinds of commitment.</li>
-          <li><b>Soft / hedged commitments</b> — flagged where the strategy's <em>own wording</em> qualifies the promise ("where appropriate," "at times," "explore," "assess," "review," or numbers it calls "proposed" / "estimated"). Found by searching the source text for these markers, then reading each in context. A hedge isn't automatically a dodge — but it's worth seeing.</li>
+          <li><b>Soft / hedged commitments</b> — flagged where the strategy's <em>own wording</em> qualifies the promise ("where appropriate," "at times," "explore," "assess," "review," or numbers it calls "proposed" / "estimated"). Found by searching the source text for these markers, then reading each in context. Qualified language is not necessarily a weakness, but it is worth surfacing.</li>
           <li><b>Live now vs. announced</b> — "live" = running or available today per the source; "announced" = committed but not yet stood up.</li>
           <li><b>Pillar / value assignment</b> — each item sits under the pillar the strategy assigns it; pillars roll up to the three values as the strategy describes.</li>
           <li><b>Unfunded categories</b> (Law &amp; rights · Standards &amp; trust · Skills &amp; people · Market &amp; structural · Infrastructure &amp; sovereignty · Diplomacy &amp; alliances) are <em>our</em> groupings of unpriced items, not the government's.</li>
@@ -441,15 +489,44 @@
           <li><b>Worked from the primary document, not memory.</b> The full 29-page strategy PDF was extracted to text and read directly; figures came from the document itself, not from anything the model "remembered" from training.</li>
           <li><b>Independent corroboration.</b> Headline numbers were cross-checked against reputable public sources (CBC, The Globe and Mail, BetaKit, BDC, CIFAR, canada.ca) before being trusted.</li>
           <li><b>Line-by-line verification.</b> Every figure, target, date, program name and claim was checked against the PDF (see §5) — which is what surfaced the five-vs-six sector contradiction and the three wordings softened to match the source.</li>
+          <li><b>A claim-by-claim verification ledger.</b> Beyond this note, every tracked figure, target and commitment is recorded in a structured ledger (<code>ledger.json</code>), each graded and traced to source by a published, reusable method — <a href="METHOD.md" target="_blank" rel="noopener">the Source-Traceable Claim Ledger</a>. Browse it in the <b>Verification</b> tab; the badge on each figure opens its record.</li>
           <li><b>Traceability over trust.</b> Every item links back to its section of the official strategy, and the full dataset sits inline in the page — so any claim can be checked rather than taken on the model's word.</li>
           <li><b>Build verification.</b> Each change was loaded in a real (headless) browser and checked for correct rendering and zero errors before it shipped.</li>
         </ul>
         <p><b>The honest limit:</b> AI can still make mistakes — misread a figure, miscategorize a program, or carry a subtle bias. The source links, the inline data, and the line-by-line check exist precisely so this work can be audited, not trusted blindly. A human directed the scope and approved every change.</p>
 
-        <h3>10 · Snapshot &amp; disclaimer</h3>
+        <h3>10 · The verification ledger</h3>
+        <p>The accuracy check above was turned into a standing, published artifact: a <b>claim ledger</b> (<a href="ledger.json" target="_blank" rel="noopener"><code>ledger.json</code></a>) in which every figure, target and commitment is one row — traced to an exact source quote and labelled by a written, reusable method, the <a href="METHOD.md" target="_blank" rel="noopener">Source-Traceable Claim Ledger</a>. Browse it live in the <b>Verification</b> tab; the badge on any figure opens its record. The point is that you needn't trust this page — you can replay the checks.</p>
+        <p>Each claim carries <b>two axes</b>: a <em>kind</em> — <b>direct</b> (asserted by the source), <b>derived</b> (computed by us, e.g. a total) or <b>editorial</b> (our framing) — and a <em>basis</em> category set by a deterministic rule (<a href="confidence-rubric.md" target="_blank" rel="noopener">the rubric</a>), so it is reproducible rather than asserted. The basis is a <em>category, not a score</em>:</p>
+        <ul>
+          <li><b>Corroborated:</b> matches the source <em>and</em> an independent outside source agrees.</li>
+          <li><b>Per the source:</b> a government statement, confirmed word-for-word against the official text.</li>
+          <li><b>Qualified by the source:</b> the government's own wording hedges, estimates or contradicts itself — verified verbatim; the qualification is the source's, not ours.</li>
+          <li><b>Recomputed</b> / <b>Our analysis:</b> figures we computed from the data, or our editorial lenses — labelled as ours, not the source's.</li>
+        </ul>
+        <p><b>How the figures were verified.</b> Because "we checked it" is not a method, every factual claim was put through an <b>independent pass</b>: three separate verifier agents re-fetched the official strategy on their own — blind to the labels — and re-derived each quote from scratch, and the headline dollar figures were corroborated against outside sources (BetaKit, University Affairs, BDC, KPMG, and a Budget 2025 legal analysis). Each record shows its check trail and who ran every step.</p>
+        <p><b>Where it stands (verified June 6, 2026):</b> 52 tracked claims — <b>6 corroborated, 19 per the source, 15 qualified by the source, 6 recomputed, 6 our analysis</b> — with <b>0 open</b> (none disputed or unchecked). The independent pass also worked in the other direction, which is the real test: it briefly flagged one claim (the conditional "Canadian models could become world-leading on safety") because a summary had skipped the sentence, and a targeted re-read then found it verbatim and cleared it. The ledger keeps that <em>dispute → adjudication → confirm</em> trail in the open — a flag honestly raised and resolved is more trustworthy than a claim never questioned.</p>
+        <p><b>What "verified" means here:</b> each claim is faithful to the source and traceable to the exact words — not that the dollars will ultimately be spent, which is a separate question. The one check a machine can't supply is a human's sign-off, which remains the editor's to give.</p>
+
+        <h3>11 · Snapshot &amp; disclaimer</h3>
         <p>A snapshot <b>as of June 5, 2026</b>; the strategy says it will be reviewed and updated, so figures may move. <b>Unofficial — not affiliated with or endorsed by the Government of Canada.</b> For any decision, consult the <a href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">official strategy</a> directly.</p>
 
       </div>
+    </section>
+
+    <section class="tab" id="tab-confidence">
+      <h2 style="margin-top:40px">Verification &amp; sources</h2>
+      <p class="h2sub">Every tracked claim in this explorer, labelled and traced to source — generated live from <code>ledger.json</code> using the <a href="METHOD.md" target="_blank" rel="noopener">Source-Traceable Claim Ledger</a> method. The verification badges throughout the site open these same records. Each claim carries two axes: <b>kind</b> (what it is — direct, derived, or editorial) and <b>basis</b> (the category — e.g. per the source, qualified by the source, corroborated).</p>
+      <div class="confgrid" id="confGrid"></div>
+      <p class="flownote" id="confCoverage"></p>
+      <h3>What the categories mean</h3>
+      <div class="conflegend" id="confLegend"></div>
+      <h3>Reading the flags</h3>
+      <p class="h2sub">Most flags here are <b>not</b> gaps in our checking — they're the places the government's own document hedges, estimates, or contradicts itself, each verified word-for-word against the source. Anything genuinely open on our side (disputed, or not yet re-checked) is listed separately and flagged in red; right now there is none.</p>
+      <div class="conflist" id="confFlagged"></div>
+      <h3>Full ledger</h3>
+      <p class="h2sub">All tracked claims. Click any badge for the full record, or open <a href="ledger.json" target="_blank" rel="noopener"><code>ledger.json</code></a> directly.</p>
+      <div id="confTable"></div>
     </section>
 
     <footer>
@@ -458,6 +535,8 @@
 
   </div>
 </div>
+
+<div class="lmodal-overlay" id="lmodal"><div class="lmodal" id="lmodalbox"></div></div>
 
 <script>
 /* ================= DATA ================= */
@@ -624,18 +703,18 @@ const SOFT = [
 
 const GAPS = [
   {p:"p3",gt:"The adoption gap",g:"Only 12% of Canadian businesses use AI — about 8% of SMEs — versus 29–42% among Nordic leaders. 78% of non-adopters say they don't see the benefit: a translation problem, not resistance.",
-   rt:"Make adoption easy and concrete",r:"$500M LIFT financing, $500M Regional AI Initiative, a readiness assessment tool, and mission-driven projects that prove value in real sectors. Target: 60% adoption by 2034."},
+   rt:"Lower the barriers to adoption",r:"$500M LIFT financing, $500M Regional AI Initiative, a readiness assessment tool, and mission-driven projects that prove value in real sectors. Target: 60% adoption by 2034."},
   {p:"p2",gt:"The literacy & trust gap",g:"Canada ranks 44th of 47 countries on AI training and literacy, 42nd on trust. Only 24% of Canadians have any AI training; half see AI as a threat to humanity.",
-   rt:"Train everyone, starting now",g2:"",r:"Free national AI literacy training, 1M students reached, 3,000+ educators equipped, AI agents for every post-secondary student, and delivery through libraries into rural and northern communities."},
-  {p:"p5",gt:"The startup exodus",g:"Nearly 70% of Canadian-led startups end up headquartered outside the country. VC is concentrated in few deals, and the rational move has long been to scale south.",
-   rt:"Change the math of staying",r:"$500M Growth Fund with equity stakes, the Venture Scientist Fund, Budget 2026 reinvestment incentives, and government as anchor customer — rebuilding the flywheel that rewards staying."},
-  {p:"p4",gt:"The sovereignty exposure",g:"Sovereign compute is nascent; GPU fabrication sits offshore; researchers train on foreign clouds and sensitive data lives in foreign jurisdictions, subject to rules Canada doesn't control.",
+   rt:"Build AI literacy and skills",g2:"",r:"Free national AI literacy training, 1M students reached, 3,000+ educators equipped, AI agents for every post-secondary student, and delivery through libraries into rural and northern communities."},
+  {p:"p5",gt:"Companies scaling abroad",g:"Nearly 70% of Canadian-led startups end up headquartered outside the country. VC is concentrated in few deals, and the rational move has long been to scale south.",
+   rt:"Improve incentives to scale in Canada",r:"$500M Growth Fund with equity stakes, the Venture Scientist Fund, Budget 2026 reinvestment incentives, and government as anchor customer — rebuilding the flywheel that rewards staying."},
+  {p:"p4",gt:"Exposure on sovereignty and infrastructure",g:"Sovereign compute is nascent; GPU fabrication sits offshore; researchers train on foreign clouds and sensitive data lives in foreign jurisdictions, subject to rules Canada doesn't control.",
    rt:"Build-partner-buy",r:"A public supercomputer by 2031, 850MW of sovereign compute by 2030 scaling to 2.3GW, $700M in SME compute access, chip fabrication via the NRC photonics spin-off, sovereign cloud for government."},
-  {p:"p4",gt:"The talent squeeze",g:"Every major economy is courting the same researchers and engineers with faster immigration, higher pay, and deeper compute. Canada's research lead is its most strategic asset — and its most poachable.",
-   rt:"Anchor the people",r:"CIFAR AI Chairs from 130 to ~200, an expanded Global Talent Stream with PR pathways, all stacked on the $1.7B Budget 2025 talent attraction strategy."},
-  {p:"p1",gt:"The harms that erode trust",g:"Deepfakes already used as sexual violence and election misinformation; algorithmic bias harming vulnerable communities; children's data exposed. Half of Canadians regard AI as a threat.",
-   rt:"Safety as the foundation of speed",r:"Modernized privacy law, online safety legislation, deepfake legal tools, election protections, a $50M AI Safety Institute expansion, watermarking, and a Trusted AI Certification mark."},
-  {p:"p4",gt:"Data locked in silos",g:"Decades of public health, energy and agricultural data — exactly what AI needs — sits inaccessible to the innovators who could turn it into products and better services.",
+  {p:"p4",gt:"Competition for talent",g:"Every major economy is courting the same researchers and engineers with faster immigration, higher pay, and deeper compute. Canada's research lead is its most strategic asset — and its most poachable.",
+   rt:"Retain and attract talent",r:"CIFAR AI Chairs from 130 to ~200, an expanded Global Talent Stream with PR pathways, all stacked on the $1.7B Budget 2025 talent attraction strategy."},
+  {p:"p1",gt:"Risks to safety and trust",g:"Deepfakes already used as sexual violence and election misinformation; algorithmic bias harming vulnerable communities; children's data exposed. Half of Canadians regard AI as a threat.",
+   rt:"Safety and rights protections",r:"Modernized privacy law, online safety legislation, deepfake legal tools, election protections, a $50M AI Safety Institute expansion, watermarking, and a Trusted AI Certification mark."},
+  {p:"p4",gt:"Data held in silos",g:"Decades of public health, energy and agricultural data — exactly what AI needs — sits inaccessible to the innovators who could turn it into products and better services.",
    rt:"Treat data as a national asset",r:"$100M Health Sector Data Space with CIHI and $100M to expand VITAL to five more provinces, with privacy-protected standards. Health first; other sectors follow."},
   {p:"p6",gt:"Platform dependence",g:"The global market is consolidating around a few closed systems. For dependent countries: lock-in, opacity, and technology that can be restricted at a foreign government's discretion.",
    rt:"Alliances and open source",r:"The Sovereign Technology Alliance pools allied compute, models and procurement; a global open-source effort keeps transparent, adaptable alternatives viable for SMEs and nonprofits."}
@@ -734,6 +813,426 @@ const EVENTS = [
    ctx:"From the parallel National Electricity Strategy: double the grid, largely with hydro, nuclear and renewables. Clean power plus a northern climate gives Canadian compute a cost and sustainability advantage competitors spend billions trying to replicate artificially."}
 ];
 
+/* ===== CONFIDENCE LEDGER (compact mirror of ledger.json; full record in that file) ===== */
+const LEDGER = {
+"meta:total-new": {
+"k": "derived",
+"b": "corroborated",
+"c": "$2.36B in new named commitments",
+"prov": "sum(MONEY.a where !lev) = 700+500+500+200+130+100+100+50+50+30 = 2360 ($M) = $2.36B",
+"chk": "verification recompute → confirm (recompute, 2026-06-06) · corroborated: KPMG Canada — AI for All analysis",
+"note": "Sum of the 10 new line-items, recomputed this cycle (=$2.36B), and independently corroborated by KPMG ('more than $2.3 billion'). Grade A."
+},
+"meta:total-leveraged": {
+"k": "derived",
+"b": "recomputed",
+"c": "~$6.2B leveraged from existing programs",
+"prov": "sum(MONEY.a where lev) = 2000+1750+1700+500+159+50 = 6159 ($M) = $6.16B",
+"chk": "verification recompute → confirm (recompute, 2026-06-06)",
+"note": "DISCREPANCY: exact recompute is $6.16B; the Overview tile rounds to '~$6.2B'. The Funded-commitments tab shows the precise $6.16B. A rounding choice, flagged for transparency."
+},
+"meta:count-programs": {
+"k": "derived",
+"b": "recomputed",
+"c": "31 concrete programs",
+"prov": "OPPS.length = 31",
+"chk": "verification recompute → confirm (recompute, 2026-06-06)",
+"note": "Count of program cards in the dataset."
+},
+"meta:count-money": {
+"k": "derived",
+"b": "recomputed",
+"c": "16 named dollar line-items",
+"prov": "MONEY.length = 16",
+"chk": "verification recompute → confirm (recompute, 2026-06-06)",
+"note": "Count of funded line-items in the dataset."
+},
+"meta:count-unfunded": {
+"k": "derived",
+"b": "recomputed",
+"c": "17 of 31 named programs are unfunded (55%)",
+"prov": "OPPS.filter(!amt).length = 17; 17/31 = 54.8% -> 55%",
+"chk": "verification recompute → confirm (recompute, 2026-06-06)",
+"note": "Programs with no named dollar amount, as a share of all programs."
+},
+"meta:pillar6-zero": {
+"k": "derived",
+"b": "recomputed",
+"c": "1 pillar carries $0 named (Pillar 6, Alliances)",
+"prov": "pillars where sum(MONEY.a for that pillar)==0 -> {p6}; count = 1 (p1=50, p2=130, p3=1200, p4=3900, p5=3239, p6=0)",
+"chk": "verification recompute → confirm (recompute, 2026-06-06)",
+"note": "Pillar 6's work is diplomatic; no named dollars attach to it."
+},
+"meta:sovereignty-concentration": {
+"k": "derived",
+"b": "recomputed",
+"c": "The named money concentrates in Sovereignty",
+"prov": "value totals -> trust(p1+p6)=50, opportunity(p2+p3)=1330, sovereignty(p4+p5)=7139; 7139/8519 = 84% of all named dollars",
+"chk": "verification recompute → confirm (recompute, 2026-06-06)",
+"note": "Supports the ribbon-diagram claim that the money concentrates in Sovereignty."
+},
+"editorial:funded-lens": {
+"k": "editorial",
+"b": "our-analysis",
+"c": "Funded vs. unfunded is defined by a named dollar figure",
+"prov": "A commitment is 'funded' only if the strategy attaches a named dollar figure to it; otherwise it is 'unfunded' (even if money may flow later). Applied to every commitment.",
+"chk": "verification source-match → confirm (rule check, 2026-06-06)",
+"note": "Our lens, not the government's framing."
+},
+"editorial:soft-lens": {
+"k": "editorial",
+"b": "our-analysis",
+"c": "Soft commitments are flagged by the source's own hedging language",
+"prov": "A commitment is 'soft' where the source's own wording qualifies it ('where appropriate', 'at times', 'explore', 'assess', 'review') or labels a number 'proposed'/'estimated'. Found by searching the source for these markers, then reading each in context.",
+"chk": "verification source-match → confirm (rule check, 2026-06-06)",
+"note": "A hedge isn't automatically a dodge, but it's worth seeing. Each soft claim quotes its giveaway phrase."
+},
+"editorial:new-vs-leveraged": {
+"k": "editorial",
+"b": "our-analysis",
+"c": "New vs. leveraged money are shown distinctly",
+"prov": "'New' = money the strategy introduces; 'leveraged' = existing or previously-announced funds (mostly Budget 2025 and ongoing programs) counted toward the total. Each line-item flagged as one or the other.",
+"chk": "verification source-match → confirm (rule check, 2026-06-06)",
+"note": "Different kinds of commitment; kept separate so totals are honest."
+},
+"editorial:neg-categories": {
+"k": "editorial",
+"b": "our-analysis",
+"c": "Unfunded items are grouped into six author-defined categories",
+"prov": "Unpriced commitments grouped into six categories chosen by us — Law & rights, Standards & trust, Skills & people, Market & structural, Infrastructure & sovereignty, Diplomacy & alliances — not the government's taxonomy.",
+"chk": "verification source-match → confirm (rule check, 2026-06-06)",
+"note": "Our groupings, stated so they can be disputed."
+},
+"editorial:persona-map": {
+"k": "editorial",
+"b": "our-analysis",
+"c": "Each program is mapped to the audiences it touches",
+"prov": "Each program is tagged with the personas (SME owner, founder, student, mid-career worker, researcher, creator, Indigenous communities, public servant) it materially serves. Our reading of relevance, not a mapping the source provides.",
+"chk": "verification source-match → confirm (rule check, 2026-06-06)",
+"note": "Drives the 'By audience' tab."
+},
+"editorial:gap-response": {
+"k": "editorial",
+"b": "our-analysis",
+"c": "Eight 'gap -> response' pairings frame the programs as answers to diagnosed gaps",
+"prov": "Eight clusters of programs are each framed as a response to a diagnosed gap (adoption, literacy/trust, startup exodus, sovereignty exposure, talent squeeze, harms, data silos, platform dependence). The pairing is our analytical framing; the underlying gap statistics are separate direct claims.",
+"chk": "verification source-match → confirm (rule check, 2026-06-06)",
+"note": "The gap statistics inside each pairing are direct claims graded separately."
+},
+"direct:five-sectors": {
+"k": "direct",
+"b": "qualified",
+"c": "Five priority sectors (not six)",
+"prov": "Priority-sectors section + Workforce-Alliances line · “These five priority sectors will act as focal points across the strategy: 1. Health and life sciences 2. Energy and natural resources 3. Transportation 4. Agriculture 5. Manufacturing and robotics”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); adjudication source-match → confirm (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "Independently confirmed internal inconsistency: the strategy enumerates FIVE priority sectors (Health & life sciences; Energy & natural resources; Transportation; Agriculture; Manufacturing & robotics), but the Workforce-Alliances line says 'across six priority sectors' (the six are never enumerated). We use the enumerated five."
+},
+"soft:Sovereign Wealth Fund for AI champions": {
+"k": "direct",
+"b": "qualified",
+"c": "Sovereign Wealth Fund will back AI champions 'where appropriate'",
+"prov": "Pillar 5 — Scaling Canadian champions · “Where appropriate, Canada will leverage its recently announced Sovereign Wealth Fund to further support emerging national champions.”",
+"chk": "verification hedge-quote → confirm (hedge marker, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "No amount or trigger defined."
+},
+"soft:Federal equity stakes in AI firms": {
+"k": "direct",
+"b": "qualified",
+"c": "Tech Growth Fund can take federal equity stakes 'at times'",
+"prov": "Pillar 5 — Scaling Canadian champions · “the federal government, at times, to take equity stakes in the most promising Canadian AI firms”",
+"chk": "verification hedge-quote → confirm (hedge marker, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "Action qualified as occasional."
+},
+"soft:Canadian models leading on AI safety": {
+"k": "direct",
+"b": "qualified",
+"c": "Canadian models 'could become world-leading' on safety — conditionally",
+"prov": "Pillar 5 — Scaling Canadian champions · “Canada's AI ecosystem also supports safe-by-design frontier AI research. These efforts, if developed appropriately and scaled commercially, have the potential to become world-leading solutions to AI safety.”",
+"chk": "verification hedge-quote → confirm (hedge marker, 2026-06-06); verification source-match → dispute (independent agent, 2026-06-06); adjudication source-match → confirm (targeted re-fetch, 2026-06-06)",
+"note": "Verified verbatim (after an initial false dispute — the first independent summary missed the sentence). A genuine conditional/soft commitment: 'if developed appropriately and scaled commercially … potential to become world-leading'."
+},
+"soft:Budget 2026 reinvestment mechanisms": {
+"k": "direct",
+"b": "qualified",
+"c": "Budget 2026 will 'explore' reinvestment mechanisms",
+"prov": "Pillar 5 — Scaling Canadian champions · “By Budget 2026, the Department of Finance will work with experts to explore mechanisms that encourage Canadians to reinvest gains”",
+"chk": "verification hedge-quote → confirm (hedge marker, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "A commitment to study, not yet a mechanism."
+},
+"soft:Aligning innovation programs": {
+"k": "direct",
+"b": "qualified",
+"c": "Canada will 'assess the full continuum' of innovation programs",
+"prov": "Pillar 5 — Scaling Canadian champions · “Canada will assess the full continuum of innovation programs to better align existing innovation instruments”",
+"chk": "verification hedge-quote → confirm (hedge marker, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "Direction set, design pending."
+},
+"soft:Mid-career upskilling at scale": {
+"k": "direct",
+"b": "qualified",
+"c": "Mid-career upskilling is a commitment to 'assess … offerings'",
+"prov": "Pillar 2 — Empowering Canadians · “Canada will assess training and upskill offerings for mid-career workers, including in skilled trades, to scale-up employer-led training nationwide”",
+"chk": "verification hedge-quote → confirm (hedge marker, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "The visual lists this as a program; the source only commits to assessing offerings. Cross-referenced from the program card."
+},
+"soft:Privacy Act review": {
+"k": "direct",
+"b": "qualified",
+"c": "Government will 'continue its review' of the Privacy Act",
+"prov": "Pillar 1 — Protecting Canadians · “the Government will continue its review of the Privacy Act to meets the needs of Canadians in the digital age”",
+"chk": "verification hedge-quote → confirm (hedge marker, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "Ongoing review, not a new rule yet."
+},
+"soft:Tracking AI's impact on jobs": {
+"k": "direct",
+"b": "qualified",
+"c": "Canada will 'track and assess' AI's labour-market impact",
+"prov": "Pillar 2 — Empowering Canadians · “Canada will track and assess the societal, labour market, and economic impacts of AI”",
+"chk": "verification hedge-quote → confirm (hedge marker, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "A monitoring commitment with no defined intervention."
+},
+"soft:850 MW → 2.3 GW sovereign compute": {
+"k": "direct",
+"b": "qualified",
+"c": "850 MW sovereign compute 'proposed', scaling 'up to' 2.3 GW by 2030",
+"prov": "Pillar 4 — Sovereign AI foundation · “These partnerships are being finalized, and have proposed providing 850 MW of compute capacity by 2030, with scaling capacity of up to 2.3 GW”",
+"chk": "verification hedge-quote → confirm (hedge marker, 2026-06-06); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "Headline compute figure — a proposal, not secured capacity. Same evidence backs the Targets dumbbell and the 2030 timeline entry."
+},
+"soft:5.5 GW of compute needed by 2030": {
+"k": "direct",
+"b": "qualified",
+"c": "An estimated 5.5 GW of AI compute needed by 2030",
+"prov": "Pillar 4 — Sovereign AI foundation · “Estimates vary, but analysis suggests Canada will require 5.5 gigawatts (GW) worth of AI compute for its commercial players by 2030.”",
+"chk": "verification hedge-quote → confirm (hedge marker, 2026-06-06); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "Analyst estimate the strategy itself hedges, not a government commitment."
+},
+"soft:$187B generative-AI upside by 2030": {
+"k": "direct",
+"b": "qualified",
+"c": "Generative AI alone could add ~$187B/year (estimate)",
+"prov": "Pillar 3 — Powering shared prosperity · “Some estimates for generative AI alone add $187 billion annually to the Canadian economy by 2030”",
+"chk": "verification hedge-quote → confirm (hedge marker, 2026-06-06); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "External projection cited as 'some estimates', not a strategy target."
+},
+"money:Existing AI compute investments (AI Compute Challenge)": {
+"k": "direct",
+"b": "per-source",
+"c": "$2B+ existing AI compute investments (AI Compute Challenge) — leveraged",
+"prov": "Pillar 4 — Sovereign AI foundation · “the Government will continue delivering on more than $2 billion in existing investments in Canadian AI compute capacity, including through the AI Compute Challenge”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "Leveraged. Upgrades to B on source-match, A on corroboration (Budget 2025 / news)."
+},
+"money:Budget 2025 venture capital stimulus": {
+"k": "direct",
+"b": "corroborated",
+"c": "$1.75B Budget 2025 venture capital stimulus — leveraged",
+"prov": "Pillar 5 — Scaling Canadian champions · “Canada will also leverage $1.75 billion of federal investments and commitments announced in Budget 2025 to stimulate private sector investment in venture capital”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06) · corroborated: BetaKit",
+"note": "Leveraged from Budget 2025; independently corroborable."
+},
+"money:Budget 2025 talent attraction strategy": {
+"k": "direct",
+"b": "corroborated",
+"c": "$1.7B Budget 2025 talent attraction strategy — leveraged (broader than AI)",
+"prov": "Pillar 4 — Sovereign AI foundation · “These efforts will complement the Government's broader $1.7 billion talent attraction strategy announced in Budget 2025.”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06) · corroborated: University Affairs",
+"note": "Leveraged (Budget 2025); independent source notes it runs over 12 years."
+},
+"money:Compute Access Fund expansion — SME sovereign compute": {
+"k": "direct",
+"b": "per-source",
+"c": "$700M Compute Access Fund expansion for SME sovereign compute — new",
+"prov": "Pillar 5 — Scaling Canadian champions · “Canada will provide Canadian SMEs with an additional $700 million in affordable sovereign compute through an expansion of the Compute Access Fund.”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "New money."
+},
+"money:Regional AI Initiative expansion (RDAs)": {
+"k": "direct",
+"b": "per-source",
+"c": "$500M Regional AI Initiative expansion (via RDAs) — new",
+"prov": "Pillar 3 — Powering shared prosperity · “Canada will invest $500 million to expand and enhance the Regional Artificial Intelligence Initiative delivered through Regional Development Agencies.”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "New money."
+},
+"money:BDC LIFT — SME AI adoption financing": {
+"k": "direct",
+"b": "corroborated",
+"c": "$500M BDC LIFT — SME AI adoption financing — leveraged",
+"prov": "Pillar 3 — Powering shared prosperity · “Canada will utilize the LIFT program, a $500 million initiative from the Business Development Bank of Canada (BDC)”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06) · corroborated: BDC media release",
+"note": "Existing BDC initiative (leveraged)."
+},
+"money:Canadian Tech Growth Fund": {
+"k": "direct",
+"b": "per-source",
+"c": "$500M Canadian Tech Growth Fund — new",
+"prov": "Pillar 5 — Scaling Canadian champions · “Canada will establish a $500 million Canadian Tech Growth Fund to help close the scale-up capital gap facing Canada's most promising AI companies.”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "New money. Equity-stake mechanism is a separate soft claim ('at times')."
+},
+"money:AI Missions Program — first mission: health": {
+"k": "direct",
+"b": "per-source",
+"c": "$200M AI Missions Program — first mission: health — new",
+"prov": "Pillar 3 — Powering shared prosperity · “Canada will launch a new AI Missions Program ... starting with $200 million towards improving health outcomes for Canadians.”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "New money."
+},
+"money:Elevate IP & IP Assist (Budget 2025)": {
+"k": "direct",
+"b": "corroborated",
+"c": "$159M Elevate IP & IP Assist (Budget 2025) — leveraged",
+"prov": "Pillar 5 — Scaling Canadian champions · “Canada will leverage $159 million invested in Budget 2025 through the Elevate IP and IP Assist programs”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06) · corroborated: Miller Thomson — Budget 2025 analysis",
+"note": "Leveraged from Budget 2025."
+},
+"money:Commercialization programs, National AI Institutes": {
+"k": "direct",
+"b": "per-source",
+"c": "$130M commercialization programs at the National AI Institutes — new",
+"prov": "Pillar 5 — Scaling Canadian champions · “Canada will invest $130 million for commercialization programs across the National AI Institutes, including for Founders-in-Residence.”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "New money."
+},
+"money:Health Sector Data Space (with CIHI)": {
+"k": "direct",
+"b": "per-source",
+"c": "$100M Health Sector Data Space (with CIHI) — new",
+"prov": "Pillar 4 — Sovereign AI foundation · “Canada will invest $100 million to launch the Health Sector Data Space, in partnership with the Canadian Institute for Health Information (CIHI).”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "New money."
+},
+"money:VITAL expansion to 5 more provinces": {
+"k": "direct",
+"b": "per-source",
+"c": "$100M VITAL expansion to 5 more provinces — new",
+"prov": "Pillar 4 — Sovereign AI foundation · “Canada will also invest $100 million to expand VITAL in five additional provinces.”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "New money."
+},
+"money:Canadian AI Safety Institute expansion": {
+"k": "direct",
+"b": "per-source",
+"c": "$50M Canadian AI Safety Institute (CAISI) expansion — new",
+"prov": "Pillar 1 — Protecting Canadians · “Canada will invest $50 million to expand the capabilities of the Canadian AI Safety Institute to track emerging AI risks, advance technical research, and to conduct transparent evaluations of AI models.”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "New money."
+},
+"money:Creative Technology Program": {
+"k": "direct",
+"b": "per-source",
+"c": "$50M Creative Technology Program — new",
+"prov": "Pillar 2 — Empowering Canadians · “Canada will establish a $50 million Creative Technology Program to support Canadian creators in using AI on their own terms.”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "New money."
+},
+"money:Job Bank AI modernization (Budget 2025)": {
+"k": "direct",
+"b": "per-source",
+"c": "$50M Job Bank AI modernization (Budget 2025) — leveraged",
+"prov": "Pillar 2 — Empowering Canadians · “Canada will invest $50 million over five years through Budget 2025 to modernize the Job Bank with AI-powered job matching.”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "Leveraged from Budget 2025."
+},
+"money:CanCode — K-12 digital & AI skills": {
+"k": "direct",
+"b": "per-source",
+"c": "$30M CanCode — K-12 digital & AI skills — new",
+"prov": "Pillar 2 — Empowering Canadians · “Canada will invest $30 million in CanCode to fund not-for-profit organizations to deliver free digital skills training.”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "New money."
+},
+"target:Business AI adoption": {
+"k": "direct",
+"b": "corroborated",
+"c": "Business AI adoption: 12% today -> 60% by 2034",
+"prov": "Pillar 3 — Powering shared prosperity · “Increase Canada's business adoption of AI from 12 percent today to 60 percent by 2034”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06) · corroborated: KPMG Canada — AI for All analysis",
+"note": "The strategy's headline number."
+},
+"target:SME AI adoption": {
+"k": "direct",
+"b": "per-source",
+"c": "SME AI adoption ~8% today, rolled into the 60% goal",
+"prov": "Pillar 3 — Powering shared prosperity · “only about 8 percent of Canadian SMEs have adopted AI, well behind Nordic leaders (29 to 42 percent)”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "SMEs are 99% of businesses; ~8% adoption baseline."
+},
+"target:Canadians with any AI training": {
+"k": "direct",
+"b": "per-source",
+"c": "Canadians with any AI training: 24% baseline, goal universal free access",
+"prov": "Pillar 2 — Empowering Canadians · “Fewer than a quarter of Canadians (24 percent) report having received any AI training”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification → pending; verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "Found on the main page in the KPMG–University of Melbourne global-trust-study context (the 24% sentence itself is not separately footnoted)."
+},
+"target:Canada CIFAR AI Chairs": {
+"k": "direct",
+"b": "per-source",
+"c": "Canada CIFAR AI Chairs: 130 -> ~200 researchers",
+"prov": "Pillar 4 — Sovereign AI foundation · “increase the Canada CIFAR AI Chairs program from 130 to nearly 200 researchers”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "Retention play against global recruitment."
+},
+"target:K-12 educators trained": {
+"k": "direct",
+"b": "per-source",
+"c": "K-12 educators trained: 1,500 -> 3,000+ (doubling)",
+"prov": "Pillar 2 — Empowering Canadians · “doubling K-12 teacher training to more than 3,000 educators”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "Source: 'doubling K-12 teacher training to more than 3,000 educators'. The 3,000+ target is verified (a floor, 'more than'); the 1,500 baseline in the dumbbell is IMPLIED by 'doubling' (= 3,000/2), not stated verbatim. Disclosed inference."
+},
+"target:90,000 AI placements": {
+"k": "direct",
+"b": "qualified",
+"c": "Up to 90,000 AI jobs & placements for young Canadians by 2031",
+"prov": "Pillar 2 — Empowering Canadians · “Create up to 90,000 AI-related jobs and work placement opportunities for young Canadians ... by 2031.”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "Verified verbatim; graded C because the source says 'up to 90,000' (a ceiling, not a floor)."
+},
+"target:250,000 new jobs": {
+"k": "direct",
+"b": "qualified",
+"c": "Up to 250,000 new jobs through AI adoption by 2031",
+"prov": "Pillar 3 — Powering shared prosperity · “Help create up to 250,000 new jobs through the adoption of AI by 2031.”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06) · corroborated: KPMG Canada — AI for All analysis",
+"note": "Verified verbatim and corroborated, but graded C: 'up to' and projected via adoption."
+},
+"target:1M students reached": {
+"k": "direct",
+"b": "per-source",
+"c": "1,000,000 post-secondary students reached with AI literacy",
+"prov": "Pillar 2 — Empowering Canadians · “AI literacy content will reach 1 million entry level post-secondary students”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "Part of the National AI Literacy Initiative."
+},
+"target:GDP unlock ~$200B": {
+"k": "direct",
+"b": "qualified",
+"c": "~$200B GDP unlock (~3% from labour productivity)",
+"prov": "Vision / economic outcomes · “Support the unlocking of a 3 percent increase in GDP, representing nearly $200 billion in GDP gains, from labour productivity”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06) · corroborated: KPMG Canada — AI for All analysis",
+"note": "Verified verbatim and corroborated; graded C as a modelled outcome conditional on adoption."
+},
+"target:public supercomputer 2031": {
+"k": "direct",
+"b": "per-source",
+"c": "World-leading public supercomputer online by 2031",
+"prov": "Pillar 4 — Sovereign AI foundation · “Canada will build a world-leading public supercomputer ... (timing 'by 2031' stated in a separate outcomes sentence)”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "'world-leading public supercomputer' and 'by 2031' are stated in two separate sentences (the year is in the outcomes list, which omits 'public'). Both supported."
+},
+"target:grid doubled 2050": {
+"k": "direct",
+"b": "per-source",
+"c": "Electricity grid doubled by 2050 (largely clean power)",
+"prov": "Pillar 4 — Sovereign AI foundation · “recognizing that Canada will need to double its electricity infrastructure by 2050”",
+"chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
+"note": "In the AI strategy page, attributed to the parallel National Electricity Strategy ('Powering Canada Strong'); framed as a need ('will need to double'), source says 'electricity infrastructure'."
+}
+};
+
 /* ================= STATE & HELPERS ================= */
 let filter="all", q="", persona=null, negCat="Law & rights";
 const $=s=>document.querySelector(s), $$=s=>document.querySelectorAll(s);
@@ -749,6 +1248,41 @@ const fmtM=v=>v>=1000?"$"+(v/1000).toFixed(2).replace(/\.?0+$/,"")+"B":"$"+v+"M"
 const DOC="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all";
 const DOC_ANCHOR={p1:"_Toc79",p2:"_Toc80",p3:"_Toc81",p4:"_Toc82",p5:"_Toc83",p6:"_Toc84",sectors:"_Toc78",vision:"_Toc76"};
 const docHref=k=>DOC+"#"+(DOC_ANCHOR[k]||"_Toc76");
+/* ---- confidence badges + ledger modal (data: const LEDGER above) ---- */
+const KINDLBL={direct:"Direct",derived:"Derived",editorial:"Editorial"};
+const BASIS={
+  corroborated:{label:"Corroborated",color:"#1f7a3f",desc:"Confirmed against the government source <b>and</b> independently corroborated by an outside source."},
+  "per-source":{label:"Per the source",color:"#2b5797",desc:"A government statement, confirmed word-for-word against the official source."},
+  qualified:{label:"Qualified by the source",color:"#9a6700",desc:"The government's own wording hedges, estimates, or contradicts itself — verified verbatim; the qualification is the source's, not ours. (This is the Soft-commitments finding.)"},
+  recomputed:{label:"Recomputed",color:"#5c6f7c",desc:"A figure we computed from the data (a total, count or share) and re-derived this cycle."},
+  "our-analysis":{label:"Our analysis",color:"#6b3fa0",desc:"Our framing, lens or grouping — a stated, consistent, reversible rule. Defensible, not a source claim."},
+  unverified:{label:"Unverified",color:"#7d8a96",desc:"Tracked but not yet re-verified this cycle. An honest placeholder, not a failure."},
+  disputed:{label:"Disputed",color:"#d3080c",desc:"Verification failed or sources conflict, unresolved. Should be none at publish."}
+};
+const BASIS_ORDER=["corroborated","per-source","qualified","recomputed","our-analysis","unverified","disputed"];
+const attr=s=>String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;");
+const LKEY_TILE={"60%":"target:Business AI adoption","250,000":"target:250,000 new jobs","90,000":"target:90,000 AI placements","~$200B":"target:GDP unlock ~$200B","1M":"target:1M students reached","850 MW":"soft:850 MW → 2.3 GW sovereign compute","#1-class":"target:public supercomputer 2031","2×":"target:grid doubled 2050"};
+const LKEY_DUMB={"Business AI adoption":"target:Business AI adoption","SME AI adoption":"target:SME AI adoption","Canadians with any AI training":"target:Canadians with any AI training","Canada CIFAR AI Chairs":"target:Canada CIFAR AI Chairs","K-12 educators trained":"target:K-12 educators trained","Sovereign compute capacity":"soft:850 MW → 2.3 GW sovereign compute"};
+function confBadge(key){const e=LEDGER[key]; if(!e||!BASIS[e.b]) return ""; const b=BASIS[e.b]; return `<button class="cbadge" style="color:${b.color}" data-lkey="${attr(key)}" title="${KINDLBL[e.k]} · ${b.label} — click for sourcing">${KINDLBL[e.k]} · ${b.label}</button>`;}
+function openLedger(key){
+  const e=LEDGER[key]; if(!e) return;
+  const provLabel=e.k==="derived"?"Formula":e.k==="editorial"?"Classification rule":"Source";
+  const b=BASIS[e.b]||{label:e.b,color:"#7d8a96"};
+  const box=$("#lmodalbox"); box.style.borderTopColor=b.color;
+  box.innerHTML=`<button class="lclose" onclick="closeLedger()">close ✕</button>
+    <h3>${e.c}</h3>
+    <div class="lgrade" style="color:${b.color}">${KINDLBL[e.k]} · ${b.label}</div>
+    <div class="lrow"><div class="lk">${provLabel}</div><div class="lv ${e.k==='direct'?'quote':''}">${e.prov||"—"}</div></div>
+    <div class="lrow"><div class="lk">Verification checks</div><div class="lv">${e.chk||"—"}</div></div>
+    ${e.note?`<div class="lrow"><div class="lk">Notes</div><div class="lv">${e.note}</div></div>`:""}
+    <a class="lfull" href="ledger.json" target="_blank" rel="noopener">Full record in ledger.json → id: ${attr(key)} ↗</a>`;
+  $("#lmodal").classList.add("show");
+}
+function closeLedger(){$("#lmodal").classList.remove("show");}
+document.addEventListener("click",e=>{const b=e.target.closest("[data-lkey]"); if(b){e.preventDefault(); e.stopPropagation(); openLedger(b.dataset.lkey);}});
+document.getElementById("lmodal").addEventListener("click",e=>{if(e.target.id==="lmodal")closeLedger();});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeLedger();});
+
 const srcLink=(k,label)=>`<a class="srclink" href="${docHref(k)}" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Open this section of the official strategy">${label||"read more ↗"}</a>`;
 
 /* ================= OVERVIEW ================= */
@@ -835,7 +1369,7 @@ function renderMoney(){
   const rows=MONEY.filter(m=>visible(m.p)&&matches(m.l+(m.note||"")));
   $("#money").innerHTML=rows.map(m=>`
     <div class="mrow">
-      <div class="lbl">${m.l}${m.note?`<small>${m.note}</small>`:""}</div>
+      <div class="lbl">${m.l}${m.note?`<small>${m.note}</small>`:""}${confBadge("money:"+m.l)}</div>
       <div class="barwrap"><div class="bar ${m.lev?'lev':''}" style="width:${Math.max(2,m.a/max*100)}%;background-color:${pcol(m.p)}"></div></div>
       <div class="amt2">${fmtM(m.a)}</div>
     </div>`).join("")||`<p class="empty">No named dollar commitments under this filter.</p>`;
@@ -909,12 +1443,12 @@ function renderFlow(){
 function renderTargets(){
   $("#tiles").innerHTML=TILES.filter(t=>visible(t.p)&&matches(t.b+t.s)).map(t=>`
     <div class="tile" style="border-top-color:${pcol(t.p)}">
-      <b>${t.b}</b><span>${t.s}</span><span class="when">${t.w}</span>
+      <b>${t.b}</b><span>${t.s}</span><span class="when">${t.w}</span>${confBadge(LKEY_TILE[t.b]||"")}
     </div>`).join("")||`<p class="empty">No headline numbers match.</p>`;
   $("#dumbs").innerHTML=DUMBS.filter(d=>visible(d.p)&&matches(d.l+d.sm)).map(d=>{
     const x1=d.from/d.max*100, x2=d.to/d.max*100;
     return `<div class="dumb">
-      <div class="lbl">${d.l}<small>${d.sm}</small></div>
+      <div class="lbl">${d.l}<small>${d.sm}</small>${confBadge(LKEY_DUMB[d.l]||"")}</div>
       <div class="track">
         <div class="rail"></div>
         <div class="fill" style="left:${x1}%;width:${x2-x1}%;background:${pcol(d.p)}"></div>
@@ -1014,6 +1548,7 @@ function softCardHTML(o){
     <div style="font-size:12px;font-style:italic;color:var(--muted);border-top:1px solid var(--line);padding-top:7px;margin-top:2px">“…${o.q}…”</div>
     <div class="foot">
       <span class="pill pl" style="color:${pcol(o.p)}">${PILLARS[o.p].n}</span>
+      ${confBadge("soft:"+o.t)}
       ${srcLink(o.p)}
     </div></div>`;
 }
@@ -1031,6 +1566,29 @@ function renderSoft(){
     if(!items.length) return "";
     return catGroup(cat, SOFT_BLURB[cat]||"", items.length, items.map(softCardHTML).join(""));
   }).join("");
+}
+
+/* ================= CONFIDENCE TAB ================= */
+function renderConfidence(){
+  const entries=Object.entries(LEDGER);
+  const total=entries.length;
+  const byBasis={}, byKind={direct:0,derived:0,editorial:0};
+  entries.forEach(([k,e])=>{byBasis[e.b]=(byBasis[e.b]||0)+1; byKind[e.k]=(byKind[e.k]||0)+1;});
+  let grid=`<div class="confcard lead"><b>${total}</b><span>claims tracked</span></div>`;
+  BASIS_ORDER.forEach(s=>{ if(byBasis[s]) grid+=`<div class="confcard"><b style="color:${BASIS[s].color}">${byBasis[s]}</b><span>${BASIS[s].label}</span></div>`; });
+  $("#confGrid").innerHTML=grid;
+  const open=(byBasis.unverified||0)+(byBasis.disputed||0);
+  $("#confCoverage").innerHTML=`By kind: ${byKind.direct} direct, ${byKind.derived} derived, ${byKind.editorial} editorial. Independently verified (2026-06-06): three separate verifier agents re-fetched the official ISED source, blind to the labels, and re-derived every quote. <b>${total} claims tracked, ${open} open.</b> ${byBasis.corroborated||0} corroborated, ${byBasis["per-source"]||0} per the source, ${byBasis.qualified||0} qualified by the source, ${byBasis.recomputed||0} recomputed, ${byBasis["our-analysis"]||0} our analysis.`;
+  $("#confLegend").innerHTML=BASIS_ORDER.map(s=>`<div class="li"><span class="cbadge" style="color:${BASIS[s].color};pointer-events:none">${BASIS[s].label}</span><div>${BASIS[s].desc}</div></div>`).join("");
+  const row=([k,e])=>`<div class="ci">${confBadge(k)}<div class="ct">${e.c}<span class="cp">${e.prov}</span></div></div>`;
+  const attn=entries.filter(([k,e])=>e.b==="unverified"||e.b==="disputed").sort((a,b)=>(a[1].b==="disputed"?0:1)-(b[1].b==="disputed"?0:1));
+  const qual=entries.filter(([k,e])=>e.b==="qualified");
+  let fh="";
+  if(attn.length) fh+=`<p class="confsubhead attn">⚠ Open on our side — ${attn.length} (disputed or not yet re-checked)</p>`+attn.map(row).join("");
+  fh+=`<p class="confsubhead">Qualified in the government's own words — ${qual.length} · hedged, estimated, or self-contradictory in the source</p>`+(qual.map(row).join("")||`<p class="empty">None.</p>`);
+  $("#confFlagged").innerHTML=fh;
+  const rows=entries.map(([k,e])=>`<tr><td class="ctab">${confBadge(k)}</td><td class="cclaim">${e.c}</td><td>${e.prov}</td></tr>`).join("");
+  $("#confTable").innerHTML=`<table class="conftable"><thead><tr><th>Basis</th><th>Claim</th><th>Provenance</th></tr></thead><tbody>${rows}</tbody></table>`;
 }
 
 /* ================= GLOBAL ================= */
@@ -1084,7 +1642,9 @@ $$(".tabbtn").forEach(b=>b.onclick=()=>{
   window.scrollTo({top:0});
 });
 
-renderValues(); renderPersonas(); renderPersonaCards(); setFilter("all");
+renderValues(); renderPersonas(); renderPersonaCards(); setFilter("all"); renderConfidence();
+/* confidence badges on the two headline overview totals */
+{const sn=$("#statNew"); if(sn) sn.insertAdjacentHTML("beforeend", confBadge("meta:total-new")); const sl=$("#statLev"); if(sl) sl.insertAdjacentHTML("beforeend", confBadge("meta:total-leveraged"));}
 </script>
 </body>
 </html>

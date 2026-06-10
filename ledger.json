@@ -1,0 +1,1889 @@
+{
+  "$schema": "./ledger.schema.json",
+  "meta": {
+    "project": "Canada's National AI Strategy — Visual Explorer",
+    "method": "Source-Traceable Claim Ledger v1.0",
+    "primary_source": {
+      "title": "Canada's National Artificial Intelligence Strategy: AI for All",
+      "url": "https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all",
+      "publisher": "Innovation, Science and Economic Development Canada (ISED)",
+      "retrieved": "2026-06-05",
+      "note": "Web page (last modified 2026-06-04) plus the 29-page PDF."
+    },
+    "compiled": "2026-06-06",
+    "compiler": "STCL ledger pass, AI-assisted under human direction",
+    "currency": "CAD unless noted",
+    "coverage_note": "Independently verified (2026-06-06): three blind verifier agents re-fetched the official ISED source and re-derived every quote; one initially-disputed claim was adjudicated and confirmed via a targeted re-read. All 39 factual claims source-matched; 0 open. Categories: corroborated (source + an outside source), per the source, qualified by the source (the government's own hedges, estimates, and one self-contradiction), recomputed (our totals/counts), our analysis (editorial lenses). Labels are reproducible via confidence-rubric.md."
+  },
+  "claims": [
+    {
+      "id": "meta:total-new",
+      "claim": "$2.36B in new named commitments",
+      "rendered_in": [
+        "overview",
+        "moneytab"
+      ],
+      "kind": "derived",
+      "basis": "corroborated",
+      "formula": "sum(MONEY.a where !lev) = 700+500+500+200+130+100+100+50+50+30 = 2360 ($M) = $2.36B",
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "recompute",
+          "by": "ai:recompute",
+          "date": "2026-06-06",
+          "result": "confirm",
+          "note": "Recomputed from the 10 new line-items; matches the displayed $2.36B."
+        }
+      ],
+      "notes": "Sum of the 10 new line-items, recomputed this cycle (=$2.36B), and independently corroborated by KPMG ('more than $2.3 billion'). Grade A.",
+      "corroboration": [
+        {
+          "src": "KPMG Canada — AI for All analysis",
+          "url": "https://kpmg.com/ca/en/insights/2026/06/canadian-national-ai-strategy-ai-for-all.html",
+          "agrees": true,
+          "note": "\"committing more than $2.3 billion\""
+        }
+      ]
+    },
+    {
+      "id": "meta:total-leveraged",
+      "claim": "~$6.2B leveraged from existing programs",
+      "rendered_in": [
+        "overview",
+        "moneytab"
+      ],
+      "kind": "derived",
+      "basis": "recomputed",
+      "formula": "sum(MONEY.a where lev) = 2000+1750+1700+500+159+50 = 6159 ($M) = $6.16B",
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "recompute",
+          "by": "ai:recompute",
+          "date": "2026-06-06",
+          "result": "confirm",
+          "note": "Recomputed from the 6 leveraged line-items."
+        }
+      ],
+      "notes": "DISCREPANCY: exact recompute is $6.16B; the Overview tile rounds to '~$6.2B'. The Funded-commitments tab shows the precise $6.16B. A rounding choice, flagged for transparency."
+    },
+    {
+      "id": "meta:count-programs",
+      "claim": "31 concrete programs",
+      "rendered_in": [
+        "overview",
+        "method"
+      ],
+      "kind": "derived",
+      "basis": "recomputed",
+      "formula": "OPPS.length = 31",
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "recompute",
+          "by": "ai:recompute",
+          "date": "2026-06-06",
+          "result": "confirm"
+        }
+      ],
+      "notes": "Count of program cards in the dataset."
+    },
+    {
+      "id": "meta:count-money",
+      "claim": "16 named dollar line-items",
+      "rendered_in": [
+        "method"
+      ],
+      "kind": "derived",
+      "basis": "recomputed",
+      "formula": "MONEY.length = 16",
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "recompute",
+          "by": "ai:recompute",
+          "date": "2026-06-06",
+          "result": "confirm"
+        }
+      ],
+      "notes": "Count of funded line-items in the dataset."
+    },
+    {
+      "id": "meta:count-unfunded",
+      "claim": "17 of 31 named programs are unfunded (55%)",
+      "rendered_in": [
+        "negative"
+      ],
+      "kind": "derived",
+      "basis": "recomputed",
+      "formula": "OPPS.filter(!amt).length = 17; 17/31 = 54.8% -> 55%",
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "recompute",
+          "by": "ai:recompute",
+          "date": "2026-06-06",
+          "result": "confirm"
+        }
+      ],
+      "notes": "Programs with no named dollar amount, as a share of all programs."
+    },
+    {
+      "id": "meta:pillar6-zero",
+      "claim": "1 pillar carries $0 named (Pillar 6, Alliances)",
+      "rendered_in": [
+        "negative",
+        "moneytab"
+      ],
+      "kind": "derived",
+      "basis": "recomputed",
+      "formula": "pillars where sum(MONEY.a for that pillar)==0 -> {p6}; count = 1 (p1=50, p2=130, p3=1200, p4=3900, p5=3239, p6=0)",
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "recompute",
+          "by": "ai:recompute",
+          "date": "2026-06-06",
+          "result": "confirm"
+        }
+      ],
+      "notes": "Pillar 6's work is diplomatic; no named dollars attach to it."
+    },
+    {
+      "id": "meta:sovereignty-concentration",
+      "claim": "The named money concentrates in Sovereignty",
+      "rendered_in": [
+        "moneytab"
+      ],
+      "kind": "derived",
+      "basis": "recomputed",
+      "formula": "value totals -> trust(p1+p6)=50, opportunity(p2+p3)=1330, sovereignty(p4+p5)=7139; 7139/8519 = 84% of all named dollars",
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "recompute",
+          "by": "ai:recompute",
+          "date": "2026-06-06",
+          "result": "confirm"
+        }
+      ],
+      "notes": "Supports the ribbon-diagram claim that the money concentrates in Sovereignty."
+    },
+    {
+      "id": "editorial:funded-lens",
+      "claim": "Funded vs. unfunded is defined by a named dollar figure",
+      "rendered_in": [
+        "moneytab",
+        "negative"
+      ],
+      "kind": "editorial",
+      "basis": "our-analysis",
+      "rule": "A commitment is 'funded' only if the strategy attaches a named dollar figure to it; otherwise it is 'unfunded' (even if money may flow later). Applied to every commitment.",
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:rule-check",
+          "date": "2026-06-06",
+          "result": "confirm",
+          "note": "Rule is written, applied consistently, reversible by the reader."
+        }
+      ],
+      "notes": "Our lens, not the government's framing."
+    },
+    {
+      "id": "editorial:soft-lens",
+      "claim": "Soft commitments are flagged by the source's own hedging language",
+      "rendered_in": [
+        "soft"
+      ],
+      "kind": "editorial",
+      "basis": "our-analysis",
+      "rule": "A commitment is 'soft' where the source's own wording qualifies it ('where appropriate', 'at times', 'explore', 'assess', 'review') or labels a number 'proposed'/'estimated'. Found by searching the source for these markers, then reading each in context.",
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:rule-check",
+          "date": "2026-06-06",
+          "result": "confirm"
+        }
+      ],
+      "notes": "A hedge isn't automatically a dodge, but it's worth seeing. Each soft claim quotes its giveaway phrase."
+    },
+    {
+      "id": "editorial:new-vs-leveraged",
+      "claim": "New vs. leveraged money are shown distinctly",
+      "rendered_in": [
+        "moneytab"
+      ],
+      "kind": "editorial",
+      "basis": "our-analysis",
+      "rule": "'New' = money the strategy introduces; 'leveraged' = existing or previously-announced funds (mostly Budget 2025 and ongoing programs) counted toward the total. Each line-item flagged as one or the other.",
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:rule-check",
+          "date": "2026-06-06",
+          "result": "confirm"
+        }
+      ],
+      "notes": "Different kinds of commitment; kept separate so totals are honest."
+    },
+    {
+      "id": "editorial:neg-categories",
+      "claim": "Unfunded items are grouped into six author-defined categories",
+      "rendered_in": [
+        "negative"
+      ],
+      "kind": "editorial",
+      "basis": "our-analysis",
+      "rule": "Unpriced commitments grouped into six categories chosen by us — Law & rights, Standards & trust, Skills & people, Market & structural, Infrastructure & sovereignty, Diplomacy & alliances — not the government's taxonomy.",
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:rule-check",
+          "date": "2026-06-06",
+          "result": "confirm"
+        }
+      ],
+      "notes": "Our groupings, stated so they can be disputed."
+    },
+    {
+      "id": "editorial:persona-map",
+      "claim": "Each program is mapped to the audiences it touches",
+      "rendered_in": [
+        "foryou"
+      ],
+      "kind": "editorial",
+      "basis": "our-analysis",
+      "rule": "Each program is tagged with the personas (SME owner, founder, student, mid-career worker, researcher, creator, Indigenous communities, public servant) it materially serves. Our reading of relevance, not a mapping the source provides.",
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:rule-check",
+          "date": "2026-06-06",
+          "result": "confirm"
+        }
+      ],
+      "notes": "Drives the 'By audience' tab."
+    },
+    {
+      "id": "editorial:gap-response",
+      "claim": "Eight 'gap -> response' pairings frame the programs as answers to diagnosed gaps",
+      "rendered_in": [
+        "opps"
+      ],
+      "kind": "editorial",
+      "basis": "our-analysis",
+      "rule": "Eight clusters of programs are each framed as a response to a diagnosed gap (adoption, literacy/trust, startup exodus, sovereignty exposure, talent squeeze, harms, data silos, platform dependence). The pairing is our analytical framing; the underlying gap statistics are separate direct claims.",
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:rule-check",
+          "date": "2026-06-06",
+          "result": "confirm"
+        }
+      ],
+      "notes": "The gap statistics inside each pairing are direct claims graded separately."
+    },
+    {
+      "id": "direct:five-sectors",
+      "claim": "Five priority sectors (not six)",
+      "rendered_in": [
+        "overview"
+      ],
+      "kind": "direct",
+      "basis": "qualified",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Priority-sectors section + Workforce-Alliances line",
+        "quote": "These five priority sectors will act as focal points across the strategy: 1. Health and life sciences 2. Energy and natural resources 3. Transportation 4. Agriculture 5. Manufacturing and robotics"
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Source is internally inconsistent: the sector section enumerates five; a later Workforce-Alliances line says six."
+        },
+        {
+          "stage": "adjudication",
+          "method": "source-match",
+          "by": "human-directed (original build)",
+          "date": "2026-06-05",
+          "result": "confirm",
+          "note": "Resolved to the authoritative enumerated five."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm",
+          "note": "Web page enumerates five: Health & life sciences; Energy & natural resources; Transportation; Agriculture; Manufacturing & robotics."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "Independently confirmed internal inconsistency: the strategy enumerates FIVE priority sectors (Health & life sciences; Energy & natural resources; Transportation; Agriculture; Manufacturing & robotics), but the Workforce-Alliances line says 'across six priority sectors' (the six are never enumerated). We use the enumerated five."
+    },
+    {
+      "id": "soft:Sovereign Wealth Fund for AI champions",
+      "claim": "Sovereign Wealth Fund will back AI champions 'where appropriate'",
+      "rendered_in": [
+        "soft"
+      ],
+      "kind": "direct",
+      "basis": "qualified",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 5 — Scaling Canadian champions",
+        "quote": "Where appropriate, Canada will leverage its recently announced Sovereign Wealth Fund to further support emerging national champions."
+      },
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "hedge-quote",
+          "by": "ai:hedge-check",
+          "date": "2026-06-06",
+          "result": "confirm",
+          "note": "Conditional marker present; verbatim phrase from original extraction."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "No amount or trigger defined."
+    },
+    {
+      "id": "soft:Federal equity stakes in AI firms",
+      "claim": "Tech Growth Fund can take federal equity stakes 'at times'",
+      "rendered_in": [
+        "soft"
+      ],
+      "kind": "direct",
+      "basis": "qualified",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 5 — Scaling Canadian champions",
+        "quote": "the federal government, at times, to take equity stakes in the most promising Canadian AI firms"
+      },
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "hedge-quote",
+          "by": "ai:hedge-check",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "Action qualified as occasional."
+    },
+    {
+      "id": "soft:Canadian models leading on AI safety",
+      "claim": "Canadian models 'could become world-leading' on safety — conditionally",
+      "rendered_in": [
+        "soft"
+      ],
+      "kind": "direct",
+      "basis": "qualified",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 5 — Scaling Canadian champions",
+        "quote": "Canada's AI ecosystem also supports safe-by-design frontier AI research. These efforts, if developed appropriately and scaled commercially, have the potential to become world-leading solutions to AI safety."
+      },
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "hedge-quote",
+          "by": "ai:hedge-check",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "dispute",
+          "date": "2026-06-06"
+        },
+        {
+          "stage": "adjudication",
+          "method": "source-match",
+          "by": "ai:targeted re-fetch (live ISED page, 'Championing our foundation models')",
+          "date": "2026-06-06",
+          "result": "confirm",
+          "note": "Resolves the earlier dispute: the broad first-pass summary missed this sentence; a targeted re-read found the quoted conditional ('if developed appropriately and scaled commercially … have the potential to become world-leading') verbatim."
+        }
+      ],
+      "notes": "Verified verbatim (after an initial false dispute — the first independent summary missed the sentence). A genuine conditional/soft commitment: 'if developed appropriately and scaled commercially … potential to become world-leading'."
+    },
+    {
+      "id": "soft:Budget 2026 reinvestment mechanisms",
+      "claim": "Budget 2026 will 'explore' reinvestment mechanisms",
+      "rendered_in": [
+        "soft",
+        "negative"
+      ],
+      "kind": "direct",
+      "basis": "qualified",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 5 — Scaling Canadian champions",
+        "quote": "By Budget 2026, the Department of Finance will work with experts to explore mechanisms that encourage Canadians to reinvest gains"
+      },
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "hedge-quote",
+          "by": "ai:hedge-check",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "A commitment to study, not yet a mechanism."
+    },
+    {
+      "id": "soft:Aligning innovation programs",
+      "claim": "Canada will 'assess the full continuum' of innovation programs",
+      "rendered_in": [
+        "soft"
+      ],
+      "kind": "direct",
+      "basis": "qualified",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 5 — Scaling Canadian champions",
+        "quote": "Canada will assess the full continuum of innovation programs to better align existing innovation instruments"
+      },
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "hedge-quote",
+          "by": "ai:hedge-check",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "Direction set, design pending."
+    },
+    {
+      "id": "soft:Mid-career upskilling at scale",
+      "claim": "Mid-career upskilling is a commitment to 'assess … offerings'",
+      "rendered_in": [
+        "soft",
+        "foryou"
+      ],
+      "kind": "direct",
+      "basis": "qualified",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 2 — Empowering Canadians",
+        "quote": "Canada will assess training and upskill offerings for mid-career workers, including in skilled trades, to scale-up employer-led training nationwide"
+      },
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "hedge-quote",
+          "by": "ai:hedge-check",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "The visual lists this as a program; the source only commits to assessing offerings. Cross-referenced from the program card."
+    },
+    {
+      "id": "soft:Privacy Act review",
+      "claim": "Government will 'continue its review' of the Privacy Act",
+      "rendered_in": [
+        "soft",
+        "negative"
+      ],
+      "kind": "direct",
+      "basis": "qualified",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 1 — Protecting Canadians",
+        "quote": "the Government will continue its review of the Privacy Act to meets the needs of Canadians in the digital age"
+      },
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "hedge-quote",
+          "by": "ai:hedge-check",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "Ongoing review, not a new rule yet."
+    },
+    {
+      "id": "soft:Tracking AI's impact on jobs",
+      "claim": "Canada will 'track and assess' AI's labour-market impact",
+      "rendered_in": [
+        "soft"
+      ],
+      "kind": "direct",
+      "basis": "qualified",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 2 — Empowering Canadians",
+        "quote": "Canada will track and assess the societal, labour market, and economic impacts of AI"
+      },
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "hedge-quote",
+          "by": "ai:hedge-check",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "A monitoring commitment with no defined intervention."
+    },
+    {
+      "id": "soft:850 MW → 2.3 GW sovereign compute",
+      "claim": "850 MW sovereign compute 'proposed', scaling 'up to' 2.3 GW by 2030",
+      "rendered_in": [
+        "soft",
+        "targets",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "qualified",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 4 — Sovereign AI foundation",
+        "quote": "These partnerships are being finalized, and have proposed providing 850 MW of compute capacity by 2030, with scaling capacity of up to 2.3 GW"
+      },
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "hedge-quote",
+          "by": "ai:hedge-check",
+          "date": "2026-06-06",
+          "result": "confirm",
+          "note": "Partnerships 'being finalized'; capacity 'proposed'."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm",
+          "note": "verbatim hedge phrase captured from the live page"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "Headline compute figure — a proposal, not secured capacity. Same evidence backs the Targets dumbbell and the 2030 timeline entry."
+    },
+    {
+      "id": "soft:5.5 GW of compute needed by 2030",
+      "claim": "An estimated 5.5 GW of AI compute needed by 2030",
+      "rendered_in": [
+        "soft",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "qualified",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 4 — Sovereign AI foundation",
+        "quote": "Estimates vary, but analysis suggests Canada will require 5.5 gigawatts (GW) worth of AI compute for its commercial players by 2030."
+      },
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "hedge-quote",
+          "by": "ai:hedge-check",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm",
+          "note": "verbatim hedge phrase captured from the live page"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "Analyst estimate the strategy itself hedges, not a government commitment."
+    },
+    {
+      "id": "soft:$187B generative-AI upside by 2030",
+      "claim": "Generative AI alone could add ~$187B/year (estimate)",
+      "rendered_in": [
+        "soft",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "qualified",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 3 — Powering shared prosperity",
+        "quote": "Some estimates for generative AI alone add $187 billion annually to the Canadian economy by 2030"
+      },
+      "checks": [
+        {
+          "stage": "verification",
+          "method": "hedge-quote",
+          "by": "ai:hedge-check",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm",
+          "note": "verbatim hedge phrase captured from the live page"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "External projection cited as 'some estimates', not a strategy target."
+    },
+    {
+      "id": "money:Existing AI compute investments (AI Compute Challenge)",
+      "claim": "$2B+ existing AI compute investments (AI Compute Challenge) — leveraged",
+      "rendered_in": [
+        "moneytab",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 4 — Sovereign AI foundation",
+        "quote": "the Government will continue delivering on more than $2 billion in existing investments in Canadian AI compute capacity, including through the AI Compute Challenge"
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Checked line-by-line vs source PDF per project methodology."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "Leveraged. Upgrades to B on source-match, A on corroboration (Budget 2025 / news)."
+    },
+    {
+      "id": "money:Budget 2025 venture capital stimulus",
+      "claim": "$1.75B Budget 2025 venture capital stimulus — leveraged",
+      "rendered_in": [
+        "moneytab",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "corroborated",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 5 — Scaling Canadian champions",
+        "quote": "Canada will also leverage $1.75 billion of federal investments and commitments announced in Budget 2025 to stimulate private sector investment in venture capital"
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "Leveraged from Budget 2025; independently corroborable.",
+      "corroboration": [
+        {
+          "src": "BetaKit",
+          "url": "https://betakit.com/feds-reveal-streams-behind-1-billion-vc-initiative-as-budget-becomes-law/",
+          "agrees": true,
+          "note": "$1B Catalyst + $750M early-stage = $1.75B (Budget 2025)"
+        }
+      ]
+    },
+    {
+      "id": "money:Budget 2025 talent attraction strategy",
+      "claim": "$1.7B Budget 2025 talent attraction strategy — leveraged (broader than AI)",
+      "rendered_in": [
+        "moneytab",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "corroborated",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 4 — Sovereign AI foundation",
+        "quote": "These efforts will complement the Government's broader $1.7 billion talent attraction strategy announced in Budget 2025."
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "Leveraged (Budget 2025); independent source notes it runs over 12 years.",
+      "corroboration": [
+        {
+          "src": "University Affairs",
+          "url": "https://universityaffairs.ca/news/feds-launch-1-7-billion-international-talent-attraction-program/",
+          "agrees": true,
+          "note": "$1.7B over 12 years (Budget 2025)"
+        }
+      ]
+    },
+    {
+      "id": "money:Compute Access Fund expansion — SME sovereign compute",
+      "claim": "$700M Compute Access Fund expansion for SME sovereign compute — new",
+      "rendered_in": [
+        "moneytab",
+        "foryou",
+        "opps"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 5 — Scaling Canadian champions",
+        "quote": "Canada will provide Canadian SMEs with an additional $700 million in affordable sovereign compute through an expansion of the Compute Access Fund."
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "New money."
+    },
+    {
+      "id": "money:Regional AI Initiative expansion (RDAs)",
+      "claim": "$500M Regional AI Initiative expansion (via RDAs) — new",
+      "rendered_in": [
+        "moneytab",
+        "foryou",
+        "opps",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 3 — Powering shared prosperity",
+        "quote": "Canada will invest $500 million to expand and enhance the Regional Artificial Intelligence Initiative delivered through Regional Development Agencies."
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "New money."
+    },
+    {
+      "id": "money:BDC LIFT — SME AI adoption financing",
+      "claim": "$500M BDC LIFT — SME AI adoption financing — leveraged",
+      "rendered_in": [
+        "moneytab",
+        "foryou",
+        "opps",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "corroborated",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 3 — Powering shared prosperity",
+        "quote": "Canada will utilize the LIFT program, a $500 million initiative from the Business Development Bank of Canada (BDC)"
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "Existing BDC initiative (leveraged).",
+      "corroboration": [
+        {
+          "src": "BDC media release",
+          "url": "https://www.bdc.ca/en/about/mediaroom/news-releases/bdc-launches-lift-getting-canadian-smes-off-the-ai-sidelines",
+          "agrees": true,
+          "note": "BDC's own $500M LIFT program"
+        }
+      ]
+    },
+    {
+      "id": "money:Canadian Tech Growth Fund",
+      "claim": "$500M Canadian Tech Growth Fund — new",
+      "rendered_in": [
+        "moneytab",
+        "foryou",
+        "opps",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 5 — Scaling Canadian champions",
+        "quote": "Canada will establish a $500 million Canadian Tech Growth Fund to help close the scale-up capital gap facing Canada's most promising AI companies."
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "New money. Equity-stake mechanism is a separate soft claim ('at times')."
+    },
+    {
+      "id": "money:AI Missions Program — first mission: health",
+      "claim": "$200M AI Missions Program — first mission: health — new",
+      "rendered_in": [
+        "moneytab",
+        "foryou",
+        "opps",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 3 — Powering shared prosperity",
+        "quote": "Canada will launch a new AI Missions Program ... starting with $200 million towards improving health outcomes for Canadians."
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "New money."
+    },
+    {
+      "id": "money:Elevate IP & IP Assist (Budget 2025)",
+      "claim": "$159M Elevate IP & IP Assist (Budget 2025) — leveraged",
+      "rendered_in": [
+        "moneytab",
+        "foryou",
+        "opps",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "corroborated",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 5 — Scaling Canadian champions",
+        "quote": "Canada will leverage $159 million invested in Budget 2025 through the Elevate IP and IP Assist programs"
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "Leveraged from Budget 2025.",
+      "corroboration": [
+        {
+          "src": "Miller Thomson — Budget 2025 analysis",
+          "url": "https://www.millerthomson.com/en/insights/technology-ip-and-privacy/federal-budget-2025-strengthening-canadas-innovation-ai-and-intellectual-property-ecosystem/",
+          "agrees": true,
+          "note": "Elevate IP $84.4M + IP Assist $75M ≈ $159M"
+        }
+      ]
+    },
+    {
+      "id": "money:Commercialization programs, National AI Institutes",
+      "claim": "$130M commercialization programs at the National AI Institutes — new",
+      "rendered_in": [
+        "moneytab",
+        "foryou",
+        "opps",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 5 — Scaling Canadian champions",
+        "quote": "Canada will invest $130 million for commercialization programs across the National AI Institutes, including for Founders-in-Residence."
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "New money."
+    },
+    {
+      "id": "money:Health Sector Data Space (with CIHI)",
+      "claim": "$100M Health Sector Data Space (with CIHI) — new",
+      "rendered_in": [
+        "moneytab",
+        "foryou",
+        "opps",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 4 — Sovereign AI foundation",
+        "quote": "Canada will invest $100 million to launch the Health Sector Data Space, in partnership with the Canadian Institute for Health Information (CIHI)."
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "New money."
+    },
+    {
+      "id": "money:VITAL expansion to 5 more provinces",
+      "claim": "$100M VITAL expansion to 5 more provinces — new",
+      "rendered_in": [
+        "moneytab",
+        "foryou",
+        "opps",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 4 — Sovereign AI foundation",
+        "quote": "Canada will also invest $100 million to expand VITAL in five additional provinces."
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "New money."
+    },
+    {
+      "id": "money:Canadian AI Safety Institute expansion",
+      "claim": "$50M Canadian AI Safety Institute (CAISI) expansion — new",
+      "rendered_in": [
+        "moneytab",
+        "opps",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 1 — Protecting Canadians",
+        "quote": "Canada will invest $50 million to expand the capabilities of the Canadian AI Safety Institute to track emerging AI risks, advance technical research, and to conduct transparent evaluations of AI models."
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "New money."
+    },
+    {
+      "id": "money:Creative Technology Program",
+      "claim": "$50M Creative Technology Program — new",
+      "rendered_in": [
+        "moneytab",
+        "foryou",
+        "opps",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 2 — Empowering Canadians",
+        "quote": "Canada will establish a $50 million Creative Technology Program to support Canadian creators in using AI on their own terms."
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "New money."
+    },
+    {
+      "id": "money:Job Bank AI modernization (Budget 2025)",
+      "claim": "$50M Job Bank AI modernization (Budget 2025) — leveraged",
+      "rendered_in": [
+        "moneytab",
+        "foryou",
+        "opps",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 2 — Empowering Canadians",
+        "quote": "Canada will invest $50 million over five years through Budget 2025 to modernize the Job Bank with AI-powered job matching."
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "Leveraged from Budget 2025."
+    },
+    {
+      "id": "money:CanCode — K-12 digital & AI skills",
+      "claim": "$30M CanCode — K-12 digital & AI skills — new",
+      "rendered_in": [
+        "moneytab",
+        "foryou",
+        "opps",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 2 — Empowering Canadians",
+        "quote": "Canada will invest $30 million in CanCode to fund not-for-profit organizations to deliver free digital skills training."
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "New money."
+    },
+    {
+      "id": "target:Business AI adoption",
+      "claim": "Business AI adoption: 12% today -> 60% by 2034",
+      "rendered_in": [
+        "targets",
+        "opps",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "corroborated",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 3 — Powering shared prosperity",
+        "quote": "Increase Canada's business adoption of AI from 12 percent today to 60 percent by 2034"
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Headline target; 12% baseline attributed to Statistics Canada. Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "The strategy's headline number.",
+      "corroboration": [
+        {
+          "src": "KPMG Canada — AI for All analysis",
+          "url": "https://kpmg.com/ca/en/insights/2026/06/canadian-national-ai-strategy-ai-for-all.html",
+          "agrees": true,
+          "note": "\"increase business adoption of AI to 60 per cent by 2034\""
+        }
+      ]
+    },
+    {
+      "id": "target:SME AI adoption",
+      "claim": "SME AI adoption ~8% today, rolled into the 60% goal",
+      "rendered_in": [
+        "targets"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 3 — Powering shared prosperity",
+        "quote": "only about 8 percent of Canadian SMEs have adopted AI, well behind Nordic leaders (29 to 42 percent)"
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "SMEs are 99% of businesses; ~8% adoption baseline."
+    },
+    {
+      "id": "target:Canadians with any AI training",
+      "claim": "Canadians with any AI training: 24% baseline, goal universal free access",
+      "rendered_in": [
+        "targets"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 2 — Empowering Canadians",
+        "quote": "Fewer than a quarter of Canadians (24 percent) report having received any AI training"
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "24% baseline attributed to a KPMG / Univ. of Melbourne study. Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "pending",
+          "by": "",
+          "date": "2026-06-06",
+          "result": "pending"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "Found on the main page in the KPMG–University of Melbourne global-trust-study context (the 24% sentence itself is not separately footnoted)."
+    },
+    {
+      "id": "target:Canada CIFAR AI Chairs",
+      "claim": "Canada CIFAR AI Chairs: 130 -> ~200 researchers",
+      "rendered_in": [
+        "targets",
+        "opps",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 4 — Sovereign AI foundation",
+        "quote": "increase the Canada CIFAR AI Chairs program from 130 to nearly 200 researchers"
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Across Mila, Amii, Vector. Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "Retention play against global recruitment."
+    },
+    {
+      "id": "target:K-12 educators trained",
+      "claim": "K-12 educators trained: 1,500 -> 3,000+ (doubling)",
+      "rendered_in": [
+        "targets",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 2 — Empowering Canadians",
+        "quote": "doubling K-12 teacher training to more than 3,000 educators"
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Source states '3,000+ educators'; the 1,500 baseline is the visual's reading of 'doubling'. Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "Source: 'doubling K-12 teacher training to more than 3,000 educators'. The 3,000+ target is verified (a floor, 'more than'); the 1,500 baseline in the dumbbell is IMPLIED by 'doubling' (= 3,000/2), not stated verbatim. Disclosed inference."
+    },
+    {
+      "id": "target:90,000 AI placements",
+      "claim": "Up to 90,000 AI jobs & placements for young Canadians by 2031",
+      "rendered_in": [
+        "targets",
+        "foryou",
+        "opps",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "qualified",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 2 — Empowering Canadians",
+        "quote": "Create up to 90,000 AI-related jobs and work placement opportunities for young Canadians ... by 2031."
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Breakdown 45k (SWPP + Canada Summer Jobs) / 35k (Skills for Success) / 10k (Mitacs ADOPT + AI+X). Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "Verified verbatim; graded C because the source says 'up to 90,000' (a ceiling, not a floor)."
+    },
+    {
+      "id": "target:250,000 new jobs",
+      "claim": "Up to 250,000 new jobs through AI adoption by 2031",
+      "rendered_in": [
+        "targets",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "qualified",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 3 — Powering shared prosperity",
+        "quote": "Help create up to 250,000 new jobs through the adoption of AI by 2031."
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Projected economy-wide. Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "Verified verbatim and corroborated, but graded C: 'up to' and projected via adoption.",
+      "corroboration": [
+        {
+          "src": "KPMG Canada — AI for All analysis",
+          "url": "https://kpmg.com/ca/en/insights/2026/06/canadian-national-ai-strategy-ai-for-all.html",
+          "agrees": true,
+          "note": "\"create up to 250,000 new jobs over the next five years\""
+        }
+      ]
+    },
+    {
+      "id": "target:1M students reached",
+      "claim": "1,000,000 post-secondary students reached with AI literacy",
+      "rendered_in": [
+        "targets",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 2 — Empowering Canadians",
+        "quote": "AI literacy content will reach 1 million entry level post-secondary students"
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "Part of the National AI Literacy Initiative."
+    },
+    {
+      "id": "target:GDP unlock ~$200B",
+      "claim": "~$200B GDP unlock (~3% from labour productivity)",
+      "rendered_in": [
+        "targets",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "qualified",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Vision / economic outcomes",
+        "quote": "Support the unlocking of a 3 percent increase in GDP, representing nearly $200 billion in GDP gains, from labour productivity"
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Framed as a 'strategy outcome' / projection, not a committed figure."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "Verified verbatim and corroborated; graded C as a modelled outcome conditional on adoption.",
+      "corroboration": [
+        {
+          "src": "KPMG Canada — AI for All analysis",
+          "url": "https://kpmg.com/ca/en/insights/2026/06/canadian-national-ai-strategy-ai-for-all.html",
+          "agrees": true,
+          "note": "\"three per cent boost to GDP – representing $200 billion in economic growth\""
+        }
+      ]
+    },
+    {
+      "id": "target:public supercomputer 2031",
+      "claim": "World-leading public supercomputer online by 2031",
+      "rendered_in": [
+        "targets",
+        "opps",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 4 — Sovereign AI foundation",
+        "quote": "Canada will build a world-leading public supercomputer ... (timing 'by 2031' stated in a separate outcomes sentence)"
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Checked vs source PDF in original build."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "'world-leading public supercomputer' and 'by 2031' are stated in two separate sentences (the year is in the outcomes list, which omits 'public'). Both supported."
+    },
+    {
+      "id": "target:grid doubled 2050",
+      "claim": "Electricity grid doubled by 2050 (largely clean power)",
+      "rendered_in": [
+        "targets",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "AI for All",
+        "locator": "Pillar 4 — Sovereign AI foundation",
+        "quote": "recognizing that Canada will need to double its electricity infrastructure by 2050"
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (original build)",
+          "date": "2026-06-05",
+          "result": "match",
+          "note": "Per the visual, this comes from the parallel National Electricity Strategy, not the AI strategy itself."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (live ISED page, re-fetch)",
+          "date": "2026-06-06",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (verifier agent, live ISED page, 2026-06-06)",
+          "result": "confirm",
+          "date": "2026-06-06"
+        }
+      ],
+      "notes": "In the AI strategy page, attributed to the parallel National Electricity Strategy ('Powering Canada Strong'); framed as a need ('will need to double'), source says 'electricity infrastructure'."
+    }
+  ]
+}
