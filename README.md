@@ -6,7 +6,7 @@ An interactive, single-file visual breakdown of [Canada's National AI Strategy: 
 
 ## What's inside
 
-Nine tabs, driven by a shared sidebar with search and value/pillar filters:
+Ten tabs, driven by a shared sidebar with search and value/pillar filters:
 
 - **Overview** — the architecture: three values (Trust, Opportunity, Sovereignty) carrying six pillars, plus the five priority sectors. Click a pillar for its themes and key actions.
 - **By audience** — pick who you are (SME owner, founder, student, mid-career worker, researcher, creator, Indigenous communities, public servant) and see the programs that touch you, grouped by pillar.
@@ -16,7 +16,8 @@ Nine tabs, driven by a shared sidebar with search and value/pillar filters:
 - **Unfunded commitments** — every commitment with no named dollar figure (laws, standards, diplomacy, infrastructure), navigable by category.
 - **Targets** — headline tiles and baseline → target dumbbells (12% → 60% business adoption by 2034, 130 → ~200 CIFAR chairs, 0 → 850 MW sovereign compute by 2030).
 - **Timeline** — every launch, dollar and target from Budget 2025 to 2050; click any entry for context.
-- **Methodology** — how it was made: source, classification rules, the accuracy check, and caveats.
+- **Methodology** — how it was made: source, classification rules, the accuracy check, and limitations.
+- **Verification** — every tracked claim, labelled and traced to source, generated live from the claim ledger.
 
 Together the **Funded → Soft → Unfunded** tabs form a spectrum of commitment strength. Every card links back ("read more ↗") to the relevant pillar section of the official strategy.
 
@@ -24,7 +25,7 @@ Together the **Funded → Soft → Unfunded** tabs form a spectrum of commitment
 
 A full methodology and transparency note lives in the **Methodology** tab: the single source and how
 figures were corroborated, the classification rules (funded vs. unfunded, new vs. leveraged, what counts as
-a "soft" commitment), the line-by-line accuracy check against the official PDF, and the honest caveats.
+a "soft" commitment), the line-by-line accuracy check against the official PDF, and the limitations.
 The analytical lenses (Funded / Soft / Unfunded) are our interpretation, built to make the gap between
 rhetoric and dollars legible — not the government's framing.
 
@@ -45,14 +46,14 @@ anyone can replay the checks.
 - **[`ledger.schema.json`](ledger.schema.json)** + **[`ledger.template.json`](ledger.template.json)** — the portable, source-agnostic artifact to reuse on the next strategy/report → visual project.
 
 The in-page **Verification** tab is generated live from the ledger: it tallies the per-category distribution,
-surfaces the flagged (C) and pending (U) claims first, and links every figure's badge to its record.
+surfaces the hedged claims (*The government hedges this*) and any *Disputed* / *Not yet checked* claims first, and links every figure's badge to its record.
 To reuse the method elsewhere, copy the four kit files, declare the new source, and fill the ledger —
 the protocol doesn't change, only the claims do.
 
 > Verified June 6, 2026: every claim was put through an independent pass — three verifier agents
 > re-fetched the official source blind to the labels and re-derived each quote, headline dollar figures
 > were corroborated against outside sources, and the one initially-disputed claim was adjudicated and
-> confirmed. Current state: **0 pending, 0 disputed** (6 A · 25 B · 15 C · 6 D).
+> confirmed. Current state: **0 pending, 0 disputed** — ✓✓ Confirmed + corroborated: 6 · ✓ Confirmed in the document: 19 · ⚑ The government hedges this: 15 · ∑ Our calculation: 6 · ✎ Our interpretation: 6.
 
 `ledger.json` is the authoritative record; `index.html` inlines a compact mirror (`const LEDGER`) so
 the badges and Verification tab work offline, regenerated from `ledger.json`.
