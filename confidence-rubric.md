@@ -100,6 +100,6 @@ Every basis other than `unverified` rests on at least one recorded entry in the 
 
 ## Displaying the basis
 
-On each claim, show both axes as words — e.g. **`Direct · Corroborated`**, **`Direct · Per the source`**, **`Direct · Qualified by the source`**, **`Derived · Recomputed`**, **`Editorial · Our analysis`**. Colour distinguishes the categories but is **not** a green→red ladder; the labels carry the meaning. The badge links to the claim's ledger row so the locator, quote, corroboration, and checks are one click away.
+On each claim, show the **basis** as a plain answer with a small glyph — e.g. **✓ Confirmed in the document**, **✓✓ Confirmed + corroborated**, **⚑ The government hedges this**, **∑ Our calculation**, **✎ Our interpretation** (and **◷ Not yet checked** / **✕ Disputed** for open items). The **kind** (direct/derived/editorial) is recorded in the claim's row, not crowded onto the badge. Colour distinguishes the categories but is **not** a green→red ladder; the words carry the meaning. The badge links to the claim's ledger row so the locator, quote, corroboration, and checks are one click away.
 
 The project's **Verification** view tallies these live from the ledger: a count per category, coverage (tracked vs. total claims), and the full list of every `qualified` claim (the source's own hedges) plus any `unverified`/`disputed` open items — what a careful reader should look at first.

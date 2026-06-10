@@ -71,20 +71,20 @@ This is the stage that turns "I checked it" into something publishable. The clai
 
 ## 4. The two axes: kind and *basis* (categories, not a score)
 
-Each claim carries **two** labels, shown together on its badge (e.g. `Direct · Corroborated`):
+Each claim carries **two** facets — a *kind* and a *basis*. The badge shows the **basis** as a plain answer (e.g. `✓ Confirmed in the document`); the **kind** is recorded in the claim's row, not crowded onto the badge:
 
 - **Axis 1 — kind**: `direct` / `derived` / `editorial` (what the claim *is*).
 - **Axis 2 — basis**: how the claim is grounded — a **category, not a graded scale**. There is no A–F: a claim the source merely *hedged* is not "worse" than one stated firmly, just a different kind of statement.
 
 | Basis | Holds when |
 |-------|-----------|
-| **Corroborated** | Confirmed against the source **and** ≥1 independent outside source agrees. |
-| **Per the source** | A `direct` statement, confirmed verbatim against the source — but only the source says it. |
-| **Qualified by the source** | A `direct` statement the source's own wording hedges, estimates, or contradicts itself on. Verified verbatim; the qualification is the source's, not ours. |
-| **Recomputed** | A `derived` figure we computed from the data and re-derived this cycle. |
-| **Our analysis** | An `editorial` framing or lens, applied by a stated, consistent, reversible rule. |
-| **Unverified** | Tracked but not yet checked this cycle. An honest placeholder, not a failure. |
-| **Disputed** | Failed verification, or sources conflict unresolved. Should be ~0 at publish; always surfaced. |
+| **Confirmed + corroborated** (`corroborated`) | Confirmed against the source **and** ≥1 independent outside source agrees. |
+| **Confirmed in the document** (`per-source`) | A `direct` statement, confirmed verbatim against the source — but only the source says it. |
+| **The government hedges this** (`qualified`) | A `direct` statement the source's own wording hedges, estimates, or contradicts itself on. Verified verbatim; the qualification is the source's, not ours. |
+| **Our calculation** (`recomputed`) | A `derived` figure we computed from the data and re-derived this cycle. |
+| **Our interpretation** (`our-analysis`) | An `editorial` framing or lens, applied by a stated, consistent, reversible rule. |
+| **Not yet checked** (`unverified`) | Tracked but not yet checked this cycle. An honest placeholder, not a failure. |
+| **Disputed** (`disputed`) | Failed verification, or sources conflict unresolved. Should be ~0 at publish; always surfaced. |
 
 Categories instead of one number — or an A–F that reads as pass/fail — is a deliberate choice: a "87% confident" or a letter grade hides exactly the distinction a careful reader needs, which is *what kind of statement this is and how it's grounded*. The full decision procedure (how the fields determine the basis) is in **`confidence-rubric.md`**.
 

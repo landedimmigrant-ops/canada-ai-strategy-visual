@@ -227,7 +227,7 @@
 
   /* ===== Confidence badges + ledger modal ===== */
   .cbadge{display:inline-flex;align-items:center;gap:5px;cursor:pointer;font-size:10px;font-weight:700;letter-spacing:.03em;border-radius:5px;padding:2px 7px;border:1px solid var(--line);background:var(--panel);color:var(--faint);white-space:nowrap;line-height:1.45;font-family:inherit;vertical-align:middle}
-  .cbadge::before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;flex:none}
+  /* per-category glyph (set in the BASIS map) stands in for a dot */
   .cbadge:hover{border-color:currentColor}
   /* basis colours are applied inline from the BASIS map in JS */
   .mrow .lbl .cbadge,.dumb .lbl .cbadge{margin-top:4px}
@@ -499,13 +499,12 @@
         <p>The accuracy check above was turned into a standing, published artifact: a <b>claim ledger</b> (<a href="ledger.json" target="_blank" rel="noopener"><code>ledger.json</code></a>) in which every figure, target and commitment is one row — traced to an exact source quote and labelled by a written, reusable method, the <a href="METHOD.md" target="_blank" rel="noopener">Source-Traceable Claim Ledger</a>. Browse it live in the <b>Verification</b> tab; the badge on any figure opens its record. The point is that you needn't trust this page — you can replay the checks.</p>
         <p>Each claim carries <b>two axes</b>: a <em>kind</em> — <b>direct</b> (asserted by the source), <b>derived</b> (computed by us, e.g. a total) or <b>editorial</b> (our framing) — and a <em>basis</em> category set by a deterministic rule (<a href="confidence-rubric.md" target="_blank" rel="noopener">the rubric</a>), so it is reproducible rather than asserted. The basis is a <em>category, not a score</em>:</p>
         <ul>
-          <li><b>Corroborated:</b> matches the source <em>and</em> an independent outside source agrees.</li>
-          <li><b>Per the source:</b> a government statement, confirmed word-for-word against the official text.</li>
-          <li><b>Qualified by the source:</b> the government's own wording hedges, estimates or contradicts itself — verified verbatim; the qualification is the source's, not ours.</li>
-          <li><b>Recomputed</b> / <b>Our analysis:</b> figures we computed from the data, or our editorial lenses — labelled as ours, not the source's.</li>
+          <li><b>Confirmed in the document</b> (<b>＋ corroborated</b> when an outside source agrees too): matches the official text word-for-word.</li>
+          <li><b>The government hedges this:</b> accurate to the document, but the wording is soft — a proposal, an estimate, or a conditional.</li>
+          <li><b>Our calculation</b> / <b>Our interpretation:</b> totals we computed, or lenses we chose — labelled as ours, not the government's words.</li>
         </ul>
         <p><b>How the figures were verified.</b> Because "we checked it" is not a method, every factual claim was put through an <b>independent pass</b>: three separate verifier agents re-fetched the official strategy on their own — blind to the labels — and re-derived each quote from scratch, and the headline dollar figures were corroborated against outside sources (BetaKit, University Affairs, BDC, KPMG, and a Budget 2025 legal analysis). Each record shows its check trail and who ran every step.</p>
-        <p><b>Where it stands (verified June 6, 2026):</b> 52 tracked claims — <b>6 corroborated, 19 per the source, 15 qualified by the source, 6 recomputed, 6 our analysis</b> — with <b>0 open</b> (none disputed or unchecked). The independent pass also worked in the other direction, which is the real test: it briefly flagged one claim (the conditional "Canadian models could become world-leading on safety") because a summary had skipped the sentence, and a targeted re-read then found it verbatim and cleared it. The ledger keeps that <em>dispute → adjudication → confirm</em> trail in the open — a flag honestly raised and resolved is more trustworthy than a claim never questioned.</p>
+        <p><b>Where it stands (verified June 6, 2026):</b> 52 tracked claims — <b>6 confirmed + corroborated, 19 confirmed in the document, 15 the government hedges, 6 our calculations, 6 our interpretations</b> — with <b>0 open</b> (none disputed or unchecked). The independent pass also worked in the other direction, which is the real test: it briefly flagged one claim (the conditional "Canadian models could become world-leading on safety") because a summary had skipped the sentence, and a targeted re-read then found it verbatim and cleared it. The ledger keeps that <em>dispute → adjudication → confirm</em> trail in the open — a flag honestly raised and resolved is more trustworthy than a claim never questioned.</p>
         <p><b>What "verified" means here:</b> each claim is faithful to the source and traceable to the exact words — not that the dollars will ultimately be spent, which is a separate question. The one check a machine can't supply is a human's sign-off, which remains the editor's to give.</p>
 
         <h3>11 · Snapshot &amp; disclaimer</h3>
@@ -516,7 +515,7 @@
 
     <section class="tab" id="tab-confidence">
       <h2 style="margin-top:40px">Verification &amp; sources</h2>
-      <p class="h2sub">Every tracked claim in this explorer, labelled and traced to source — generated live from <code>ledger.json</code> using the <a href="METHOD.md" target="_blank" rel="noopener">Source-Traceable Claim Ledger</a> method. The verification badges throughout the site open these same records. Each claim carries two axes: <b>kind</b> (what it is — direct, derived, or editorial) and <b>basis</b> (the category — e.g. per the source, qualified by the source, corroborated).</p>
+      <p class="h2sub">Every tracked claim in this explorer, labelled and traced to source — generated live from <code>ledger.json</code> using the <a href="METHOD.md" target="_blank" rel="noopener">Source-Traceable Claim Ledger</a> method. The verification badges throughout the site open these same records. Each claim carries two axes: <b>kind</b> (what it is — direct, derived, or editorial) and a plain answer to "can I trust this?" — e.g. <b>Confirmed in the document</b>, <b>The government hedges this</b>, or <b>Our calculation</b>.</p>
       <div class="confgrid" id="confGrid"></div>
       <p class="flownote" id="confCoverage"></p>
       <h3>What the categories mean</h3>
@@ -1251,19 +1250,19 @@ const docHref=k=>DOC+"#"+(DOC_ANCHOR[k]||"_Toc76");
 /* ---- confidence badges + ledger modal (data: const LEDGER above) ---- */
 const KINDLBL={direct:"Direct",derived:"Derived",editorial:"Editorial"};
 const BASIS={
-  corroborated:{label:"Corroborated",color:"#1f7a3f",desc:"Confirmed against the government source <b>and</b> independently corroborated by an outside source."},
-  "per-source":{label:"Per the source",color:"#2b5797",desc:"A government statement, confirmed word-for-word against the official source."},
-  qualified:{label:"Qualified by the source",color:"#9a6700",desc:"The government's own wording hedges, estimates, or contradicts itself — verified verbatim; the qualification is the source's, not ours. (This is the Soft-commitments finding.)"},
-  recomputed:{label:"Recomputed",color:"#5c6f7c",desc:"A figure we computed from the data (a total, count or share) and re-derived this cycle."},
-  "our-analysis":{label:"Our analysis",color:"#6b3fa0",desc:"Our framing, lens or grouping — a stated, consistent, reversible rule. Defensible, not a source claim."},
-  unverified:{label:"Unverified",color:"#7d8a96",desc:"Tracked but not yet re-verified this cycle. An honest placeholder, not a failure."},
-  disputed:{label:"Disputed",color:"#d3080c",desc:"Verification failed or sources conflict, unresolved. Should be none at publish."}
+  corroborated:{label:"Confirmed + corroborated",glyph:"✓✓",color:"#1f7a3f",desc:"In the government's document <b>and</b> independently confirmed by an outside source. The strongest answer."},
+  "per-source":{label:"Confirmed in the document",glyph:"✓",color:"#2b5797",desc:"Matches the official document word-for-word. The document is the only source that states it."},
+  qualified:{label:"The government hedges this",glyph:"⚑",color:"#9a6700",desc:"Accurate to the document, but the government's own wording is soft — a proposal, an estimate, or a conditional. (The Soft-commitments finding.)"},
+  recomputed:{label:"Our calculation",glyph:"∑",color:"#5c6f7c",desc:"A figure we computed from the data (a total, count or share) and re-derived this cycle — not a number the document states directly."},
+  "our-analysis":{label:"Our interpretation",glyph:"✎",color:"#6b3fa0",desc:"Our framing, lens or grouping — a stated, consistent, reversible rule. Defensible, but ours, not the government's words."},
+  unverified:{label:"Not yet checked",glyph:"◷",color:"#7d8a96",desc:"Tracked but not yet re-verified this cycle. An honest placeholder, not a failure."},
+  disputed:{label:"Disputed",glyph:"✕",color:"#d3080c",desc:"Verification failed or sources conflict, unresolved. Should be none at publish."}
 };
 const BASIS_ORDER=["corroborated","per-source","qualified","recomputed","our-analysis","unverified","disputed"];
 const attr=s=>String(s).replace(/&/g,"&amp;").replace(/"/g,"&quot;");
 const LKEY_TILE={"60%":"target:Business AI adoption","250,000":"target:250,000 new jobs","90,000":"target:90,000 AI placements","~$200B":"target:GDP unlock ~$200B","1M":"target:1M students reached","850 MW":"soft:850 MW → 2.3 GW sovereign compute","#1-class":"target:public supercomputer 2031","2×":"target:grid doubled 2050"};
 const LKEY_DUMB={"Business AI adoption":"target:Business AI adoption","SME AI adoption":"target:SME AI adoption","Canadians with any AI training":"target:Canadians with any AI training","Canada CIFAR AI Chairs":"target:Canada CIFAR AI Chairs","K-12 educators trained":"target:K-12 educators trained","Sovereign compute capacity":"soft:850 MW → 2.3 GW sovereign compute"};
-function confBadge(key){const e=LEDGER[key]; if(!e||!BASIS[e.b]) return ""; const b=BASIS[e.b]; return `<button class="cbadge" style="color:${b.color}" data-lkey="${attr(key)}" title="${KINDLBL[e.k]} · ${b.label} — click for sourcing">${KINDLBL[e.k]} · ${b.label}</button>`;}
+function confBadge(key){const e=LEDGER[key]; if(!e||!BASIS[e.b]) return ""; const b=BASIS[e.b]; return `<button class="cbadge" style="color:${b.color}" data-lkey="${attr(key)}" title="${b.label} (${KINDLBL[e.k]} claim) — click for sourcing">${b.glyph} ${b.label}</button>`;}
 function openLedger(key){
   const e=LEDGER[key]; if(!e) return;
   const provLabel=e.k==="derived"?"Formula":e.k==="editorial"?"Classification rule":"Source";
@@ -1271,7 +1270,8 @@ function openLedger(key){
   const box=$("#lmodalbox"); box.style.borderTopColor=b.color;
   box.innerHTML=`<button class="lclose" onclick="closeLedger()">close ✕</button>
     <h3>${e.c}</h3>
-    <div class="lgrade" style="color:${b.color}">${KINDLBL[e.k]} · ${b.label}</div>
+    <div class="lgrade" style="color:${b.color}">${b.glyph} ${b.label}</div>
+    <div class="lrow"><div class="lk">Kind</div><div class="lv">${KINDLBL[e.k]}${e.k==='direct'?' — a statement from the source':e.k==='derived'?' — a figure we computed':' — our framing'}</div></div>
     <div class="lrow"><div class="lk">${provLabel}</div><div class="lv ${e.k==='direct'?'quote':''}">${e.prov||"—"}</div></div>
     <div class="lrow"><div class="lk">Verification checks</div><div class="lv">${e.chk||"—"}</div></div>
     ${e.note?`<div class="lrow"><div class="lk">Notes</div><div class="lv">${e.note}</div></div>`:""}
@@ -1578,14 +1578,14 @@ function renderConfidence(){
   BASIS_ORDER.forEach(s=>{ if(byBasis[s]) grid+=`<div class="confcard"><b style="color:${BASIS[s].color}">${byBasis[s]}</b><span>${BASIS[s].label}</span></div>`; });
   $("#confGrid").innerHTML=grid;
   const open=(byBasis.unverified||0)+(byBasis.disputed||0);
-  $("#confCoverage").innerHTML=`By kind: ${byKind.direct} direct, ${byKind.derived} derived, ${byKind.editorial} editorial. Independently verified (2026-06-06): three separate verifier agents re-fetched the official ISED source, blind to the labels, and re-derived every quote. <b>${total} claims tracked, ${open} open.</b> ${byBasis.corroborated||0} corroborated, ${byBasis["per-source"]||0} per the source, ${byBasis.qualified||0} qualified by the source, ${byBasis.recomputed||0} recomputed, ${byBasis["our-analysis"]||0} our analysis.`;
-  $("#confLegend").innerHTML=BASIS_ORDER.map(s=>`<div class="li"><span class="cbadge" style="color:${BASIS[s].color};pointer-events:none">${BASIS[s].label}</span><div>${BASIS[s].desc}</div></div>`).join("");
+  $("#confCoverage").innerHTML=`Independently verified (2026-06-06): three separate verifier agents re-fetched the official ISED source, blind to the labels, and re-derived every quote. <b>${total} claims tracked, ${open} open.</b> ${byBasis.corroborated||0} confirmed + corroborated · ${byBasis["per-source"]||0} confirmed in the document · ${byBasis.qualified||0} the government hedges · ${byBasis.recomputed||0} our calculations · ${byBasis["our-analysis"]||0} our interpretations.`;
+  $("#confLegend").innerHTML=BASIS_ORDER.map(s=>`<div class="li"><span class="cbadge" style="color:${BASIS[s].color};pointer-events:none">${BASIS[s].glyph} ${BASIS[s].label}</span><div>${BASIS[s].desc}</div></div>`).join("");
   const row=([k,e])=>`<div class="ci">${confBadge(k)}<div class="ct">${e.c}<span class="cp">${e.prov}</span></div></div>`;
   const attn=entries.filter(([k,e])=>e.b==="unverified"||e.b==="disputed").sort((a,b)=>(a[1].b==="disputed"?0:1)-(b[1].b==="disputed"?0:1));
   const qual=entries.filter(([k,e])=>e.b==="qualified");
   let fh="";
   if(attn.length) fh+=`<p class="confsubhead attn">⚠ Open on our side — ${attn.length} (disputed or not yet re-checked)</p>`+attn.map(row).join("");
-  fh+=`<p class="confsubhead">Qualified in the government's own words — ${qual.length} · hedged, estimated, or self-contradictory in the source</p>`+(qual.map(row).join("")||`<p class="empty">None.</p>`);
+  fh+=`<p class="confsubhead">The government hedges this — ${qual.length} · in its own words: a proposal, an estimate, or a conditional</p>`+(qual.map(row).join("")||`<p class="empty">None.</p>`);
   $("#confFlagged").innerHTML=fh;
   const rows=entries.map(([k,e])=>`<tr><td class="ctab">${confBadge(k)}</td><td class="cclaim">${e.c}</td><td>${e.prov}</td></tr>`).join("");
   $("#confTable").innerHTML=`<table class="conftable"><thead><tr><th>Basis</th><th>Claim</th><th>Provenance</th></tr></thead><tbody>${rows}</tbody></table>`;

@@ -41,7 +41,7 @@ is a row in [`ledger.json`](ledger.json) — traced to an exact place in the sou
 anyone can replay the checks.
 
 - **[`METHOD.md`](METHOD.md)** — the protocol: Atomize → Cite → Corroborate → Grade → Sign-off.
-- **[`confidence-rubric.md`](confidence-rubric.md)** — the two-axis labelling: **kind** (direct / derived / editorial) × **basis** (corroborated · per the source · qualified by the source · recomputed · our analysis · unverified · disputed) — categories, not a graded scale — with a deterministic procedure so the labels are reproducible, not asserted.
+- **[`confidence-rubric.md`](confidence-rubric.md)** — the two-axis labelling: **kind** (direct / derived / editorial) × **basis**, shown as plain answers — *Confirmed in the document* (＋ *corroborated*) · *The government hedges this* · *Our calculation* · *Our interpretation* (· *not yet checked* · *disputed*) — categories, not a graded scale — with a deterministic procedure so the labels are reproducible, not asserted.
 - **[`ledger.schema.json`](ledger.schema.json)** + **[`ledger.template.json`](ledger.template.json)** — the portable, source-agnostic artifact to reuse on the next strategy/report → visual project.
 
 The in-page **Verification** tab is generated live from the ledger: it tallies the per-category distribution,
