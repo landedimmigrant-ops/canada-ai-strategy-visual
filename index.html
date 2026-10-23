@@ -36,7 +36,28 @@
   .chip:hover{color:var(--text)}
   .chip.active{color:#fff;font-weight:600}
   .chip .dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:7px;vertical-align:1px}
-  .resetnote{font-size:11.5px;color:var(--faint);margin-top:6px}
+  /* the colour dot disappears on a selected chip (same colour as its fill), so make it white */
+  .chip.active .dot{background:#fff!important}
+
+  /* ===== In-page filter bar: search + value/pillar filters, above the content ===== */
+  .filterbar{display:none;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:12px 14px 10px;margin:18px 0 0}
+  .filterbar.show{display:block}
+  .filterbar.on{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+  @media(min-width:901px) and (min-height:700px){.filterbar{position:sticky;top:8px;z-index:20;box-shadow:0 8px 20px rgba(38,55,74,.12)}.filterbar.on{box-shadow:0 8px 20px rgba(38,55,74,.12),0 0 0 1px var(--accent) inset}}
+  .fb-search .search{padding:8px 12px 8px 34px;font-size:14px;border-radius:9px;background:var(--panel2) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%237d8a96' stroke-width='2.4' stroke-linecap='round'%3E%3Ccircle cx='11' cy='11' r='7'/%3E%3Cpath d='M20 20l-3.5-3.5'/%3E%3C/svg%3E") no-repeat 11px center}
+  .fb-search .search:focus{background-color:var(--panel);border-color:var(--text)}
+  .fb-chips{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin-top:10px}
+  .fb-lbl{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:700}
+  .fb-sep{width:1px;align-self:stretch;min-height:20px;background:var(--line);margin:0 4px}
+  #filterbar .chip{display:inline-flex;align-items:center;width:auto;margin:0;border-radius:999px;padding:4px 12px;font-size:12.5px}
+  .fb-status{display:flex;align-items:center;flex-wrap:wrap;gap:6px 12px;margin-top:10px;padding-top:9px;border-top:1px solid var(--line);font-size:12.5px;color:var(--muted)}
+  .fb-status b{color:var(--text)}
+  .filterbar.on .fb-status b{color:var(--accent)}
+  .filterbar.zero .fb-status{color:var(--accent)}
+  .fb-what{color:var(--text);font-weight:600}
+  .fb-clear{margin-left:auto;cursor:pointer;background:var(--accent);color:#fff;border:none;border-radius:999px;padding:4px 13px;font-size:12px;font-weight:700;font-family:inherit}
+  .fb-clear:hover{background:#a90609}
+  .fb-clear[hidden]{display:none}
 
   @media(max-width:900px){
     .layout{grid-template-columns:1fr}
@@ -45,9 +66,6 @@
     .tabbtn{display:inline-block;width:auto;padding:4px 10px;border-left:none;border-radius:999px}
     .tabbtn.current{outline:1px solid var(--accent)}
     .tabbtn small{display:none}
-    .chip{display:inline-block;width:auto;margin-bottom:0;border-radius:999px;padding:4px 11px}
-    .search{width:160px}
-    .resetnote{display:none}
     .content{padding:0 18px 60px}
   }
 
@@ -131,11 +149,9 @@
   .srclink:hover{color:var(--accent);text-decoration:underline}
   .pagelink{display:inline-block;font-size:12px;font-weight:700;color:var(--accent);background:var(--panel);border:1px solid var(--accent);text-decoration:none;border-radius:999px;padding:3px 12px;white-space:nowrap;vertical-align:middle;margin-left:4px}
   .pagelink:hover{background:var(--accent);color:#fff}
-  .filterbox{border:1px solid var(--line);border-radius:10px;padding:10px 12px 12px;margin-top:4px;background:var(--panel)}
-  .filterbox .sidetitle:first-child{margin-top:0}
-  #searchsummary{display:none;margin:9px 0 2px}
-  .ssum-h{color:var(--faint);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;margin-bottom:5px}
-  .ssum{display:inline-flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:3px 8px;margin:0 5px 5px 0;font-size:12px;color:var(--muted);cursor:pointer}
+  #searchsummary{display:none;flex-wrap:wrap;align-items:center;gap:6px;margin-top:9px;padding-top:9px;border-top:1px dashed var(--line)}
+  .ssum-h{color:var(--faint);font-size:10.5px;text-transform:uppercase;letter-spacing:.05em;margin-right:4px}
+  .ssum{display:inline-flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:7px;padding:3px 8px;font-size:12px;color:var(--muted);cursor:pointer}
   .ssum:hover{border-color:var(--faint);color:var(--text)}
   .ssum b{background:var(--accent);color:#fff;border-radius:4px;padding:0 5px;font-size:10.5px;font-weight:700}
   .ssum-none{color:var(--faint);font-size:12px}
@@ -310,28 +326,30 @@
       <button class="tabbtn" data-tab="confidence">Verification<small>how every claim was checked</small></button>
     </nav>
 
-    <div class="sidetitle">Search</div>
-    <input class="search" id="search" type="search" placeholder="e.g. SME, health, compute…">
-    <div id="searchsummary"></div>
-
-    <div class="filterbox">
-    <div class="sidetitle">Filter by value</div>
-    <button class="chip active" data-f="all">All</button>
-    <button class="chip" data-f="trust"><span class="dot" style="background:var(--trust)"></span>Trust</button>
-    <button class="chip" data-f="opportunity"><span class="dot" style="background:var(--opportunity)"></span>Opportunity</button>
-    <button class="chip" data-f="sovereignty"><span class="dot" style="background:var(--sovereignty)"></span>Sovereignty</button>
-    <div class="sidetitle">Filter by pillar</div>
-    <button class="chip" data-f="p1"><span class="dot" style="background:var(--p1)"></span>P1 Protection</button>
-    <button class="chip" data-f="p2"><span class="dot" style="background:var(--p2)"></span>P2 Empowerment</button>
-    <button class="chip" data-f="p3"><span class="dot" style="background:var(--p3)"></span>P3 Prosperity</button>
-    <button class="chip" data-f="p4"><span class="dot" style="background:var(--p4)"></span>P4 Foundation</button>
-    <button class="chip" data-f="p5"><span class="dot" style="background:var(--p5)"></span>P5 Champions</button>
-    <button class="chip" data-f="p6"><span class="dot" style="background:var(--p6)"></span>P6 Alliances</button>
-    <p class="resetnote">Search and filters apply across the Opportunities, Funded-commitments, Soft-commitments, Unfunded-commitments, Targets and Timeline tabs.</p>
-    </div>
   </aside>
 
   <div class="content">
+
+    <!-- ============ FILTER BAR (shown on the tabs it affects) ============ -->
+    <div class="filterbar" id="filterbar" role="search" aria-label="Search and filter this tab">
+      <div class="fb-search"><input class="search" id="search" type="search" placeholder="Search, e.g. SME, health, compute…" aria-label="Search"></div>
+      <div class="fb-chips">
+        <button class="chip active" data-f="all">All</button>
+        <span class="fb-sep"></span><span class="fb-lbl">Value</span>
+        <button class="chip" data-f="trust"><span class="dot" style="background:var(--trust)"></span>Trust</button>
+        <button class="chip" data-f="opportunity"><span class="dot" style="background:var(--opportunity)"></span>Opportunity</button>
+        <button class="chip" data-f="sovereignty"><span class="dot" style="background:var(--sovereignty)"></span>Sovereignty</button>
+        <span class="fb-sep"></span><span class="fb-lbl">Pillar</span>
+        <button class="chip" data-f="p1"><span class="dot" style="background:var(--p1)"></span>P1 Protection</button>
+        <button class="chip" data-f="p2"><span class="dot" style="background:var(--p2)"></span>P2 Empowerment</button>
+        <button class="chip" data-f="p3"><span class="dot" style="background:var(--p3)"></span>P3 Prosperity</button>
+        <button class="chip" data-f="p4"><span class="dot" style="background:var(--p4)"></span>P4 Foundation</button>
+        <button class="chip" data-f="p5"><span class="dot" style="background:var(--p5)"></span>P5 Champions</button>
+        <button class="chip" data-f="p6"><span class="dot" style="background:var(--p6)"></span>P6 Alliances</button>
+      </div>
+      <div class="fb-status" id="fbStatus" aria-live="polite"><span id="fbText"></span><button class="fb-clear" id="fbClear" type="button" hidden>Clear filters ✕</button></div>
+      <div id="searchsummary"></div>
+    </div>
 
     <!-- ============ OVERVIEW ============ -->
     <section class="tab show" id="tab-overview">
@@ -383,7 +401,7 @@
       <div class="gaps" id="gaps"></div>
 
       <h2>Program catalogue</h2>
-      <p class="h2sub">Each named program in the strategy: its purpose, intended audience, funding where specified, and whether it is live or announced. Grouped by pillar; filter or search from the sidebar.</p>
+      <p class="h2sub">Each named program in the strategy: its purpose, intended audience, funding where specified, and whether it is live or announced. Grouped by pillar; use the filters above to narrow it.</p>
       <div class="cards" id="oppcards"></div>
     </section>
 
@@ -421,7 +439,7 @@
     <!-- ============ TIMELINE ============ -->
     <section class="tab" id="tab-runway">
       <h2 style="margin-top:40px">Timeline, 2025–2050</h2>
-      <p class="h2sub">Announcements, funding and targets by date. Funding is shown in green, targets in amber. Select an entry for context; filter or search from the sidebar. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">Read the full strategy ↗</a></p>
+      <p class="h2sub">Announcements, funding and targets by date. Funding is shown in green, targets in amber. Select an entry for context; use the filters above to narrow it. <a class="pagelink" href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">Read the full strategy ↗</a></p>
       <div class="timeline" id="timeline"></div>
     </section>
 
@@ -1707,7 +1725,7 @@ function renderNegative(){
     const items=shown.filter(o=>o.cat===negCat);
     $("#negative").innerHTML=items.length
       ? `<p class="h2sub" style="margin-top:16px">${NEG_BLURB[negCat]||""}</p><div class="cards">${items.map(negCardHTML).join("")}</div>`
-      : `<p class="empty">No “${negCat}” items match the current filter — pick another category above, or clear the sidebar filter.</p>`;
+      : `<p class="empty">No “${negCat}” items match the current filter — pick another category above, or clear the filters at the top of the page.</p>`;
     return;
   }
   $("#negative").innerHTML=shown.length
@@ -1774,10 +1792,42 @@ function renderConfidence(){
 }
 
 /* ================= GLOBAL ================= */
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+
+/* In-page filter bar: shown on the tabs the filters actually change, with a live "showing X of Y" line. */
+const FILTER_TABS=["opps","moneytab","soft","negative","targets","runway"];
+const FILTER_NAME={trust:"Trust",opportunity:"Opportunity",sovereignty:"Sovereignty",p1:"P1 Protection",p2:"P2 Empowerment",p3:"P3 Prosperity",p4:"P4 Foundation",p5:"P5 Champions",p6:"P6 Alliances"};
+function tabCounts(tab){
+  if(tab==="opps"){const n=OPPS.filter(o=>visible(o.p)&&matches(o.n+o.who+o.get+(o.amt||""))).length; return {n,of:OPPS.length,what:"programs"};}
+  if(tab==="moneytab"){
+    const rows=MONEY.filter(m=>visible(m.p)&&matches(m.l+(m.note||"")));
+    const tn=rows.filter(m=>!m.lev).reduce((s,m)=>s+m.a,0), tl=rows.filter(m=>m.lev).reduce((s,m)=>s+m.a,0);
+    return {n:rows.length,of:MONEY.length,what:"named dollar line-items",extra:`${fmtM(tn)} new · ${fmtM(tl)} leveraged`};}
+  if(tab==="soft"){const n=SOFT.filter(o=>visible(o.p)&&matches(o.t+" "+o.what+" "+o.q)).length; return {n,of:SOFT.length,what:"soft commitments"};}
+  if(tab==="negative"){const all=negItems(), n=all.filter(o=>visible(o.p)&&matches(o.t+" "+o.what+" "+(o.who||""))).length; return {n,of:all.length,what:"unfunded commitments"};}
+  if(tab==="targets"){const n=TILES.filter(t=>visible(t.p)&&matches(t.b+t.s)).length+DUMBS.filter(d=>visible(d.p)&&matches(d.l+d.sm)).length; return {n,of:TILES.length+DUMBS.length,what:"targets"};}
+  const n=EVENTS.filter(e=>visible(e.p)&&matches(e.t+(e.ctx||""))).length; return {n,of:EVENTS.length,what:"timeline entries"};
+}
+function updateFilterBar(){
+  const bar=$("#filterbar"); if(!bar) return;
+  const cur=document.querySelector(".tabbtn.current"), tab=cur&&cur.dataset.tab;
+  const applies=FILTER_TABS.includes(tab);
+  bar.classList.toggle("show",applies); if(!applies) return;
+  const typed=$("#search").value.trim(), active=filter!=="all"||!!q, c=tabCounts(tab);
+  bar.classList.toggle("on",active); bar.classList.toggle("zero",active&&c.n===0);
+  const by=[]; if(filter!=="all") by.push(FILTER_NAME[filter]); if(q) by.push(`“${esc(typed)}”`);
+  const extra=c.extra?` · ${c.extra}`:"";
+  $("#fbText").innerHTML=active
+    ? (c.n===0 ? `<b>No ${c.what} match</b> <span class="fb-what">${by.join(" + ")}</span>`
+               : `Showing <b>${c.n} of ${c.of}</b> ${c.what}${extra} · <span class="fb-what">${by.join(" + ")}</span>`)
+    : `Showing all <b>${c.of}</b> ${c.what}${extra}. Narrow by value or pillar, or search.`;
+  $("#fbClear").hidden=!active;
+}
+
 function searchSummary(){
   const el=$("#searchsummary"); if(!el) return;
   if(!q){ el.style.display="none"; el.innerHTML=""; return; }
-  el.style.display="block";
+  el.style.display="flex";
   const counts=[
     ["opps","Opportunities",OPPS.filter(o=>visible(o.p)&&matches(o.n+o.who+o.get+(o.amt||""))).length],
     ["moneytab","Funded",MONEY.filter(m=>visible(m.p)&&matches(m.l+(m.note||""))).length],
@@ -1787,12 +1837,12 @@ function searchSummary(){
     ["soft","Soft",SOFT.filter(o=>visible(o.p)&&matches(o.t+" "+o.what+" "+o.q)).length]
   ];
   const total=counts.reduce((s,c)=>s+c[2],0);
-  if(!total){ el.innerHTML=`<div class="ssum-none">No matches for “${q}” — try another term.</div>`; return; }
+  if(!total){ el.innerHTML=`<div class="ssum-none">No matches on any tab for “${esc(q)}”. Try another term.</div>`; return; }
   el.innerHTML=`<div class="ssum-h">${total} match${total===1?"":"es"} across tabs — jump to:</div>`+
     counts.filter(c=>c[2]>0).map(([tab,label,n])=>`<button class="ssum" data-go="${tab}">${label}<b>${n}</b></button>`).join("");
   $$("#searchsummary .ssum").forEach(b=>b.onclick=()=>{ if(b.dataset.go==="negative")negCat="All"; rerenderFiltered(); document.querySelector(`.tabbtn[data-tab="${b.dataset.go}"]`).click(); });
 }
-function rerenderFiltered(){ renderGaps(); renderOpps(); renderMoney(); renderFlow(); renderTargets(); renderTimeline(); renderNegative(); renderSoft(); searchSummary(); }
+function rerenderFiltered(){ renderGaps(); renderOpps(); renderMoney(); renderFlow(); renderTargets(); renderTimeline(); renderNegative(); renderSoft(); searchSummary(); updateFilterBar(); }
 function setFilter(f){
   filter=f;
   $$(".chip").forEach(c=>{
@@ -1805,22 +1855,13 @@ function setFilter(f){
   rerenderFiltered();
 }
 $$(".chip").forEach(c=>c.onclick=()=>setFilter(c.dataset.f));
-$("#search").addEventListener("input",e=>{
-  q=e.target.value.trim().toLowerCase();
-  rerenderFiltered();
-  // Search only affects the list tabs. If the user starts typing from Overview or
-  // By audience (which don't respond to search), jump to the Opportunities catalogue
-  // so results are actually visible.
-  const cur=document.querySelector(".tabbtn.current");
-  if(q && cur && (cur.dataset.tab==="overview"||cur.dataset.tab==="foryou")){
-    document.querySelector('.tabbtn[data-tab="opps"]').click();
-    $("#search").focus();
-  }
-});
+$("#search").addEventListener("input",e=>{ q=e.target.value.trim().toLowerCase(); rerenderFiltered(); });
+$("#fbClear").onclick=()=>{ $("#search").value=""; q=""; setFilter("all"); $("#search").focus(); };
 
 $$(".tabbtn").forEach(b=>b.onclick=()=>{
   $$(".tabbtn").forEach(x=>x.classList.toggle("current",x===b));
   $$(".tab").forEach(t=>t.classList.toggle("show",t.id==="tab-"+b.dataset.tab));
+  updateFilterBar();
   window.scrollTo({top:0});
 });
 

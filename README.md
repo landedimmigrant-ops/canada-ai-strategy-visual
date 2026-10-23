@@ -6,7 +6,7 @@ An interactive, single-file visual breakdown of [Canada's National AI Strategy: 
 
 ## What's inside
 
-Eight explore tabs plus an About group, driven by a shared sidebar with search and value/pillar filters:
+Eight explore tabs plus an About group, with a sidebar for navigation and a filter bar at the top of the page (search plus value and pillar filters, with a live "showing X of Y" count) on the six tabs it changes:
 
 - **Overview** — the architecture: three values (Trust, Opportunity, Sovereignty) carrying six pillars, plus the five priority sectors. Click a pillar for its themes and key actions.
 - **By audience** — pick who you are (SME owner, founder, student, mid-career worker, researcher, creator, Indigenous communities, public servant) and see the programs that touch you, grouped by pillar.
