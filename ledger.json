@@ -16,7 +16,7 @@
     "coverage_note": "Independently verified (2026-06-06): three blind verifier agents re-fetched the official ISED source and re-derived every quote; one initially-disputed claim was adjudicated and confirmed via a targeted re-read. All 39 factual claims source-matched; 0 open. Categories: corroborated (source + an outside source), per the source, qualified by the source (the government's own hedges, estimates, and one self-contradiction), recomputed (our totals/counts), our analysis (editorial lenses). Labels are reproducible via confidence-rubric.md.",
     "post_launch": {
       "as_of": "2026-10-23",
-      "note": "Claims with ids starting 'post:' record announcements made after the strategy's June 2026 publication. They were read from official pages on 2026-10-23 in a single AI pass (extraction plus one re-read), not the independent three-agent pass used for the strategy's own claims. They are shown separately in the Verification tab and never feed the headline totals."
+      "note": "Claims with ids starting 'post:' record announcements made after the strategy's June 2026 publication. They were read from official pages on 2026-10-23, then independently re-read the same day by three blind verifier agents (briefed with the claim and the URL only, not our quotes or labels, and told to try to refute). Five were confirmed as worded and five with qualifications that were folded into the wording; one (post:dtc-launch) was disputed, reworded and re-confirmed. Human sign-off is still pending. They are shown separately in the Verification tab and never feed the headline totals."
     }
   },
   "claims": [
@@ -1847,7 +1847,7 @@
           "date": "2026-06-06"
         }
       ],
-      "notes": "'world-leading public supercomputer' and 'by 2031' are stated in two separate sentences (the year is in the outcomes list, which omits 'public'). Both supported. Post-launch flag (2026-10-23, unresolved): ISED's program page names about $890M for the build; the strategy gives no figure, so this stays unfunded here. See post:supercomputer-program."
+      "notes": "'world-leading public supercomputer' and 'by 2031' are stated in two separate sentences (the year is in the outcomes list, which omits 'public'). Both supported. Post-launch flag (2026-10-23, unresolved): ISED's program page names about $890M to build and operate the system; the strategy gives no figure, so this stays unfunded here. See post:supercomputer-program."
     },
     {
       "id": "target:grid doubled 2050",
@@ -1891,7 +1891,7 @@
     },
     {
       "id": "post:raii-open",
-      "claim": "Regional AI Initiative: the additional $500M is now available; total federal funding $700M (Oct 13, 2026)",
+      "claim": "Regional AI Initiative: an additional $500M over five years is now available; total federal funding $700M (Oct 13, 2026)",
       "rendered_in": [
         "opps",
         "runway"
@@ -1918,6 +1918,14 @@
           "by": "ai:source-match (second read, same session; not independent)",
           "date": "2026-10-23",
           "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (blind verifier agent, browser)",
+          "date": "2026-10-23",
+          "result": "confirm",
+          "note": "Confirmed. The verifier noted the claim omitted 'over five years'; the wording now includes it."
         }
       ],
       "notes": "The same $500M the strategy already counts (money:Regional AI Initiative expansion (RDAs)); not added to any total. Release also gives deadlines: projects with eligible costs before 2027-03-31 must be submitted by 2026-11-24; southern Ontario applications close 2027-01-19 (other regions' dates not given)."
@@ -1958,13 +1966,21 @@
           "by": "ai:hedge-check",
           "date": "2026-10-23",
           "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (blind verifier agent, browser)",
+          "date": "2026-10-23",
+          "result": "confirm",
+          "note": "Confirmed. 'could expand ... over the coming months' is the source's own qualifier. The verifier read the whole page and found no number of additional provinces anywhere on it."
         }
       ],
-      "notes": "OPEN QUESTION (flagged, not resolved): the strategy says '$100 million to expand VITAL in five additional provinces'. This release does not repeat 'five' and says only that the platform 'could expand'. The strategy claim money:VITAL expansion to 5 more provinces is left as it was."
+      "notes": "OPEN QUESTION (flagged, not resolved): the strategy says '$100 million to expand VITAL in five additional provinces'. This release does not repeat 'five' and says only that the platform 'could expand'. The strategy claim money:VITAL expansion to 5 more provinces is left as it was. Independently re-read: a blind verifier found no number of additional provinces anywhere on the page."
     },
     {
       "id": "post:dtc-launch",
-      "claim": "Digital Transformation Canada launched Sep 3, 2026 (CEO Patrick Pichette); the release ties it to the strategy's anchor-customer commitment",
+      "claim": "Digital Transformation Canada launched Sep 3, 2026 under CEO Patrick Pichette. The release cites the strategy's anchor-customer commitment in its background and lists procurement to help Canadian AI firms scale among its priorities",
       "rendered_in": [
         "opps",
         "runway"
@@ -1974,7 +1990,7 @@
       "source": {
         "doc": "PM news release, Sep 3, 2026",
         "locator": "News release, Ottawa, 2026-09-03",
-        "quote": "The strategy commits the federal government to lead by example in the responsible adoption of AI and to use government procurement as a strategic anchor customer for Canadian AI companies … Digital Transformation Canada will bring together Shared Services Canada and selected functions from the Treasury Board of Canada Secretariat, Public Services and Procurement Canada, and Employment and Social Development Canada – specifically the Canadian Digital Service."
+        "quote": "Patrick Pichette to spearhead this mission as the Chief Executive Officer (CEO) of Digital Transformation Canada … The strategy commits the federal government to lead by example in the responsible adoption of AI and to use government procurement as a strategic anchor customer for Canadian AI companies … Use the Government of Canada’s purchasing power more strategically to help Canadian digital and AI companies test, scale, and commercialise new technologies"
       },
       "checks": [
         {
@@ -1991,13 +2007,29 @@
           "by": "ai:source-match (second read, same session; not independent)",
           "date": "2026-10-23",
           "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (blind verifier agent, curl)",
+          "date": "2026-10-23",
+          "result": "dispute",
+          "note": "Date and CEO match, but the anchor-customer phrase appears only in a background paragraph about the strategy; the release never says the new organisation delivers that commitment. The original wording ('ties it to') overstated this."
+        },
+        {
+          "stage": "adjudication",
+          "method": "source-match",
+          "by": "ai:adjudication (claim reworded to match the release; human sign-off pending)",
+          "date": "2026-10-23",
+          "result": "confirm",
+          "note": "Re-read the release ourselves: the anchor-customer sentence is in the background paragraph, and priority three is 'Use the Government of Canada’s purchasing power more strategically to help Canadian digital and AI companies test, scale, and commercialise new technologies'. The claim now says exactly that."
         }
       ],
-      "notes": "Minister responsible: Joël Lightbound. The release states no dollar figure or deadline. Also announces a fellowship model for short-term private-sector expertise; we do not equate it with the strategy's PM's Innovation Fellows Program."
+      "notes": "The release does not say the new organisation delivers the anchor-customer commitment, so that tie is not claimed; the commitment is named in a background paragraph about the strategy. It brings Shared Services Canada together with selected Treasury Board Secretariat, Public Services and Procurement Canada and Canadian Digital Service functions, under Minister Joël Lightbound. No dollar figure or deadline is stated. It also announces a fellowship model for short-term private-sector expertise; we do not equate it with the strategy's PM's Innovation Fellows Program."
     },
     {
       "id": "post:council",
-      "claim": "Prime Minister's National Council on AI launched Oct 2, 2026: 12 members, advises on the AI for All strategy",
+      "claim": "Prime Minister's National Council on AI launched Oct 2, 2026: 12 people listed (one ex officio); advises on the AI for All strategy",
       "rendered_in": [
         "runway"
       ],
@@ -2023,9 +2055,17 @@
           "by": "ai:source-match (second read, same session; not independent)",
           "date": "2026-10-23",
           "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (blind verifier agent, curl)",
+          "date": "2026-10-23",
+          "result": "confirm",
+          "note": "Confirmed. The verifier counted the names itself (11 plus one ex officio) and found no chair, meeting schedule or budget."
         }
       ],
-      "notes": "Members listed: Ajay Agrawal, Yoshua Bengio, Sanja Fidler, Gillian Hadfield, Jordan Jacobs, Eric Lamarre, Valérie Pisano, Senator Thomas Pitfield, Jody Thomas, Louis Vachon, Michelle Zatlyn, and Patrick Pichette (ex officio). In the release text read on 2026-10-23: no chair named, no meeting schedule, no budget."
+      "notes": "The release states no member count; 12 is our count of the listed names (11 plus Patrick Pichette, ex officio). Listed: Ajay Agrawal, Yoshua Bengio, Sanja Fidler, Gillian Hadfield, Jordan Jacobs, Eric Lamarre, Valérie Pisano, Senator Thomas Pitfield, Jody Thomas, Louis Vachon, Michelle Zatlyn, and Patrick Pichette (ex officio). In the release text, read twice: no chair named, no meeting schedule, no budget."
     },
     {
       "id": "post:literacy-launch",
@@ -2064,6 +2104,14 @@
           "by": "ai:hedge-check",
           "date": "2026-10-23",
           "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (blind verifier agent, browser)",
+          "date": "2026-10-23",
+          "result": "confirm",
+          "note": "Confirmed. The $13M appears once, in a quoted statement by Eleanor Olszewski, not in the body text. The 'expected to reach up to' wording is in the body text and Quick facts."
         }
       ],
       "notes": "The $13M appears in a minister's quoted statement in the release, not in the body text. Not added to any total; the program stays in the Unfunded count (the strategy attached no figure). OPEN QUESTION (flagged, not resolved): the strategy targets 'more than 3,000 educators' (target:K-12 educators trained); this release says reach of 50,000+. Possibly different measures (trained vs reached).",
@@ -2118,9 +2166,17 @@
           "by": "ai:hedge-check",
           "date": "2026-10-23",
           "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (blind verifier agent, curl)",
+          "date": "2026-10-23",
+          "result": "confirm",
+          "note": "Confirmed. Page date Sep 25, 2026; 'up to' qualifies the $162M but not the 10,000. The page does not say whether the money is new."
         }
       ],
-      "notes": "This is the Mitacs slice (10,000) of the strategy's up-to-90,000 placements target. The release does not say whether the money is new or from an existing budget, so it is not added to any total."
+      "notes": "This is the Mitacs slice (10,000) of the strategy's up-to-90,000 placements target. The release does not say whether the money is new or from an existing budget, so it is not added to any total. Page metadata shows it was modified on 2026-10-06 after its 2026-09-25 publication; the wording quoted is as read on 2026-10-23."
     },
     {
       "id": "post:bill-c34",
@@ -2151,13 +2207,21 @@
           "by": "ai:source-match (second read, same session; not independent)",
           "date": "2026-10-23",
           "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (blind verifier agent, browser)",
+          "date": "2026-10-23",
+          "result": "confirm",
+          "note": "Confirmed. First reading Jun 10; second reading 'In progress'; latest activity Oct 21, 2026, and nothing later when read on Oct 23."
         }
       ],
       "notes": "Status as read 2026-10-23; check LEGISinfo for later stages. Long title: an Act to enact the Digital Safety Act and the Digital Safety Commission of Canada Act. Whether it contains the strategy's 'deepfake legal tools' has not been checked."
     },
     {
       "id": "post:bill-c36",
-      "claim": "Bill C-36 (Protecting Privacy and Consumer Data Act) introduced Jun 15, 2026; second reading not yet begun",
+      "claim": "Bill C-36 (would enact the Protecting Privacy and Consumer Data Act) introduced Jun 15, 2026; second reading not yet begun",
       "rendered_in": [
         "negative",
         "runway"
@@ -2167,7 +2231,7 @@
       "source": {
         "doc": "Parliament of Canada, LEGISinfo (45th Parliament, 1st session)",
         "locator": "LEGISinfo bill page C-36",
-        "quote": "Introduction and first reading on Monday, June 15, 2026 (House of Commons) … Second reading No activity"
+        "quote": "An Act to enact the Protecting Privacy and Consumer Data Act, to amend the Personal Information Protection and Electronic Documents Act and to make amendments to other Acts … Introduction and first reading on Monday, June 15, 2026 (House of Commons) … Second reading No activity"
       },
       "checks": [
         {
@@ -2184,23 +2248,31 @@
           "by": "ai:source-match (second read, same session; not independent)",
           "date": "2026-10-23",
           "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (blind verifier agent, browser)",
+          "date": "2026-10-23",
+          "result": "confirm",
+          "note": "Confirmed with qualification: LEGISinfo shows no short title, and 'At second reading in the House of Commons' sits beside 'Second reading: No activity'. Wording corrected to 'would enact'."
         }
       ],
-      "notes": "Status as read 2026-10-23; check LEGISinfo for later stages. The bill's long title also amends the Personal Information Protection and Electronic Documents Act (PIPEDA), the private-sector law. It is a different law from the Privacy Act review the strategy mentions."
+      "notes": "Status as read 2026-10-23; check LEGISinfo for later stages. LEGISinfo lists no short title for C-36: the Act's name appears only in the long title. Its status line reads 'At second reading in the House of Commons' while the progress line reads 'Second reading: No activity'; we read this as first reading done and waiting for second reading, with no debate yet. The long title also amends the Personal Information Protection and Electronic Documents Act (PIPEDA), the private-sector law, which is a different law from the Privacy Act review the strategy mentions."
     },
     {
       "id": "post:budget-date",
-      "claim": "Budget 2026 to be presented Nov 5, 2026",
+      "claim": "Budget 2026 to be tabled Nov 5, 2026",
       "rendered_in": [
         "negative",
         "runway"
       ],
       "kind": "direct",
-      "basis": "per-source",
+      "basis": "corroborated",
       "source": {
-        "doc": "The Hub (news report, 2026-10-21)",
-        "locator": "Article: Champagne sets Nov. 5 budget date as watchdog warns deficits are deepening",
-        "quote": "The Carney government will present its 2026 budget on Nov. 5"
+        "doc": "Department of Finance Canada media advisory, Oct 20, 2026",
+        "locator": "Media advisory, Ottawa, 2026-10-20",
+        "quote": "announced that he will table Budget 2026 on November 5, 2026"
       },
       "checks": [
         {
@@ -2209,7 +2281,7 @@
           "by": "ai-assisted (post-launch update)",
           "date": "2026-10-23",
           "result": "match",
-          "note": "Read from the official page text."
+          "note": "First read from The Hub article (secondary); the Finance Canada advisory was then read directly."
         },
         {
           "stage": "verification",
@@ -2217,13 +2289,37 @@
           "by": "ai:source-match (second read, same session; not independent)",
           "date": "2026-10-23",
           "result": "confirm"
+        },
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (official advisory read)",
+          "date": "2026-10-23",
+          "result": "match",
+          "note": "Finance Canada advisory text read in the browser."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (blind verifier agent, curl plus browser)",
+          "date": "2026-10-23",
+          "result": "confirm",
+          "note": "Confirmed. The verifier found the official Finance Canada advisory (Oct 20, 2026) as well as The Hub article; both give Nov 5, 2026."
         }
       ],
-      "notes": "Secondary source: a news report of the Finance Minister's statement; the Finance Canada notice was not read. Nothing yet known about AI measures in it."
+      "notes": "Official source: Finance Canada media advisory (read directly in the browser on 2026-10-23, then by a blind verifier). A news report agrees. The advisory does not mention AI, so nothing is known yet about AI measures in Budget 2026.",
+      "corroboration": [
+        {
+          "src": "The Hub (news report, 2026-10-21)",
+          "url": "https://thehub.ca/2026/10/21/champagne-sets-nov-5-budget-date-as-watchdog-warns-deficits-are-deepening/",
+          "agrees": true,
+          "note": "Same date, reported separately: 'The Carney government will present its 2026 budget on Nov. 5'"
+        }
+      ]
     },
     {
       "id": "post:supercomputer-program",
-      "claim": "AI Sovereign Compute Infrastructure Program: about $890M over seven fiscal years for the build; applications closed Jun 1, 2026",
+      "claim": "AI Sovereign Compute Infrastructure Program: about $890M over seven fiscal years to build and operate the system; applications closed Jun 1, 2026",
       "rendered_in": [
         "opps",
         "negative"
@@ -2257,9 +2353,17 @@
           "by": "ai:hedge-check",
           "date": "2026-10-23",
           "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:independent-pass (blind verifier agent, curl)",
+          "date": "2026-10-23",
+          "result": "confirm",
+          "note": "Confirmed. The page says 'approximately $890 million' and that amounts are 'notional and are subject to negotiation'. Scope is build plus ongoing operation, so the claim now says 'build and operate'."
         }
       ],
-      "notes": "OPEN QUESTION (flagged, not resolved): the strategy gives the public supercomputer no dollar figure, so it stays in the Unfunded count. The strategy does not name this program; linking them is our reading (same type of system, same period). No selected proponent announced as of 2026-10-23."
+      "notes": "OPEN QUESTION (flagged, not resolved): the strategy gives the public supercomputer no dollar figure, so it stays in the Unfunded count. The strategy does not name this program; linking them is our reading (same type of system, same period). No selected proponent announced as of 2026-10-23. The $890M goes to the 'Infrastructure Build Layer' (design, construction and ongoing operation) and is contingent on Parliament and Treasury Board approvals."
     }
   ]
 }

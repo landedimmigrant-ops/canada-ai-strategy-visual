@@ -31,7 +31,7 @@ The visual is a snapshot of the strategy as published in June 2026. Announcement
 
 - Dated **Update** notes on the relevant program cards, and a **Since launch** group in the Timeline.
 - Three **open questions** flagged in amber and not resolved: the K-12 educator figure (3,000+ in the strategy, 50,000+ in the literacy-launch release), VITAL's "five additional provinces" wording, and the supercomputer's roughly $890M program figure that the strategy does not state.
-- Ten ledger rows with ids starting `post:`, each with a verbatim quote from the official page. They had a single AI read and are listed separately in the Verification tab; the 52 strategy claims keep their independent-verification counts.
+- Ten ledger rows with ids starting `post:`, each with a verbatim quote from the official page. On October 23, 2026 each was re-read by one of three blind verifier agents (given the claim and link, not our quotes or labels, and told to try to refute it): five confirmed as worded, five with qualifications folded into the wording, and one (Digital Transformation Canada) disputed, reworded and re-confirmed. They are listed separately in the Verification tab; the 52 strategy claims keep their own counts. Human sign-off is still pending.
 - The headline totals ($2.36B new, ~$6.2B leveraged) and every program's dollar amount are unchanged.
 
 The research behind this is in [`CHANGES-since-launch-2026-10-23.md`](CHANGES-since-launch-2026-10-23.md), with sources marked as official, secondary or search-only.
