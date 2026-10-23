@@ -13,7 +13,11 @@
     "compiled": "2026-06-06",
     "compiler": "STCL ledger pass, AI-assisted under human direction",
     "currency": "CAD unless noted",
-    "coverage_note": "Independently verified (2026-06-06): three blind verifier agents re-fetched the official ISED source and re-derived every quote; one initially-disputed claim was adjudicated and confirmed via a targeted re-read. All 39 factual claims source-matched; 0 open. Categories: corroborated (source + an outside source), per the source, qualified by the source (the government's own hedges, estimates, and one self-contradiction), recomputed (our totals/counts), our analysis (editorial lenses). Labels are reproducible via confidence-rubric.md."
+    "coverage_note": "Independently verified (2026-06-06): three blind verifier agents re-fetched the official ISED source and re-derived every quote; one initially-disputed claim was adjudicated and confirmed via a targeted re-read. All 39 factual claims source-matched; 0 open. Categories: corroborated (source + an outside source), per the source, qualified by the source (the government's own hedges, estimates, and one self-contradiction), recomputed (our totals/counts), our analysis (editorial lenses). Labels are reproducible via confidence-rubric.md.",
+    "post_launch": {
+      "as_of": "2026-10-23",
+      "note": "Claims with ids starting 'post:' record announcements made after the strategy's June 2026 publication. They were read from official pages on 2026-10-23 in a single AI pass (extraction plus one re-read), not the independent three-agent pass used for the strategy's own claims. They are shown separately in the Verification tab and never feed the headline totals."
+    }
   },
   "claims": [
     {
@@ -472,7 +476,7 @@
           "date": "2026-06-06"
         }
       ],
-      "notes": "A commitment to study, not yet a mechanism."
+      "notes": "A commitment to study, not yet a mechanism. Post-launch (2026-10-23): Budget 2026 is scheduled for Nov 5, 2026, the first checkpoint for this commitment. See post:budget-date."
     },
     {
       "id": "soft:Aligning innovation programs",
@@ -939,7 +943,7 @@
           "date": "2026-06-06"
         }
       ],
-      "notes": "New money."
+      "notes": "New money. Post-launch (2026-10-23): opened for applications on Oct 13, 2026. Same money, not double-counted. See post:raii-open."
     },
     {
       "id": "money:BDC LIFT — SME AI adoption financing",
@@ -1249,7 +1253,7 @@
           "date": "2026-06-06"
         }
       ],
-      "notes": "New money."
+      "notes": "New money. Post-launch flag (2026-10-23, unresolved): the Jun 23 release announcing $100M for VITAL says the platform 'could expand to additional provinces and territories' and does not repeat 'five'. See post:vital-announced."
     },
     {
       "id": "money:Canadian AI Safety Institute expansion",
@@ -1624,7 +1628,7 @@
           "date": "2026-06-06"
         }
       ],
-      "notes": "Source: 'doubling K-12 teacher training to more than 3,000 educators'. The 3,000+ target is verified (a floor, 'more than'); the 1,500 baseline in the dumbbell is IMPLIED by 'doubling' (= 3,000/2), not stated verbatim. Disclosed inference."
+      "notes": "Source: 'doubling K-12 teacher training to more than 3,000 educators'. The 3,000+ target is verified (a floor, 'more than'); the 1,500 baseline in the dumbbell is IMPLIED by 'doubling' (= 3,000/2), not stated verbatim. Disclosed inference. Post-launch flag (2026-10-23, unresolved): the Sep 9 literacy-launch release says the initiative is expected to reach more than 50,000 K-12 educators. Possibly a different measure (reach vs training). See post:literacy-launch."
     },
     {
       "id": "target:90,000 AI placements",
@@ -1666,7 +1670,7 @@
           "date": "2026-06-06"
         }
       ],
-      "notes": "Verified verbatim; graded C because the source says 'up to 90,000' (a ceiling, not a floor)."
+      "notes": "Verified verbatim; graded C because the source says 'up to 90,000' (a ceiling, not a floor). Post-launch (2026-10-23): up to $162M announced Sep 25, 2026 for the 10,000 Mitacs placements within this target; new vs existing money not stated. See post:mitacs-placements."
     },
     {
       "id": "target:250,000 new jobs",
@@ -1843,7 +1847,7 @@
           "date": "2026-06-06"
         }
       ],
-      "notes": "'world-leading public supercomputer' and 'by 2031' are stated in two separate sentences (the year is in the outcomes list, which omits 'public'). Both supported."
+      "notes": "'world-leading public supercomputer' and 'by 2031' are stated in two separate sentences (the year is in the outcomes list, which omits 'public'). Both supported. Post-launch flag (2026-10-23, unresolved): ISED's program page names about $890M for the build; the strategy gives no figure, so this stays unfunded here. See post:supercomputer-program."
     },
     {
       "id": "target:grid doubled 2050",
@@ -1884,6 +1888,378 @@
         }
       ],
       "notes": "In the AI strategy page, attributed to the parallel National Electricity Strategy ('Powering Canada Strong'); framed as a need ('will need to double'), source says 'electricity infrastructure'."
+    },
+    {
+      "id": "post:raii-open",
+      "claim": "Regional AI Initiative: the additional $500M is now available; total federal funding $700M (Oct 13, 2026)",
+      "rendered_in": [
+        "opps",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "FedDev Ontario news release, Oct 13, 2026",
+        "locator": "News release, Ottawa, 2026-10-13",
+        "quote": "an additional $500 million over five years to expand and enhance the Regional Artificial Intelligence Initiative is now available. This investment brings total federal funding for the initiative to $700 million."
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (post-launch update)",
+          "date": "2026-10-23",
+          "result": "match",
+          "note": "Read from the official page text."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (second read, same session; not independent)",
+          "date": "2026-10-23",
+          "result": "confirm"
+        }
+      ],
+      "notes": "The same $500M the strategy already counts (money:Regional AI Initiative expansion (RDAs)); not added to any total. Release also gives deadlines: projects with eligible costs before 2027-03-31 must be submitted by 2026-11-24; southern Ontario applications close 2027-01-19 (other regions' dates not given)."
+    },
+    {
+      "id": "post:vital-announced",
+      "claim": "VITAL: $100M announced Jun 23, 2026; first phase covers 160 hospitals in Ontario, Alberta and Quebec; may expand to more provinces and territories",
+      "rendered_in": [
+        "opps",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "qualified",
+      "source": {
+        "doc": "ISED news release, Jun 23, 2026",
+        "locator": "News release, Toronto, 2026-06-23 (Quick facts)",
+        "quote": "The first phase of VITAL connects 160 hospitals across Ontario, Alberta and Quebec, serving over 20 million Canadians. With this increased investment, the platform could expand to additional provinces and territories over the coming months."
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (post-launch update)",
+          "date": "2026-10-23",
+          "result": "match",
+          "note": "Read from the official page text."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (second read, same session; not independent)",
+          "date": "2026-10-23",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "hedge-quote",
+          "by": "ai:hedge-check",
+          "date": "2026-10-23",
+          "result": "confirm"
+        }
+      ],
+      "notes": "OPEN QUESTION (flagged, not resolved): the strategy says '$100 million to expand VITAL in five additional provinces'. This release does not repeat 'five' and says only that the platform 'could expand'. The strategy claim money:VITAL expansion to 5 more provinces is left as it was."
+    },
+    {
+      "id": "post:dtc-launch",
+      "claim": "Digital Transformation Canada launched Sep 3, 2026 (CEO Patrick Pichette); the release ties it to the strategy's anchor-customer commitment",
+      "rendered_in": [
+        "opps",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "PM news release, Sep 3, 2026",
+        "locator": "News release, Ottawa, 2026-09-03",
+        "quote": "The strategy commits the federal government to lead by example in the responsible adoption of AI and to use government procurement as a strategic anchor customer for Canadian AI companies … Digital Transformation Canada will bring together Shared Services Canada and selected functions from the Treasury Board of Canada Secretariat, Public Services and Procurement Canada, and Employment and Social Development Canada – specifically the Canadian Digital Service."
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (post-launch update)",
+          "date": "2026-10-23",
+          "result": "match",
+          "note": "Read from the official page text."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (second read, same session; not independent)",
+          "date": "2026-10-23",
+          "result": "confirm"
+        }
+      ],
+      "notes": "Minister responsible: Joël Lightbound. The release states no dollar figure or deadline. Also announces a fellowship model for short-term private-sector expertise; we do not equate it with the strategy's PM's Innovation Fellows Program."
+    },
+    {
+      "id": "post:council",
+      "claim": "Prime Minister's National Council on AI launched Oct 2, 2026: 12 members, advises on the AI for All strategy",
+      "rendered_in": [
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "PM news release, Oct 2, 2026",
+        "locator": "News release, Ottawa, 2026-10-02",
+        "quote": "The Council will advise on cross-cutting issues affecting the implementation and evolution of Canada’s AI for All strategy. … The Council will be supported by a small team within the Privy Council Office, while responsible ministers and departments will remain accountable for policy decisions and implementation."
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (post-launch update)",
+          "date": "2026-10-23",
+          "result": "match",
+          "note": "Read from the official page text."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (second read, same session; not independent)",
+          "date": "2026-10-23",
+          "result": "confirm"
+        }
+      ],
+      "notes": "Members listed: Ajay Agrawal, Yoshua Bengio, Sanja Fidler, Gillian Hadfield, Jordan Jacobs, Eric Lamarre, Valérie Pisano, Senator Thomas Pitfield, Jody Thomas, Louis Vachon, Michelle Zatlyn, and Patrick Pichette (ex officio). In the release text read on 2026-10-23: no chair named, no meeting schedule, no budget."
+    },
+    {
+      "id": "post:literacy-launch",
+      "claim": "National AI Literacy Initiative launched Sep 9, 2026 with Amii: $13M partnership; expected to reach up to 1M post-secondary students and 50,000+ K-12 educators",
+      "rendered_in": [
+        "opps",
+        "negative",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "qualified",
+      "source": {
+        "doc": "ISED news release, Sep 9, 2026",
+        "locator": "News release, Edmonton, 2026-09-09",
+        "quote": "launched Canada’s National AI Literacy Initiative, a new national partnership with the Alberta Machine Intelligence Institute (Amii) … Through this new $13 million national partnership … the initiative is expected to reach up to one million post-secondary students and more than 50,000 kindergarten-to-Grade-12 (K-12) educators."
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (post-launch update)",
+          "date": "2026-10-23",
+          "result": "match",
+          "note": "Read from the official page text."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (second read, same session; not independent)",
+          "date": "2026-10-23",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "hedge-quote",
+          "by": "ai:hedge-check",
+          "date": "2026-10-23",
+          "result": "confirm"
+        }
+      ],
+      "notes": "The $13M appears in a minister's quoted statement in the release, not in the body text. Not added to any total; the program stays in the Unfunded count (the strategy attached no figure). OPEN QUESTION (flagged, not resolved): the strategy targets 'more than 3,000 educators' (target:K-12 educators trained); this release says reach of 50,000+. Possibly different measures (trained vs reached).",
+      "corroboration": [
+        {
+          "src": "BetaKit (2026-09-09)",
+          "url": "https://betakit.com/canada-unveils-national-ai-literacy-initiative/",
+          "agrees": true,
+          "note": "Same launch, $13M, 1M students, 50,000+ K-12 educators"
+        },
+        {
+          "src": "Mitacs release (2026-09-25)",
+          "url": "https://www.mitacs.ca/news/government-of-canada-invests-in-10000-ai-related-work-placements-for-young-canadians/",
+          "agrees": true,
+          "note": "Confirms the Sep 9, 2026 launch date only"
+        }
+      ]
+    },
+    {
+      "id": "post:mitacs-placements",
+      "claim": "Mitacs AI Advantage: up to $162M over five years for 10,000 co-funded AI work placements (Sep 25, 2026)",
+      "rendered_in": [
+        "opps",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "qualified",
+      "source": {
+        "doc": "Mitacs news release (federal announcement), Sep 25, 2026",
+        "locator": "News release, Toronto, 2026-09-25",
+        "quote": "announced up to $162 million over five years, beginning in 2026–2027, for Mitacs to support 10,000 co-funded work placement opportunities for post-secondary students, recent graduates and post-doctoral fellows"
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (post-launch update)",
+          "date": "2026-10-23",
+          "result": "match",
+          "note": "Read from the official page text."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (second read, same session; not independent)",
+          "date": "2026-10-23",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "hedge-quote",
+          "by": "ai:hedge-check",
+          "date": "2026-10-23",
+          "result": "confirm"
+        }
+      ],
+      "notes": "This is the Mitacs slice (10,000) of the strategy's up-to-90,000 placements target. The release does not say whether the money is new or from an existing budget, so it is not added to any total."
+    },
+    {
+      "id": "post:bill-c34",
+      "claim": "Bill C-34 (Safe Social Media Act) introduced Jun 10, 2026; in second-reading debate as of Oct 21, 2026",
+      "rendered_in": [
+        "negative",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "Parliament of Canada, LEGISinfo (45th Parliament, 1st session)",
+        "locator": "LEGISinfo bill page C-34",
+        "quote": "Short title: Safe Social Media Act … First reading Completed on Wednesday, June 10, 2026 … Debate at second reading on Wednesday, October 21, 2026 (House of Commons)"
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (post-launch update)",
+          "date": "2026-10-23",
+          "result": "match",
+          "note": "Read from the official page text."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (second read, same session; not independent)",
+          "date": "2026-10-23",
+          "result": "confirm"
+        }
+      ],
+      "notes": "Status as read 2026-10-23; check LEGISinfo for later stages. Long title: an Act to enact the Digital Safety Act and the Digital Safety Commission of Canada Act. Whether it contains the strategy's 'deepfake legal tools' has not been checked."
+    },
+    {
+      "id": "post:bill-c36",
+      "claim": "Bill C-36 (Protecting Privacy and Consumer Data Act) introduced Jun 15, 2026; second reading not yet begun",
+      "rendered_in": [
+        "negative",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "Parliament of Canada, LEGISinfo (45th Parliament, 1st session)",
+        "locator": "LEGISinfo bill page C-36",
+        "quote": "Introduction and first reading on Monday, June 15, 2026 (House of Commons) … Second reading No activity"
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (post-launch update)",
+          "date": "2026-10-23",
+          "result": "match",
+          "note": "Read from the official page text."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (second read, same session; not independent)",
+          "date": "2026-10-23",
+          "result": "confirm"
+        }
+      ],
+      "notes": "Status as read 2026-10-23; check LEGISinfo for later stages. The bill's long title also amends the Personal Information Protection and Electronic Documents Act (PIPEDA), the private-sector law. It is a different law from the Privacy Act review the strategy mentions."
+    },
+    {
+      "id": "post:budget-date",
+      "claim": "Budget 2026 to be presented Nov 5, 2026",
+      "rendered_in": [
+        "negative",
+        "runway"
+      ],
+      "kind": "direct",
+      "basis": "per-source",
+      "source": {
+        "doc": "The Hub (news report, 2026-10-21)",
+        "locator": "Article: Champagne sets Nov. 5 budget date as watchdog warns deficits are deepening",
+        "quote": "The Carney government will present its 2026 budget on Nov. 5"
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (post-launch update)",
+          "date": "2026-10-23",
+          "result": "match",
+          "note": "Read from the official page text."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (second read, same session; not independent)",
+          "date": "2026-10-23",
+          "result": "confirm"
+        }
+      ],
+      "notes": "Secondary source: a news report of the Finance Minister's statement; the Finance Canada notice was not read. Nothing yet known about AI measures in it."
+    },
+    {
+      "id": "post:supercomputer-program",
+      "claim": "AI Sovereign Compute Infrastructure Program: about $890M over seven fiscal years for the build; applications closed Jun 1, 2026",
+      "rendered_in": [
+        "opps",
+        "negative"
+      ],
+      "kind": "direct",
+      "basis": "qualified",
+      "source": {
+        "doc": "ISED program page (AI Sovereign Compute Infrastructure Program)",
+        "locator": "Program page, date modified 2026-06-01",
+        "quote": "The program will provide approximately $890 million to the Infrastructure Build Layer to support the design, construction, and ongoing operation of the compute system, over seven fiscal years, beginning in fiscal year 2026–27 … All funding amounts are notional and are subject to negotiation."
+      },
+      "checks": [
+        {
+          "stage": "extraction",
+          "method": "read-transcribe",
+          "by": "ai-assisted (post-launch update)",
+          "date": "2026-10-23",
+          "result": "match",
+          "note": "Read from the official page text."
+        },
+        {
+          "stage": "verification",
+          "method": "source-match",
+          "by": "ai:source-match (second read, same session; not independent)",
+          "date": "2026-10-23",
+          "result": "confirm"
+        },
+        {
+          "stage": "verification",
+          "method": "hedge-quote",
+          "by": "ai:hedge-check",
+          "date": "2026-10-23",
+          "result": "confirm"
+        }
+      ],
+      "notes": "OPEN QUESTION (flagged, not resolved): the strategy gives the public supercomputer no dollar figure, so it stays in the Unfunded count. The strategy does not name this program; linking them is our reading (same type of system, same period). No selected proponent announced as of 2026-10-23."
     }
   ]
 }

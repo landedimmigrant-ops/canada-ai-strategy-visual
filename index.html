@@ -222,6 +222,19 @@
   .badge.money.lev{background:rgba(111,125,137,.13);color:var(--lev)}
   .badge.target{background:rgba(154,103,0,.12);color:var(--opportunity)}
 
+  /* ===== Post-launch update notes (dated; never counted in the headline totals) ===== */
+  .upd{font-size:12px;line-height:1.5;color:var(--muted);background:var(--panel2);border-left:3px solid var(--p3);border-radius:6px;padding:7px 10px;margin-top:4px}
+  .upd b{display:block;color:var(--text);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+  .upd.flag{border-left-color:var(--opportunity);background:rgba(154,103,0,.07)}
+  .upd.flag b{color:var(--opportunity)}
+  .upd .updsrc{font-size:11px;font-weight:600;color:var(--faint);text-decoration:none;white-space:nowrap;margin-left:4px}
+  .upd .updsrc:hover,.tctx .updsrc:hover{color:var(--accent);text-decoration:underline}
+  .upd .cbadge,.tctx .cbadge{margin-left:6px}
+  .tctx .updsrc{font-size:11.5px;font-weight:600;color:var(--faint);text-decoration:none;white-space:nowrap;margin-left:6px}
+  .dumb .upd{grid-column:1/-1}
+  .asof{font-size:12.5px;color:var(--muted);margin-top:16px;max-width:760px;border-left:3px solid var(--p3);padding-left:10px;line-height:1.55}
+  .asof b{color:var(--text)}
+
   footer{margin-top:56px;color:var(--faint);font-size:12px;border-top:1px solid var(--line);padding-top:16px}
   footer a{color:var(--muted)}
 
@@ -334,6 +347,7 @@
           <div class="stat" id="statLev"><b>~$6.2B</b><span>leveraged from existing programs</span></div>
           <div class="stat"><b>~$200B</b><span>targeted GDP gain (≈3%)</span></div>
         </div>
+        <p class="asof">The strategy as published in June 2026. Announcements made since, through <b>October 23, 2026</b>, appear as dated <b>Update</b> notes on program cards and in the Timeline under <b>Since launch</b>. They do not change the figures above, which are the strategy's own. Three open questions are flagged in amber.</p>
       </header>
 
       <h2>The architecture: values → pillars</h2>
@@ -462,6 +476,7 @@
           <li><b>One primary source:</b> the official ISED strategy (the web page and its 29-page PDF), published June 2026 (page last modified 2026‑06‑04). Every figure, program, target and date was extracted from that document on <b>June 5, 2026</b>.</li>
           <li><b>Corroboration:</b> headline numbers were cross-checked against reputable secondary sources (CBC, The Globe and Mail, BetaKit, BDC, CIFAR, canada.ca) to catch extraction errors.</li>
           <li>Amounts are in <b>CAD</b> unless noted (one fund is reported in US$).</li>
+          <li><b>Post-launch updates:</b> announcements made after June 2026 (Prime Minister and ISED/FedDev releases, Parliament's bill tracker, Mitacs, one news report on the budget date) were read on <b>October 23, 2026</b>. They appear as dated <b>Update</b> notes on cards and under <b>Since launch</b> in the Timeline, apart from the strategy's own figures, and each is a ledger row (ids starting <code>post:</code>).</li>
         </ul>
 
         <h3>3 · How the strategy was structured</h3>
@@ -473,7 +488,7 @@
           <li><b>Funded vs. unfunded:</b> a commitment is "funded" only if the strategy attaches a <em>named dollar figure</em> to it. Programs described without a specific amount are "unfunded," even if money may flow later.</li>
           <li><b>New vs. leveraged:</b> "new" = money the strategy introduces; "leveraged" = existing or previously-announced funds (mostly Budget 2025 and ongoing programs) counted toward the total. Shown distinctly because they're different kinds of commitment.</li>
           <li><b>Soft / hedged commitments:</b> flagged where the strategy's <em>own wording</em> qualifies the promise ("where appropriate," "at times," "explore," "assess," "review," or numbers it calls "proposed" / "estimated"). Found by searching the source text for these markers, then reading each in context. Qualified language is not necessarily a weakness, but it is worth surfacing.</li>
-          <li><b>Live now vs. announced:</b> "live" = running or available today per the source; "announced" = committed but not yet stood up.</li>
+          <li><b>Live now vs. announced:</b> "live" = running or available today per the source; "announced" = committed but not yet stood up. A later official release can move a program from announced to live; those cards carry an Update note saying why.</li>
           <li><b>Pillar / value assignment:</b> each item sits under the pillar the strategy assigns it; pillars roll up to the three values as the strategy describes.</li>
           <li><b>Unfunded categories</b> (Law &amp; rights · Standards &amp; trust · Skills &amp; people · Market &amp; structural · Infrastructure &amp; sovereignty · Diplomacy &amp; alliances) are <em>our</em> groupings of unpriced items, not the government's.</li>
         </ul>
@@ -528,10 +543,11 @@
         </ul>
         <p><b>How the figures were verified.</b> Because "we checked it" is not a method, every factual claim was put through an <b>independent pass</b>: three separate verifier agents re-fetched the official strategy on their own, blind to the labels, and re-derived each quote from scratch. Headline dollar figures were corroborated against outside sources (BetaKit, University Affairs, BDC, KPMG, and a Budget 2025 legal analysis). Each record shows its check trail and who ran every step.</p>
         <p><b>Where it stands (verified June 6, 2026):</b> 52 tracked claims — <b>6 confirmed + corroborated, 19 confirmed in the document, 15 the government hedges, 6 our calculations, 6 our interpretations</b> — with <b>0 open</b> (none disputed or unchecked). The independent pass also worked in the other direction, which is the real test: it briefly flagged one claim (the conditional "Canadian models could become world-leading on safety") because a summary had skipped the sentence, and a targeted re-read then found it verbatim and cleared it. The ledger keeps that <em>dispute → adjudication → confirm</em> trail in the open — a flag honestly raised and resolved is more trustworthy than a claim never questioned.</p>
+        <p><b>Since launch.</b> Ten later announcements are tracked in the same ledger (ids starting <code>post:</code>) but kept out of the counts above. They were read from official pages on October 23, 2026 in a single AI pass, not the independent three-agent pass, and an independent re-check is still to do. Three carry an open question we have not resolved: the K-12 educator figure (3,000+ in the strategy, 50,000+ in the literacy-launch release), the VITAL "five additional provinces" wording, and the supercomputer's roughly $890M program figure that the strategy does not state. They are flagged in amber, not settled. None changes the headline totals.</p>
         <p><b>What "verified" means here:</b> each claim is faithful to the source and traceable to the exact words. Whether the dollars will ultimately be spent is a separate question. The one check a machine can't supply is a human's sign-off, which remains the editor's to give.</p>
 
         <h3>11 · Snapshot &amp; disclaimer</h3>
-        <p>A snapshot <b>as of June 5, 2026</b>; the strategy says it will be reviewed and updated, so figures may move. <b>Unofficial — not affiliated with or endorsed by the Government of Canada.</b> For any decision, consult the <a href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">official strategy</a> directly.</p>
+        <p>A snapshot of the strategy <b>as of June 5, 2026</b>, with announcements since then tracked through <b>October 23, 2026</b>; the strategy says it will be reviewed and updated, so figures may move. <b>Unofficial — not affiliated with or endorsed by the Government of Canada.</b> For any decision, consult the <a href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all" target="_blank" rel="noopener">official strategy</a> directly.</p>
 
       </div>
     </section>
@@ -546,13 +562,16 @@
       <h3>Reading the flags</h3>
       <p class="h2sub">Most flags here are places the government's own document hedges, estimates, or contradicts itself, each verified word-for-word against the source. Anything genuinely open on our side (disputed or not yet re-checked) is listed separately and flagged in red; right now there is none.</p>
       <div class="conflist" id="confFlagged"></div>
+      <h3>Since launch</h3>
+      <p class="h2sub" id="confSinceIntro"></p>
+      <div class="conflist" id="confSince"></div>
       <h3>Full ledger</h3>
       <p class="h2sub">All tracked claims. Click any badge for the full record, or open <a href="ledger.json" target="_blank" rel="noopener"><code>ledger.json</code></a> directly.</p>
       <div id="confTable"></div>
     </section>
 
     <footer>
-      Source: <a href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all">Canada's National Artificial Intelligence Strategy: AI for All</a>, ISED, published June 2026. All figures CAD unless noted. Visual prepared June 5, 2026.
+      Source: <a href="https://ised-isde.canada.ca/site/ised/en/canadas-national-artificial-intelligence-strategy-ai-all">Canada's National Artificial Intelligence Strategy: AI for All</a>, ISED, published June 2026. All figures CAD unless noted. Visual prepared June 5, 2026; post-launch updates through October 23, 2026.
     </footer>
 
   </div>
@@ -626,7 +645,7 @@ const PERSONAS = {
 
 const OPPS = [
   {n:"BDC LIFT program",amt:"$500M",p:"p3",who:"SMEs",get:"Financing to buy and integrate AI tools, software and equipment into operations.",st:"live",per:["sme"]},
-  {n:"Regional AI Initiative expansion",amt:"$500M",p:"p3",who:"SMEs & regional organizations",get:"Hands-on adoption and commercialization support delivered through Regional Development Agencies, across the country.",st:"announced",per:["sme"]},
+  {n:"Regional AI Initiative expansion",amt:"$500M",p:"p3",who:"SMEs & regional organizations",get:"Hands-on adoption and commercialization support delivered through Regional Development Agencies, across the country.",st:"live",per:["sme"]},
   {n:"AI Literacy & Adoption Assessment tool",amt:"",p:"p3",who:"SMEs & entrepreneurs",get:"Assess your AI readiness, identify practical use cases, and get connected to programs — in a low-risk environment.",st:"announced",per:["sme"]},
   {n:"SR&ED + Productivity Super-Deduction",amt:"",p:"p3",who:"Businesses investing in innovation",get:"Tax credits and the Budget 2025 super-deduction to make AI investment more affordable.",st:"live",per:["sme","founder"]},
   {n:"Compute Access Fund expansion",amt:"+$700M",p:"p5",who:"SMEs & startups",get:"Affordable sovereign compute so you can train, test and deploy on Canadian infrastructure instead of foreign clouds.",st:"announced",per:["sme","founder","researcher"]},
@@ -636,7 +655,7 @@ const OPPS = [
   {n:"Elevate IP & IP Assist",amt:"$159M",p:"p5",who:"SMEs with intangible assets",get:"Protect Canadian intellectual property and commercialize it in the global marketplace.",st:"live",per:["founder","sme"]},
   {n:"Government as anchor customer",amt:"",p:"p5",who:"Domestic scale-ups",get:"Federal revenue and validation through the Buy Canadian policy — reference customers before you export.",st:"announced",per:["founder"]},
   {n:"AI Missions Program — health first",amt:"$200M",p:"p3",who:"Health innovators & researchers",get:"Mission funding for high-impact public-good AI: primary care access, ER wait times, admin burden.",st:"announced",per:["founder","researcher","public"]},
-  {n:"National AI Literacy Initiative",amt:"",p:"p2",who:"All Canadians",get:"Free entry-level AI training: practical courses and sector modules, delivered through schools, libraries and community organizations.",st:"announced",per:["youth","worker","sme","creator","indigenous","public"]},
+  {n:"National AI Literacy Initiative",amt:"",p:"p2",who:"All Canadians",get:"Free entry-level AI training: practical courses and sector modules, delivered through schools, libraries and community organizations.",st:"live",per:["youth","worker","sme","creator","indigenous","public"]},
   {n:"Trusted AI agents for students",amt:"",p:"p2",who:"Post-secondary students",get:"Access to capable, personal AI tools while you study, for workforce-ready experience before graduation.",st:"announced",per:["youth"]},
   {n:"90,000 AI job placements",amt:"",p:"p2",who:"Young Canadians",get:"45K via Student Work Placement & Canada Summer Jobs, 35K via Skills for Success, 10K via Mitacs ADOPT and AI+X — by 2031.",st:"announced",per:["youth"]},
   {n:"CanCode",amt:"$30M",p:"p2",who:"K-12 youth & educators",get:"Free coding, AI and emerging-tech skills via nonprofits, with emphasis on underrepresented groups.",st:"announced",per:["youth"]},
@@ -764,6 +783,7 @@ const DUMBS = [
 const GROUPS = [
   {k:"2025",t:"Already in motion",s:"Budget 2025 and groundwork laid before the strategy"},
   {k:"2026",t:"2026 — Strategy launch",s:"AI for All released June 2026; commitments begin rolling out"},
+  {k:"since",t:"Since launch · Jun–Oct 2026",s:"Announced after the strategy was published, through Oct 23, 2026. Dated and sourced here; none of it changes the headline totals"},
   {k:"2030",t:"By 2030",s:"Compute scale-up checkpoint"},
   {k:"2031",t:"By 2031",s:"Jobs and infrastructure milestones"},
   {k:"2034",t:"By 2034",s:"The adoption endgame"},
@@ -812,6 +832,23 @@ const EVENTS = [
   {g:"2026",p:"p6",t:"Global open-source AI effort; trilateral Canada–Australia–India tech partnership",tag:"rollout",
    ctx:"Open-source AI is framed as resilience: transparent, cheaper to deploy, and adaptable to local needs — an answer to vendor lock-in as the market consolidates around a few proprietary systems. The trilateral partnership covers AI, quantum, trade missions, and matchmaking."},
 
+  {g:"since",p:"p1",t:"Jun 10 and 15 — Online safety (C-34) and privacy (C-36) bills introduced",tag:"milestone",lk:["post:bill-c34","post:bill-c36"],src:["c34","c36"],
+   ctx:"The strategy promised privacy modernization and online safety laws. Bill C-34, the Safe Social Media Act, was introduced Jun 10 and was in second-reading debate on Oct 21. Bill C-36, the Protecting Privacy and Consumer Data Act, was introduced Jun 15 and had no second-reading activity as of Oct 23. Neither has passed."},
+  {g:"since",p:"p4",t:"Jun 23 — $100M announced for VITAL; first phase covers 160 hospitals in three provinces",m:"$100M · already counted",lk:["post:vital-announced"],src:["vital"],
+   ctx:"The first phase connects hospitals in Ontario, Alberta and Quebec, serving over 20 million Canadians. The release says the platform “could expand to additional provinces and territories over the coming months”. The strategy says five additional provinces; the two are not yet reconciled."},
+  {g:"since",p:"p5",t:"Sep 3 — Digital Transformation Canada launched, led by CEO Patrick Pichette",tag:"milestone",lk:["post:dtc-launch"],src:["dtc"],
+   ctx:"Brings Shared Services Canada together with selected Treasury Board Secretariat, Public Services and Procurement Canada, and Canadian Digital Service functions, under Minister Joël Lightbound. The release ties it to the strategy's commitment to use procurement as an anchor customer for Canadian AI firms. No dollar figure was stated."},
+  {g:"since",p:"p2",t:"Sep 9 — National AI Literacy Initiative launched with Amii",m:"$13M · not in totals",lk:["post:literacy-launch"],src:["literacy"],
+   ctx:"Three streams: Essentials for Students, Educators and Canadians. A free three-hour course opens to post-secondary institutions from Sep 21; the Canadians stream launches later this year. The release expects reach of up to 1M post-secondary students and 50,000+ K-12 educators; the strategy's educator target was 3,000+, so that figure is flagged as unreconciled."},
+  {g:"since",p:"p2",t:"Sep 25 — Mitacs AI Advantage: up to $162M for 10,000 AI work placements",m:"up to $162M · not in totals",lk:["post:mitacs-placements"],src:["mitacs"],
+   ctx:"Five years from 2026–27, co-funding placements for post-secondary students, recent graduates and postdoctoral fellows (ADOPT and AI+X streams). It matches the 10,000 Mitacs placements inside the strategy's up-to-90,000 target. The release does not say whether the money is new."},
+  {g:"since",p:"all",t:"Oct 2 — Prime Minister's National Council on AI created",tag:"milestone",lk:["post:council"],src:["council"],
+   ctx:"Twelve members, including Yoshua Bengio and Ajay Agrawal, with Patrick Pichette ex officio. It advises on the implementation and evolution of AI for All and is supported by a small Privy Council Office team; ministers stay accountable for decisions. The release names no chair, meeting schedule or budget."},
+  {g:"since",p:"p3",t:"Oct 13 — Regional AI Initiative expansion opens for applications",m:"$500M · already counted",lk:["post:raii-open"],src:["raii"],
+   ctx:"The additional $500M over five years is now available, bringing total federal funding for the initiative to $700M. Delivered through the regional development agencies. Projects with eligible costs before Mar 31, 2027 are due Nov 24, 2026; southern Ontario applications close Jan 19, 2027."},
+  {g:"since",p:"p5",t:"Nov 5 — Budget 2026 scheduled (upcoming)",tag:"milestone",lk:["post:budget-date"],src:["budget"],
+   ctx:"The first checkpoint for the strategy's commitment to explore ways to reinvest tech gains into Canadian AI startups. Nothing is yet known about AI measures in it."},
+
   {g:"2030",p:"p4",t:"850 MW sovereign compute capacity proposed, with scaling path to 2.3 GW",tag:"target",
    ctx:"Partnerships now being finalized for 100MW+ data centres under Canadian control and law, with tens of billions in corresponding investment. The built-in edge: a grid that's 83%+ renewable and low-emission, and a cold climate that slashes cooling costs."},
   {g:"2030",p:"p4",t:"Estimated 5.5 GW of AI compute needed for Canada's commercial players",tag:"context",
@@ -834,6 +871,39 @@ const EVENTS = [
   {g:"2050",p:"p4",t:"Electricity grid doubled — clean power pairing with sovereign AI data centres",tag:"target",
    ctx:"From the parallel National Electricity Strategy: double the grid, largely with hydro, nuclear and renewables. Clean power plus a northern climate gives Canadian compute a cost and sustainability advantage competitors spend billions trying to replicate artificially."}
 ];
+
+/* ===== SINCE LAUNCH (as of 2026-10-23): announcements made after the June 4, 2026 strategy =====
+   Shown as dated notes on cards and in the Timeline. They are NOT in MONEY, OPPS.amt or any total.
+   `flag` = an open question we have not resolved. `k` = ledger id (post:*) behind each note. */
+const SRC={
+  raii:["FedDev Ontario release","https://www.canada.ca/en/economic-development-southern-ontario/news/2026/10/government-of-canada-expands-support-to-adopt-and-commercialize-artificial-intelligence.html"],
+  vital:["ISED release","https://www.canada.ca/en/innovation-science-economic-development/news/2026/06/government-of-canada-invests-100-million-in-vital-health-data-platform.html"],
+  dtc:["PM release","https://www.pm.gc.ca/en/news/news-releases/2026/09/03/prime-minister-carney-launches-digital-transformation-canada-deliver"],
+  council:["PM release","https://www.pm.gc.ca/en/news/news-releases/2026/10/02/prime-minister-carney-launches-new-national-council-artificial"],
+  literacy:["ISED release","https://www.canada.ca/en/innovation-science-economic-development/news/2026/09/government-of-canada-launches-national-ai-literacy-initiative.html"],
+  mitacs:["Mitacs release","https://www.mitacs.ca/news/government-of-canada-invests-in-10000-ai-related-work-placements-for-young-canadians/"],
+  c34:["LEGISinfo C-34","https://www.parl.ca/legisinfo/en/bill/45-1/c-34"],
+  c36:["LEGISinfo C-36","https://www.parl.ca/legisinfo/en/bill/45-1/c-36"],
+  budget:["The Hub","https://thehub.ca/2026/10/21/champagne-sets-nov-5-budget-date-as-watchdog-warns-deficits-are-deepening/"],
+  scip:["ISED program page","https://ised-isde.canada.ca/site/ised/node/279"]
+};
+const srcA=k=>`<a class="updsrc" href="${SRC[k][1]}" target="_blank" rel="noopener" onclick="event.stopPropagation()">${SRC[k][0]} ↗</a>`;
+const UPDATES={
+  "Regional AI Initiative expansion":[{d:"Oct 13, 2026",s:"raii",k:"post:raii-open",t:"Now open for applications. The initiative's total federal funding is $700M. Projects with eligible costs before Mar 31, 2027 are due Nov 24, 2026; southern Ontario applications close Jan 19, 2027. This is the same $500M counted here, not new money."}],
+  "National AI Literacy Initiative":[
+    {d:"Sep 9, 2026",s:"literacy",k:"post:literacy-launch",t:"Launched with Amii as a $13M partnership. A free course for post-secondary students opens Sep 21; the Canadians stream follows later this year. The $13M is not counted in any total here."},
+    {flag:1,d:"Sep 9, 2026",s:"literacy",t:"The release expects to reach 50,000+ K-12 educators; the strategy's target is 3,000+. They may measure different things (reach vs training). Not reconciled."}],
+  "90,000 AI job placements":[{d:"Sep 25, 2026",s:"mitacs",k:"post:mitacs-placements",t:"Mitacs AI Advantage: up to $162M over five years for the 10,000 Mitacs placements in this target. The release does not say whether the money is new. Not counted in any total here."}],
+  "VITAL expansion":[{flag:1,d:"Jun 23, 2026",s:"vital",k:"post:vital-announced",t:"The $100M was announced. The first phase links 160 hospitals in Ontario, Alberta and Quebec. The release says VITAL “could expand to additional provinces and territories” and does not repeat “five”. Not reconciled with the strategy's wording."}],
+  "World-leading public supercomputer":[{flag:1,d:"As of Oct 23, 2026",s:"scip",k:"post:supercomputer-program",t:"ISED's AI Sovereign Compute Infrastructure Program lists about $890M over seven fiscal years for the build (notional). Applications closed Jun 1 and no winner is announced. The strategy gives no figure, so this stays under Unfunded. Linking the two is our reading."}],
+  "Government as anchor customer":[{d:"Sep 3, 2026",s:"dtc",k:"post:dtc-launch",t:"Digital Transformation Canada launched, and its release ties it to this commitment. No dollar figure stated."}],
+  "Modernize consumer privacy legislation":[{d:"Jun 15, 2026",s:"c36",k:"post:bill-c36",t:"Bill C-36, the Protecting Privacy and Consumer Data Act, was introduced. Second reading had not begun as of Oct 23."}],
+  "Online safety laws & deepfake legal tools":[{d:"Jun 10, 2026",s:"c34",k:"post:bill-c34",t:"Bill C-34, the Safe Social Media Act, was introduced and was in second-reading debate on Oct 21. Whether it includes the deepfake legal tools was not checked."}],
+  "Continue the Privacy Act review":[{d:"Jun 15, 2026",s:"c36",k:"post:bill-c36",t:"Bill C-36 amends PIPEDA, the private-sector privacy law. This review covers government's own data use and is unchanged."}],
+  "Budget 2026 reinvestment mechanisms":[{d:"Oct 21, 2026",s:"budget",k:"post:budget-date",t:"Budget 2026 is scheduled for Nov 5, 2026, the first checkpoint for this commitment."}],
+  "K-12 educators trained":[{flag:1,d:"Sep 9, 2026",s:"literacy",t:"The National AI Literacy Initiative expects to reach 50,000+ K-12 educators, against this 3,000+ target. Possibly a different measure (reach vs training). Not reconciled."}]
+};
+const updHTML=name=>(UPDATES[name]||[]).map(u=>`<div class="upd${u.flag?" flag":""}"><b>${u.flag?"Open question":"Update"} · ${u.d}</b>${u.t} ${srcA(u.s)}${u.k?confBadge(u.k):""}</div>`).join("");
 
 /* ===== CONFIDENCE LEDGER (compact mirror of ledger.json; full record in that file) ===== */
 const LEDGER = {
@@ -979,7 +1049,7 @@ const LEDGER = {
 "c": "Budget 2026 will 'explore' reinvestment mechanisms",
 "prov": "Pillar 5 — Scaling Canadian champions · “By Budget 2026, the Department of Finance will work with experts to explore mechanisms that encourage Canadians to reinvest gains”",
 "chk": "verification hedge-quote → confirm (hedge marker, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
-"note": "A commitment to study, not yet a mechanism."
+"note": "A commitment to study, not yet a mechanism. Post-launch (2026-10-23): Budget 2026 is scheduled for Nov 5, 2026, the first checkpoint for this commitment. See post:budget-date."
 },
 "soft:Aligning innovation programs": {
 "k": "direct",
@@ -1075,7 +1145,7 @@ const LEDGER = {
 "c": "$500M Regional AI Initiative expansion (via RDAs) — new",
 "prov": "Pillar 3 — Powering shared prosperity · “Canada will invest $500 million to expand and enhance the Regional Artificial Intelligence Initiative delivered through Regional Development Agencies.”",
 "chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
-"note": "New money."
+"note": "New money. Post-launch (2026-10-23): opened for applications on Oct 13, 2026. Same money, not double-counted. See post:raii-open."
 },
 "money:BDC LIFT — SME AI adoption financing": {
 "k": "direct",
@@ -1131,7 +1201,7 @@ const LEDGER = {
 "c": "$100M VITAL expansion to 5 more provinces — new",
 "prov": "Pillar 4 — Sovereign AI foundation · “Canada will also invest $100 million to expand VITAL in five additional provinces.”",
 "chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
-"note": "New money."
+"note": "New money. Post-launch flag (2026-10-23, unresolved): the Jun 23 release announcing $100M for VITAL says the platform 'could expand to additional provinces and territories' and does not repeat 'five'. See post:vital-announced."
 },
 "money:Canadian AI Safety Institute expansion": {
 "k": "direct",
@@ -1203,7 +1273,7 @@ const LEDGER = {
 "c": "K-12 educators trained: 1,500 -> 3,000+ (doubling)",
 "prov": "Pillar 2 — Empowering Canadians · “doubling K-12 teacher training to more than 3,000 educators”",
 "chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
-"note": "Source: 'doubling K-12 teacher training to more than 3,000 educators'. The 3,000+ target is verified (a floor, 'more than'); the 1,500 baseline in the dumbbell is IMPLIED by 'doubling' (= 3,000/2), not stated verbatim. Disclosed inference."
+"note": "Source: 'doubling K-12 teacher training to more than 3,000 educators'. The 3,000+ target is verified (a floor, 'more than'); the 1,500 baseline in the dumbbell is IMPLIED by 'doubling' (= 3,000/2), not stated verbatim. Disclosed inference. Post-launch flag (2026-10-23, unresolved): the Sep 9 literacy-launch release says the initiative is expected to reach more than 50,000 K-12 educators. Possibly a different measure (reach vs training). See post:literacy-launch."
 },
 "target:90,000 AI placements": {
 "k": "direct",
@@ -1211,7 +1281,7 @@ const LEDGER = {
 "c": "Up to 90,000 AI jobs & placements for young Canadians by 2031",
 "prov": "Pillar 2 — Empowering Canadians · “Create up to 90,000 AI-related jobs and work placement opportunities for young Canadians ... by 2031.”",
 "chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
-"note": "Verified verbatim; graded C because the source says 'up to 90,000' (a ceiling, not a floor)."
+"note": "Verified verbatim; graded C because the source says 'up to 90,000' (a ceiling, not a floor). Post-launch (2026-10-23): up to $162M announced Sep 25, 2026 for the 10,000 Mitacs placements within this target; new vs existing money not stated. See post:mitacs-placements."
 },
 "target:250,000 new jobs": {
 "k": "direct",
@@ -1243,7 +1313,7 @@ const LEDGER = {
 "c": "World-leading public supercomputer online by 2031",
 "prov": "Pillar 4 — Sovereign AI foundation · “Canada will build a world-leading public supercomputer ... (timing 'by 2031' stated in a separate outcomes sentence)”",
 "chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
-"note": "'world-leading public supercomputer' and 'by 2031' are stated in two separate sentences (the year is in the outcomes list, which omits 'public'). Both supported."
+"note": "'world-leading public supercomputer' and 'by 2031' are stated in two separate sentences (the year is in the outcomes list, which omits 'public'). Both supported. Post-launch flag (2026-10-23, unresolved): ISED's program page names about $890M for the build; the strategy gives no figure, so this stays unfunded here. See post:supercomputer-program."
 },
 "target:grid doubled 2050": {
 "k": "direct",
@@ -1252,6 +1322,86 @@ const LEDGER = {
 "prov": "Pillar 4 — Sovereign AI foundation · “recognizing that Canada will need to double its electricity infrastructure by 2050”",
 "chk": "extraction read-transcribe → match (original build vs PDF, 2026-06-05); verification source-match → confirm (source re-fetch, 2026-06-06); verification source-match → confirm (independent agent, 2026-06-06)",
 "note": "In the AI strategy page, attributed to the parallel National Electricity Strategy ('Powering Canada Strong'); framed as a need ('will need to double'), source says 'electricity infrastructure'."
+},
+"post:raii-open": {
+"k": "direct",
+"b": "per-source",
+"c": "Regional AI Initiative: the additional $500M is now available; total federal funding $700M (Oct 13, 2026)",
+"prov": "News release, Ottawa, 2026-10-13 · “an additional $500 million over five years to expand and enhance the Regional Artificial Intelligence Initiative is now available. This investment brings total federal funding for the initiative to $700 million.”",
+"chk": "extraction read-transcribe → match (page text read, 2026-10-23); verification source-match → confirm (second read, same session, not independent, 2026-10-23)",
+"note": "The same $500M the strategy already counts (money:Regional AI Initiative expansion (RDAs)); not added to any total. Release also gives deadlines: projects with eligible costs before 2027-03-31 must be submitted by 2026-11-24; southern Ontario applications close 2027-01-19 (other regions' dates not given)."
+},
+"post:vital-announced": {
+"k": "direct",
+"b": "qualified",
+"c": "VITAL: $100M announced Jun 23, 2026; first phase covers 160 hospitals in Ontario, Alberta and Quebec; may expand to more provinces and territories",
+"prov": "News release, Toronto, 2026-06-23 (Quick facts) · “The first phase of VITAL connects 160 hospitals across Ontario, Alberta and Quebec, serving over 20 million Canadians. With this increased investment, the platform could expand to additional provinces and territories over the coming months.”",
+"chk": "extraction read-transcribe → match (page text read, 2026-10-23); verification source-match → confirm (second read, same session, not independent, 2026-10-23); verification hedge-quote → confirm (hedge marker, 2026-10-23)",
+"note": "OPEN QUESTION (flagged, not resolved): the strategy says '$100 million to expand VITAL in five additional provinces'. This release does not repeat 'five' and says only that the platform 'could expand'. The strategy claim money:VITAL expansion to 5 more provinces is left as it was."
+},
+"post:dtc-launch": {
+"k": "direct",
+"b": "per-source",
+"c": "Digital Transformation Canada launched Sep 3, 2026 (CEO Patrick Pichette); the release ties it to the strategy's anchor-customer commitment",
+"prov": "News release, Ottawa, 2026-09-03 · “The strategy commits the federal government to lead by example in the responsible adoption of AI and to use government procurement as a strategic anchor customer for Canadian AI companies … Digital Transformation Canada will bring together Shared Services Canada and selected functions from the Treasury Board of Canada Secretariat, Public Services and Procurement Canada, and Employment and Social Development Canada – specifically the Canadian Digital Service.”",
+"chk": "extraction read-transcribe → match (page text read, 2026-10-23); verification source-match → confirm (second read, same session, not independent, 2026-10-23)",
+"note": "Minister responsible: Joël Lightbound. The release states no dollar figure or deadline. Also announces a fellowship model for short-term private-sector expertise; we do not equate it with the strategy's PM's Innovation Fellows Program."
+},
+"post:council": {
+"k": "direct",
+"b": "per-source",
+"c": "Prime Minister's National Council on AI launched Oct 2, 2026: 12 members, advises on the AI for All strategy",
+"prov": "News release, Ottawa, 2026-10-02 · “The Council will advise on cross-cutting issues affecting the implementation and evolution of Canada’s AI for All strategy. … The Council will be supported by a small team within the Privy Council Office, while responsible ministers and departments will remain accountable for policy decisions and implementation.”",
+"chk": "extraction read-transcribe → match (page text read, 2026-10-23); verification source-match → confirm (second read, same session, not independent, 2026-10-23)",
+"note": "Members listed: Ajay Agrawal, Yoshua Bengio, Sanja Fidler, Gillian Hadfield, Jordan Jacobs, Eric Lamarre, Valérie Pisano, Senator Thomas Pitfield, Jody Thomas, Louis Vachon, Michelle Zatlyn, and Patrick Pichette (ex officio). In the release text read on 2026-10-23: no chair named, no meeting schedule, no budget."
+},
+"post:literacy-launch": {
+"k": "direct",
+"b": "qualified",
+"c": "National AI Literacy Initiative launched Sep 9, 2026 with Amii: $13M partnership; expected to reach up to 1M post-secondary students and 50,000+ K-12 educators",
+"prov": "News release, Edmonton, 2026-09-09 · “launched Canada’s National AI Literacy Initiative, a new national partnership with the Alberta Machine Intelligence Institute (Amii) … Through this new $13 million national partnership … the initiative is expected to reach up to one million post-secondary students and more than 50,000 kindergarten-to-Grade-12 (K-12) educators.”",
+"chk": "extraction read-transcribe → match (page text read, 2026-10-23); verification source-match → confirm (second read, same session, not independent, 2026-10-23); verification hedge-quote → confirm (hedge marker, 2026-10-23) · corroborated: BetaKit (2026-09-09) · corroborated: Mitacs release (2026-09-25)",
+"note": "The $13M appears in a minister's quoted statement in the release, not in the body text. Not added to any total; the program stays in the Unfunded count (the strategy attached no figure). OPEN QUESTION (flagged, not resolved): the strategy targets 'more than 3,000 educators' (target:K-12 educators trained); this release says reach of 50,000+. Possibly different measures (trained vs reached)."
+},
+"post:mitacs-placements": {
+"k": "direct",
+"b": "qualified",
+"c": "Mitacs AI Advantage: up to $162M over five years for 10,000 co-funded AI work placements (Sep 25, 2026)",
+"prov": "News release, Toronto, 2026-09-25 · “announced up to $162 million over five years, beginning in 2026–2027, for Mitacs to support 10,000 co-funded work placement opportunities for post-secondary students, recent graduates and post-doctoral fellows”",
+"chk": "extraction read-transcribe → match (page text read, 2026-10-23); verification source-match → confirm (second read, same session, not independent, 2026-10-23); verification hedge-quote → confirm (hedge marker, 2026-10-23)",
+"note": "This is the Mitacs slice (10,000) of the strategy's up-to-90,000 placements target. The release does not say whether the money is new or from an existing budget, so it is not added to any total."
+},
+"post:bill-c34": {
+"k": "direct",
+"b": "per-source",
+"c": "Bill C-34 (Safe Social Media Act) introduced Jun 10, 2026; in second-reading debate as of Oct 21, 2026",
+"prov": "LEGISinfo bill page C-34 · “Short title: Safe Social Media Act … First reading Completed on Wednesday, June 10, 2026 … Debate at second reading on Wednesday, October 21, 2026 (House of Commons)”",
+"chk": "extraction read-transcribe → match (page text read, 2026-10-23); verification source-match → confirm (second read, same session, not independent, 2026-10-23)",
+"note": "Status as read 2026-10-23; check LEGISinfo for later stages. Long title: an Act to enact the Digital Safety Act and the Digital Safety Commission of Canada Act. Whether it contains the strategy's 'deepfake legal tools' has not been checked."
+},
+"post:bill-c36": {
+"k": "direct",
+"b": "per-source",
+"c": "Bill C-36 (Protecting Privacy and Consumer Data Act) introduced Jun 15, 2026; second reading not yet begun",
+"prov": "LEGISinfo bill page C-36 · “Introduction and first reading on Monday, June 15, 2026 (House of Commons) … Second reading No activity”",
+"chk": "extraction read-transcribe → match (page text read, 2026-10-23); verification source-match → confirm (second read, same session, not independent, 2026-10-23)",
+"note": "Status as read 2026-10-23; check LEGISinfo for later stages. The bill's long title also amends the Personal Information Protection and Electronic Documents Act (PIPEDA), the private-sector law. It is a different law from the Privacy Act review the strategy mentions."
+},
+"post:budget-date": {
+"k": "direct",
+"b": "per-source",
+"c": "Budget 2026 to be presented Nov 5, 2026",
+"prov": "Article: Champagne sets Nov. 5 budget date as watchdog warns deficits are deepening · “The Carney government will present its 2026 budget on Nov. 5”",
+"chk": "extraction read-transcribe → match (page text read, 2026-10-23); verification source-match → confirm (second read, same session, not independent, 2026-10-23)",
+"note": "Secondary source: a news report of the Finance Minister's statement; the Finance Canada notice was not read. Nothing yet known about AI measures in it."
+},
+"post:supercomputer-program": {
+"k": "direct",
+"b": "qualified",
+"c": "AI Sovereign Compute Infrastructure Program: about $890M over seven fiscal years for the build; applications closed Jun 1, 2026",
+"prov": "Program page, date modified 2026-06-01 · “The program will provide approximately $890 million to the Infrastructure Build Layer to support the design, construction, and ongoing operation of the compute system, over seven fiscal years, beginning in fiscal year 2026–27 … All funding amounts are notional and are subject to negotiation.”",
+"chk": "extraction read-transcribe → match (page text read, 2026-10-23); verification source-match → confirm (second read, same session, not independent, 2026-10-23); verification hedge-quote → confirm (hedge marker, 2026-10-23)",
+"note": "OPEN QUESTION (flagged, not resolved): the strategy gives the public supercomputer no dollar figure, so it stays in the Unfunded count. The strategy does not name this program; linking them is our reading (same type of system, same period). No selected proponent announced as of 2026-10-23."
 }
 };
 
@@ -1342,6 +1492,7 @@ function cardHTML(o){
     <div class="top"><h4>${o.n}</h4>${o.amt?`<span class="amt">${o.amt}</span>`:""}</div>
     <div class="who">FOR <b>${o.who}</b></div>
     <div class="get">${o.get}</div>
+    ${updHTML(o.n)}
     <div class="foot">
       <span class="pill ${o.st}">${o.st==="live"?"live now":"announced"}</span>
       <span class="pill pl" style="color:${pcol(o.p)}">${PILLARS[o.p].n}</span>
@@ -1481,6 +1632,7 @@ function renderTargets(){
         <span class="vlabel b" style="left:${x2}%">${d.to.toLocaleString()}${d.unit}${d.l.includes("compute")?"+":""}</span>
       </div>
       <div class="when">${d.when}</div>
+      ${updHTML(d.l)}
     </div>`;
   }).join("")||`<p class="empty">No targets match.</p>`;
 }
@@ -1495,13 +1647,13 @@ function renderTimeline(){
         const col=pcol(e.p);
         const hit=visible(e.p)&&matches(e.t+(e.ctx||""));
         let badge="";
-        if(e.m)badge=`<span class="badge money ${e.lev?'lev':''}">${e.m}${e.lev?' leveraged':''}</span>`;
+        if(e.m)badge=`<span class="badge money ${e.lev||e.g==="since"?'lev':''}">${e.m}${e.lev?' leveraged':''}</span>`;
         else if(e.tag==="target")badge=`<span class="badge target">target</span>`;
         else if(e.tag==="milestone")badge=`<span class="badge target" style="background:rgba(43,87,151,.12);color:var(--sovereignty)">milestone</span>`;
         else if(e.tag==="context")badge=`<span class="badge" style="background:#eef1f4;color:var(--faint)">context</span>`;
-        return `<div class="tevent ${hit?'':'dim'}" style="border-left-color:${col}" onclick="this.classList.toggle('open')">
+        return `<div class="tevent ${hit?'':'dim'}" style="border-left-color:${col}" onclick="if(!event.target.closest('.cbadge'))this.classList.toggle('open')">
           <span class="tp" style="color:${col}">${e.p==="all"?"ALL":e.p.toUpperCase()}</span>
-          <span class="tt">${e.t}</span>${badge}${e.ctx?`<span class="chev">▶</span><div class="tctx">${e.ctx} ${srcLink(e.p)}</div>`:""}</div>`;
+          <span class="tt">${e.t}</span>${badge}${e.ctx?`<span class="chev">▶</span><div class="tctx">${e.ctx} ${e.src?e.src.map(srcA).join(""):srcLink(e.p)}${(e.lk||[]).map(confBadge).join("")}</div>`:""}</div>`;
       }).join("")}
     </div>`;
   }).join("");
@@ -1518,6 +1670,7 @@ function negCardHTML(o){
     <div class="top"><h4>${o.t}</h4><span class="pill pl">no $ attached</span></div>
     ${o.who?`<div class="who">FOR <b>${o.who}</b></div>`:""}
     <div class="get">${o.what}</div>
+    ${updHTML(o.t)}
     <div class="foot">
       ${o.st?`<span class="pill ${o.st}">${o.st==="live"?"live now":"announced"}</span>`:`<span class="pill pl">commitment</span>`}
       <span class="pill pl" style="color:${pcol(o.p)}">${PILLARS[o.p].n}</span>
@@ -1592,8 +1745,11 @@ function renderSoft(){
 }
 
 /* ================= CONFIDENCE TAB ================= */
+const isPost=k=>k.startsWith("post:");
 function renderConfidence(){
-  const entries=Object.entries(LEDGER);
+  /* The strategy's own claims drive the summary; post-launch updates (post:*) are listed apart, below. */
+  const all=Object.entries(LEDGER);
+  const entries=all.filter(([k])=>!isPost(k)), post=all.filter(([k])=>isPost(k));
   const total=entries.length;
   const byBasis={}, byKind={direct:0,derived:0,editorial:0};
   entries.forEach(([k,e])=>{byBasis[e.b]=(byBasis[e.b]||0)+1; byKind[e.k]=(byKind[e.k]||0)+1;});
@@ -1601,7 +1757,7 @@ function renderConfidence(){
   BASIS_ORDER.forEach(s=>{ if(byBasis[s]) grid+=`<div class="confcard"><b style="color:${BASIS[s].color}">${byBasis[s]}</b><span>${BASIS[s].label}</span></div>`; });
   $("#confGrid").innerHTML=grid;
   const open=(byBasis.unverified||0)+(byBasis.disputed||0);
-  $("#confCoverage").innerHTML=`Independently verified (2026-06-06): three separate verifier agents re-fetched the official ISED source, blind to the labels, and re-derived every quote. <b>${total} claims tracked, ${open} open.</b> ${byBasis.corroborated||0} confirmed + corroborated · ${byBasis["per-source"]||0} confirmed in the document · ${byBasis.qualified||0} the government hedges · ${byBasis.recomputed||0} our calculations · ${byBasis["our-analysis"]||0} our interpretations.`;
+  $("#confCoverage").innerHTML=`Independently verified (2026-06-06): three separate verifier agents re-fetched the official ISED source, blind to the labels, and re-derived every quote. <b>${total} claims tracked, ${open} open.</b> ${byBasis.corroborated||0} confirmed + corroborated · ${byBasis["per-source"]||0} confirmed in the document · ${byBasis.qualified||0} the government hedges · ${byBasis.recomputed||0} our calculations · ${byBasis["our-analysis"]||0} our interpretations. These counts cover the strategy's own claims only; ${post.length} updates since launch are tracked separately below.`;
   $("#confLegend").innerHTML=BASIS_ORDER.map(s=>`<div class="li"><span class="cbadge" style="color:${BASIS[s].color};pointer-events:none">${BASIS[s].glyph} ${BASIS[s].label}</span><div>${BASIS[s].desc}</div></div>`).join("");
   const row=([k,e])=>`<div class="ci">${confBadge(k)}<div class="ct">${e.c}<span class="cp">${e.prov}</span></div></div>`;
   const attn=entries.filter(([k,e])=>e.b==="unverified"||e.b==="disputed").sort((a,b)=>(a[1].b==="disputed"?0:1)-(b[1].b==="disputed"?0:1));
@@ -1610,7 +1766,10 @@ function renderConfidence(){
   if(attn.length) fh+=`<p class="confsubhead attn">⚠ Open on our side — ${attn.length} (disputed or not yet re-checked)</p>`+attn.map(row).join("");
   fh+=`<p class="confsubhead">The government hedges this — ${qual.length} · in its own words: a proposal, an estimate, or a conditional</p>`+(qual.map(row).join("")||`<p class="empty">None.</p>`);
   $("#confFlagged").innerHTML=fh;
-  const rows=entries.map(([k,e])=>`<tr><td class="ctab">${confBadge(k)}</td><td class="cclaim">${e.c}</td><td>${e.prov}</td></tr>`).join("");
+  const flagged=post.filter(([k,e])=>/OPEN QUESTION/.test(e.note||"")).length;
+  $("#confSinceIntro").innerHTML=`${post.length} announcements made after publication, through Oct 23, 2026. They were read from official pages (releases, Parliament's bill tracker) in a single AI pass, <b>not</b> the independent three-agent pass used for the claims above, so treat them as read once. ${flagged} carry an unresolved open question, shown in amber on the cards. None feeds the headline totals.`;
+  $("#confSince").innerHTML=post.map(row).join("");
+  const rows=entries.concat(post).map(([k,e])=>`<tr><td class="ctab">${confBadge(k)}</td><td class="cclaim">${e.c}${isPost(k)?` <span class="pill pl">since launch</span>`:""}</td><td>${e.prov}</td></tr>`).join("");
   $("#confTable").innerHTML=`<table class="conftable"><thead><tr><th>Basis</th><th>Claim</th><th>Provenance</th></tr></thead><tbody>${rows}</tbody></table>`;
 }
 
